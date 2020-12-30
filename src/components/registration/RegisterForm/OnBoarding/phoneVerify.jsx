@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "@emotion/styled";
 import {Button, Col, Row, TextInput} from "srx";
 import OtpInput from "react-otp-input";
+import {useMutation} from "graphql-hooks";
+
+import {RESEND_OTP_MUTATION, VERIFY_OTP_MUTATION} from "../../../../graphql/queries/user";
 
 const FormInput = styled(TextInput)`
     input { 
@@ -24,10 +27,15 @@ const FormInput = styled(TextInput)`
 const OTPInput = styled(OtpInput)`
     input {
         padding: 0.5rem;
-        margin-right: 10px;
-        font-size: 22px;
-        width: 50px!important;
-        border: 2px solid white!important;
+        margin-right: min(5px, 2vw);
+        font-size: calc(0.8rem + 0.8vw);
+        width: min(50px, 13vw)!important;
+        height: min(50px, 13vw)!important;
+        border: ${({ success, failed }) =>
+          failed ? `2px solid red!important` :
+              success ? `2px solid green!important`
+                  : `2px solid white!important`
+        };
         &:focus {
           outline: none!important;
           border-color: #AF0C3E!important;
@@ -53,16 +61,39 @@ const PhoneVerifyCard = ({
    const [phone, setPhone] = useState(profile.phone ? profile.phone : '+91');
    const [phoneEntered, setPhoneEntered] = useState(false);
    const [otp, setOtp] = useState('');
+   const [isVerified, setVerified] = useState(profile?.phoneVerified);
+
+   const [requestOTP] = useMutation(RESEND_OTP_MUTATION);
+   const [verifyOTP] = useMutation(VERIFY_OTP_MUTATION);
 
    const handleVerify = (e) => {
       e.preventDefault();
-      onVerify({ ...profile, phone, phoneVerified: true });
+      if(isVerified){
+         onVerify({ ...profile, phone, phoneVerified: true });
+      }
    };
 
    const handleEnter = (e) => {
       e.preventDefault();
+      requestOTP({ variables: { phone }}).then(({ data, error }) => {
+         if(data?.resendOTP) {
+            console.log('OTP send')
+         }
+      })
       setPhoneEntered(true);
-   }
+   };
+
+   useEffect(() => {
+      if(!isVerified && otp.length >= 6){
+         verifyOTP({ variables: { otp }}).then(({ data, error }) => {
+            if(data?.verifyOTP){
+               setVerified(true);
+            } else {
+               setVerified(false);
+            }
+         })
+      }
+   }, [otp]);
 
    return <div>
       {profile?.phoneVerified ?
@@ -95,6 +126,8 @@ const PhoneVerifyCard = ({
              <div className="px-2 py-3">
                 <div className="font-weight-bold mb-2">Enter Code</div>
                 <OTPInput
+                    success={isVerified}
+                    failed={isVerified===false&&otp.length===6}
                     value={otp}
                     onChange={setOtp}
                     numInputs={6}
@@ -108,7 +141,7 @@ const PhoneVerifyCard = ({
              </div>
              <Row>
                 <Col md={8} />
-                {(otp.length === 6 || profile.emailVerified) && <Col md={4} p={1} flexHR>
+                {(isVerified) && <Col md={4} p={1} flexHR>
                    <FormButton
                        text="Continue"
                        type="submit" fw

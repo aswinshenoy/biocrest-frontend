@@ -42,10 +42,6 @@ const customConfig = {
                 },
             },
         ],
-    },
-
-    env: {
-        domain: 'http://localhost:5431',
     }
 
 };

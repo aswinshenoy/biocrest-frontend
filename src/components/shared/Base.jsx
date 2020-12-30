@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from "next/head";
 import config from 'react-reveal/globals';
+import {ClientContext, GraphQLClient} from 'graphql-hooks'
 
 config({ ssrFadeout: true });
 
@@ -14,10 +15,17 @@ const seoTags = {
     "description": "BIOCREST 2021 - An International Symposium on Antimicrobial Resistance organized by Amrita Vishwa Vidyapeetam. Register Today, limited seats available."
 };
 
+const graphQLEndpoint = process.env.GRAPHQL_SERVER_ENDPOINT || '/api/graphql/';
+
+
 const Base = ({ children, meta }) => {
 
     const title = `${meta && meta.title ? `${meta.title} |` : '' } ${seoTags.siteName} - ${seoTags.tagLine}`;
     const GoogleAnalyticsID = null;
+
+    const client = new GraphQLClient({
+        url: graphQLEndpoint,
+    });
 
     return <React.Fragment>
         <Head>
@@ -50,7 +58,9 @@ const Base = ({ children, meta }) => {
             <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
         </Head>
         <div className="app">
-            {children}
+            <ClientContext.Provider value={client}>
+                {children}
+            </ClientContext.Provider>
         </div>
     </React.Fragment>
 };

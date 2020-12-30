@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import styled from "@emotion/styled";
-import UserTypeSelector from "./typeSelector";
 import {Col, Row} from "srx";
-import EmailVerifyCard from "./emailVerify";
+import {useMutation} from "graphql-hooks";
+import {UPDATE_MUTATION} from "../../../../graphql/queries/user";
+
 import BasicInfoForm from "./basicInfo";
+import UserTypeSelector from "./typeSelector";
+import EmailVerifyCard from "./emailVerify";
 import PhoneVerifyCard from "./phoneVerify";
 import IDUploader from "./idUpload";
 
@@ -74,13 +77,11 @@ const OnBoarding = ({
 
     const stages_list = [
         {
-            "complete": true,
             "value": "basic_profile",
             "label": "Basic Info",
             "icon": require('../../../../assets/icons/teacher.png'),
         },
         {
-            "active": true,
             "value": "type_select",
             "label": "Profile Type",
             "icon": require('../../../../assets/icons/type.png'),
@@ -102,7 +103,38 @@ const OnBoarding = ({
         }
     ];
 
-    const [stages, setStages] = useState(stages_list);
+    const setActive = (stages, value) => {
+        return stages.map((s) => {
+            if(s.value === value)
+                return { ...s, active: true }
+            return s;
+        });
+    };
+
+    const setCompleted = (stages, value) => {
+        let flag = false;
+        return stages.map((s) => {
+            if(s.value === value)
+                flag = true;
+            if(flag === false)
+                return { ...s, complete: true }
+            return s;
+        });
+    };
+
+    const getInitialState = () => {
+        if(!(profile.name.length > 0))
+            return setCompleted(setActive(stages_list, 'basic_profile'), 'basic_profile');
+        if(!profile?.type?.length > 0)
+            return setCompleted(setActive(stages_list, 'type_select'), 'type_select');
+        if(!profile.emailVerified)
+            return setCompleted(setActive(stages_list, 'email_verify'), 'email_verify');
+        if(!profile.phoneVerified)
+            return setCompleted(setActive(stages_list, 'phone_verify'), 'phone_verify');
+        return setCompleted(setActive(stages_list, 'id_upload'), 'id_upload');
+    };
+
+    const [stages, setStages] = useState(getInitialState());
 
     const changeStage = (curr, next) => {
         let newStages = stages.map((s) => {
@@ -115,13 +147,26 @@ const OnBoarding = ({
         setStages([...newStages]);
     }
 
+    const [updateProfile] = useMutation(UPDATE_MUTATION);
     const handleInfoComplete = (profile) => {
         setProfile(profile);
+        updateProfile({
+            variables: { update: { name: profile.name, email: profile.email, password: profile.password } }
+        }).then(({ data, error }) => {
+            if(data?.updateProfile?.success){
+                console.log('updated');
+            }
+        })
         changeStage('basic_profile', 'type_select');
     }
 
     const handleTypeComplete = (type) => {
         setProfile({...profile, type});
+        updateProfile({ variables: { update: { type } }}).then(({ data, error }) => {
+            if(data?.updateProfile?.success){
+                console.log('updated');
+            }
+        })
         changeStage('type_select', 'email_verify');
     };
 
@@ -138,6 +183,23 @@ const OnBoarding = ({
     const handleUploadID = (profile) => {
         setProfile(profile);
         setSubmitting(true);
+        updateProfile({ variables: { update: { idCard: profile.idCard } }}).then(({ data, error }) => {
+            setSubmitting(false);
+            if(data?.updateProfile?.success){
+                console.log('updated');
+            }
+        });
+    }
+
+    const openStage = (value) => {
+        let newStages = stages.map((s) => {
+            if(s.value === value) {
+                return { ...s, active: true }
+            } else if (s.active) {
+                return {...s, active: false }
+            } return s;
+        });
+        setStages([...newStages]);
     }
 
     const onOpen = (stage) => {
@@ -196,6 +258,8 @@ const OnBoarding = ({
         </div>
     </BodyContainer>;
 
+    console.log(profile);
+
     const renderForm = () =>
     <BodyContainer>
         <div className="container px-0" style={{ maxWidth: '1200px' }}>
@@ -214,9 +278,16 @@ const OnBoarding = ({
                             if(s.value === 'basic_profile')
                                 return <BasicInfoForm profile={profile} onSave={handleInfoComplete} />;
                             if (s.value === 'type_select')
-                                return <UserTypeSelector type={profile?.type} onComplete={handleTypeComplete}/>;
+                                return <UserTypeSelector
+                                    type={profile?.type ? parseInt(profile.type) : null}
+                                    onComplete={handleTypeComplete}
+                                />;
                             if(s.value === 'email_verify')
-                                return <EmailVerifyCard profile={profile} onVerify={handleVerifyEmail} />;
+                                return <EmailVerifyCard
+                                    profile={profile}
+                                    onVerify={handleVerifyEmail}
+                                    onRequestChange={() => openStage('basic_profile')}
+                                />;
                             if(s.value === 'phone_verify')
                                 return <PhoneVerifyCard profile={profile} onVerify={handleVerifyPhone} />
                             if(s.value === 'id_upload')
