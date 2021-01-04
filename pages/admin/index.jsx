@@ -4,6 +4,7 @@ import Base from "../../src/components/shared/Base";
 import AdminPanel from "../../src/components/admin";
 import ViewAuthenticator from "../../src/components/shared/ViewAuthenticator";
 import Header from "../../src/components/shared/Header";
+import RegistrationForm from "../../src/components/registration/RegisterForm";
 
 export default () => {
 
@@ -14,6 +15,11 @@ export default () => {
                 <div className="container-lg px-2 py-5">
                     <AdminPanel />
                 </div>
+            </Base>
+        }
+        renderPublic={() =>
+            <Base meta={{ title: 'Registration' }}>
+                <RegistrationForm />
             </Base>
         }
     />
