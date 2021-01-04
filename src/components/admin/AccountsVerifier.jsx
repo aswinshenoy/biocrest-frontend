@@ -13,7 +13,9 @@ const AccountVerifier = () => {
             <div>
                 <h1 className="mb-4">Pending Verifications</h1>
                 {data.profilesToVerify.map((p) =>
-                    <VerifyCard {...p} />
+                    <div className="my-2">
+                        <VerifyCard {...p} />
+                    </div>
                 )}
             </div>
             : <div>No profiles to verify</div>}

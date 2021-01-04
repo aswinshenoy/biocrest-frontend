@@ -178,7 +178,10 @@ const OnBoarding = () => {
         updateProfile({ variables: { update: { idCard: profile.idCard } }}).then(({ data, error }) => {
             setSubmitting(false);
             if(data?.updateProfile?.success){
-                console.log('updated');
+                setUserInfo({
+                    ...profile,
+                    isProfileComplete: true
+                })
             }
         });
     }
