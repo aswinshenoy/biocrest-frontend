@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "@emotion/styled";
 import {Col, Row} from "srx";
 import {useMutation} from "graphql-hooks";
@@ -9,24 +9,13 @@ import UserTypeSelector from "./typeSelector";
 import EmailVerifyCard from "./emailVerify";
 import PhoneVerifyCard from "./phoneVerify";
 import IDUploader from "./idUpload";
+import {setUserInfo, useAuthState} from "../../../../states";
+import Header from "../../../shared/Header";
 
 const OnBoardWrap = styled.div`
     background: #EFEFEF;
     color: black;
     min-height: 100vh;
-    padding: 10vh 0;
-    .branding-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 3000;
-        padding: 1rem;
-        background: #AF0C3E;
-        img {
-            max-height: 5vh;
-        }
-    }
 `;
 
 const StageButton = styled.button`
@@ -67,12 +56,9 @@ const BodyCol = styled(Col)`
     }
 `
 
-const OnBoarding = ({
-    profile: profileProps,
-    onComplete = () => {},
-}) => {
+const OnBoarding = () => {
 
-    const [profile, setProfile] = useState(profileProps);
+    const [profile] = useAuthState('userInfo');
     const [isSubmitting, setSubmitting] = useState(false);
 
     const stages_list = [
@@ -123,18 +109,24 @@ const OnBoarding = ({
     };
 
     const getInitialState = () => {
-        if(!(profile.name.length > 0))
+        if(!(profile?.name.length > 0))
             return setCompleted(setActive(stages_list, 'basic_profile'), 'basic_profile');
         if(!profile?.type?.length > 0)
             return setCompleted(setActive(stages_list, 'type_select'), 'type_select');
-        if(!profile.emailVerified)
+        if(!profile?.emailVerified)
             return setCompleted(setActive(stages_list, 'email_verify'), 'email_verify');
-        if(!profile.phoneVerified)
+        if(!profile?.phoneVerified)
             return setCompleted(setActive(stages_list, 'phone_verify'), 'phone_verify');
         return setCompleted(setActive(stages_list, 'id_upload'), 'id_upload');
     };
 
-    const [stages, setStages] = useState(getInitialState());
+    const [stages, setStages] = useState([]);
+
+    useEffect(() => {
+        if(profile && stages.length === 0){
+            setStages(getInitialState())
+        }
+    }, [profile])
 
     const changeStage = (curr, next) => {
         let newStages = stages.map((s) => {
@@ -161,7 +153,7 @@ const OnBoarding = ({
     }
 
     const handleTypeComplete = (type) => {
-        setProfile({...profile, type});
+        setUserInfo({...profile, type});
         updateProfile({ variables: { update: { type } }}).then(({ data, error }) => {
             if(data?.updateProfile?.success){
                 console.log('updated');
@@ -171,17 +163,17 @@ const OnBoarding = ({
     };
 
     const handleVerifyEmail = (profile) => {
-        setProfile(profile);
+        setUserInfo(profile);
         changeStage('email_verify', 'phone_verify');
     };
 
     const handleVerifyPhone = (profile) => {
-        setProfile(profile);
+        setUserInfo(profile);
         changeStage('phone_verify', 'id_upload');
     };
 
     const handleUploadID = (profile) => {
-        setProfile(profile);
+        setUserInfo(profile);
         setSubmitting(true);
         updateProfile({ variables: { update: { idCard: profile.idCard } }}).then(({ data, error }) => {
             setSubmitting(false);
@@ -258,8 +250,6 @@ const OnBoarding = ({
         </div>
     </BodyContainer>;
 
-    console.log(profile);
-
     const renderForm = () =>
     <BodyContainer>
         <div className="container px-0" style={{ maxWidth: '1200px' }}>
@@ -307,23 +297,8 @@ const OnBoarding = ({
 
 
     return <OnBoardWrap>
-        <div className="branding-bar">
-            <Row>
-                <Col s={6} flexVC>
-                    <img
-                        draggable="false" alt="BIOCREST"
-                        src={require('./../../../../assets/branding/biocrest_logo_light.png')}
-                    />
-                </Col>
-                <Col s={6} flexVC flexHR>
-                    <img
-                        draggable="false" alt="Amrita Vishwa Vidyapeetham"
-                        src={require('./../../../../assets/branding/amrita_vishwa_vidyapeetham_light_logo.png')}
-                    />
-                </Col>
-            </Row>
-        </div>
-        {isSubmitting ? renderSubmitting() : renderForm()}
+        <Header />
+        {(profile && !profile?.isProfileComplete) ? (isSubmitting ? renderSubmitting() : renderForm()) : <div />}
     </OnBoardWrap>;
 
 };

@@ -52,3 +52,59 @@ export const VERIFY_OTP_MUTATION = `
 mutation ($otp: String!){
   verifyOTP(otp: $otp)
 }`;
+
+export const PROFILES_TO_VERIFY_QUERY = `
+{
+  profilesToVerify{
+    user
+    {
+      id
+      name
+      email
+      phone
+      type
+      isEmailVerified
+      isPhoneVerified
+      isIDVerified
+    }
+    image
+    timestamp
+  }
+}`;
+
+export const APPROVE_REGISTRATION_MUTATION = `
+mutation ($userID: ID!, $update: UserUpdationInput, $remarks: String){
+  approveRegistration(userID: $userID, update: $update, remarks: $remarks)
+}`;
+
+export const REJECT_VERIFICATION =
+`mutation ($userID: ID!, $remarks: String){
+  rejectVerification(userID: $userID, remarks: $remarks)
+}`;
+
+export const MY_REGISTRATION_QUERY =
+`{
+  me{
+    isProfileComplete
+    isIDVerified
+    requiresCorrection
+    remarks
+  }
+}`;
+
+export const PROFILES_QUERY = `
+query ($key: String){
+  profiles(key: $key){
+    id
+    name
+    email
+    phone
+    type
+    isPhoneVerified
+    isEmailVerified
+    isIDVerified
+    dateJoined
+    isProfileComplete
+    requiresCorrection
+  }
+}`;

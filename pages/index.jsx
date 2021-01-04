@@ -1,31 +1,43 @@
 import React from 'react';
-import styled from "@emotion/styled";
-import {Col, Row} from "srx"
 
-import Base from "../src/components/shared/Base";
-import RegistrationSideCover from "../src/components/registration/SideCover";
 import RegistrationForm from "../src/components/registration/RegisterForm";
+import OnBoarding from "../src/components/registration/RegisterForm/OnBoarding";
 
-const RegisterPageWrapper = styled.main`
-  width: 100%;
-  .container-lg{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      max-width: 900px;
-  }
+import {useAuthState} from "../src/states";
+import DashboardPage from "../src/components/dashboard";
+import Base from "../src/components/shared/Base";
+import AdminPanel from "../src/components/admin";
+import ViewAuthenticator from "../src/components/shared/ViewAuthenticator";
+import Header from "../src/components/shared/Header";
 
-`
+
 
 const RegisterPage = () => {
 
-
-    return <Base meta={{ title: 'Registration' }}>
-        <RegisterPageWrapper>
-            <RegistrationForm />
-        </RegisterPageWrapper>
-    </Base>
+    return <ViewAuthenticator
+        renderAdmin={() =>
+            <Base meta={{ title: 'Admin Panel' }}>
+                <Header />
+                <div className="container-lg px-2 py-5">
+                    <AdminPanel />
+                </div>
+            </Base>
+        }
+        renderAuth={(userInfo) =>
+            !userInfo?.isProfileComplete ?
+            <Base meta={{ title: 'Complete Your Profile' }}>
+                <OnBoarding />
+            </Base> :
+            <Base meta={{ title: 'Dashboard' }}>
+                <DashboardPage />
+            </Base>
+        }
+        renderPublic={() =>
+            <Base meta={{ title: 'Registration' }}>
+                <RegistrationForm />
+            </Base>
+        }
+    />;
 
 };
 

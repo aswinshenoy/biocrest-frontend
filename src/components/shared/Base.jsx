@@ -49,7 +49,7 @@ const Base = ({ children, meta }) => {
             <link href='/images/icons/icon-384x384.png' rel='icon' type='image/png' sizes='384x384' />
             <link rel='apple-touch-icon' href='/images/icons/icon-512x512.png' />
             <link rel="shortcut icon" href="../images/icons/icon-72x72.png" />
-            {   GoogleAnalyticsID && <React.Fragment>
+            {GoogleAnalyticsID && <React.Fragment>
                 <script rel="preconnect" async src={`https://www.googletagmanager.com/gtag/js?id=${GoogleAnalyticsID}`} />
                 <script dangerouslySetInnerHTML={{
                     __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GoogleAnalyticsID}');`
