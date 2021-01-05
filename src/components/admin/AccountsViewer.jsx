@@ -49,7 +49,7 @@ const AccountsViewer = () => {
 
     const generateCSVData = () => {
         const d = [];
-        d.push(['#', 'Name', 'Type', 'Phone', 'Email', 'Status', 'Date Joined'])
+        d.push(['#', 'Name', 'Type', 'Phone', 'Email', 'Status', 'Date Joined', 'City', 'State', 'County', 'Gender'])
         if(data?.profiles.length > 0){
             data?.profiles.forEach((s, index) =>
                 d.push([
@@ -64,7 +64,11 @@ const AccountsViewer = () => {
                                 !s.isIDVerified ? "Pending Verification" :
                                     "Verified"
                     }`,
-                    `${format(parseISO(s.dateJoined), 'hh:MM a, dd-MM-yyyy')}`
+                    `${format(parseISO(s.dateJoined), 'hh:MM a, dd-MM-yyyy')}`,
+                    `${s.city}`,
+                    `${s.state}`,
+                    `${s.country}`,
+                    `${s.gender}`,
                 ])
             )
         }

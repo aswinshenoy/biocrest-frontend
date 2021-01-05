@@ -145,7 +145,7 @@ const OnBoarding = () => {
         setUserInfo({ ...profile });
         updateProfile({
             variables: { update: {
-                name: profile.name, email: profile.email,
+                name: profile.name, email: profile.email, gender: profile.gender,
                 city: profile.city, state: profile.state, country: profile.country
             } }
         }).then(({ data, error }) => {

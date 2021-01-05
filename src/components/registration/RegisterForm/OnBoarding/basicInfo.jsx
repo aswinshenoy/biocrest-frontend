@@ -109,6 +109,20 @@ const BasicInfoForm = ({
                     }}
                 />}
             </Col>
+            <Col md={6} p={1}>
+                <label style={{ fontWeight: 500 }} className="px-1 text-dark">Gender</label>
+                <select
+                    value={profile?.gender}
+                    onChange={(e) => { setProfile({ ...profile, gender: e.currentTarget.value })} }
+                    className="w-100 px-3 py-2"
+                >
+                    <option disabled selected value> -- select an option -- </option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other">Other</option>
+                    <option value={null}>Prefer not to say</option>
+                </select>
+            </Col>
             <Col md={8} />
             <Col md={4} p={2} className="mt-4" flexHR>
                 <FormButton
