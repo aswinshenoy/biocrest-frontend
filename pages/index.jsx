@@ -3,7 +3,6 @@ import React from 'react';
 import RegistrationForm from "../src/components/registration/RegisterForm";
 import OnBoarding from "../src/components/registration/RegisterForm/OnBoarding";
 
-import {useAuthState} from "../src/states";
 import DashboardPage from "../src/components/dashboard";
 import Base from "../src/components/shared/Base";
 import AdminPanel from "../src/components/admin";

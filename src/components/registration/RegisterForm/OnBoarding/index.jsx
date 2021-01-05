@@ -173,7 +173,6 @@ const OnBoarding = () => {
     };
 
     const handleUploadID = (profile) => {
-        setUserInfo(profile);
         setSubmitting(true);
         updateProfile({ variables: { update: { idCard: profile.idCard } }}).then(({ data, error }) => {
             setSubmitting(false);

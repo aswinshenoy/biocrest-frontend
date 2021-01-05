@@ -93,8 +93,8 @@ export const MY_REGISTRATION_QUERY =
 }`;
 
 export const PROFILES_QUERY = `
-query ($key: String){
-  profiles(key: $key){
+query ($key: String, $filters: ProfileQueryFilters){
+  profiles(key: $key, filters: $filters){
     id
     name
     email
