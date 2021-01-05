@@ -20,6 +20,9 @@ mutation ($username: String!, $password: String!){
       phone
       type
       isProfileComplete
+      city
+      state
+      country
       emailVerified: isEmailVerified
       phoneVerified: isPhoneVerified
     }
@@ -100,6 +103,9 @@ query ($key: String, $filters: ProfileQueryFilters){
     email
     phone
     type
+    city
+    country
+    state
     isPhoneVerified
     isEmailVerified
     isIDVerified

@@ -61,6 +61,7 @@ const OnBoarding = () => {
     const [profile] = useAuthState('userInfo');
     const [isSubmitting, setSubmitting] = useState(false);
 
+
     const stages_list = [
         {
             "value": "basic_profile",
@@ -109,7 +110,7 @@ const OnBoarding = () => {
     };
 
     const getInitialState = () => {
-        if(!(profile?.name.length > 0))
+        if(!(profile?.name.length > 0) || !(profile?.country?.length > 0))
             return setCompleted(setActive(stages_list, 'basic_profile'), 'basic_profile');
         if(!profile?.type?.length > 0)
             return setCompleted(setActive(stages_list, 'type_select'), 'type_select');
@@ -141,9 +142,12 @@ const OnBoarding = () => {
 
     const [updateProfile] = useMutation(UPDATE_MUTATION);
     const handleInfoComplete = (profile) => {
-        setProfile(profile);
+        setUserInfo({ ...profile });
         updateProfile({
-            variables: { update: { name: profile.name, email: profile.email, password: profile.password } }
+            variables: { update: {
+                name: profile.name, email: profile.email,
+                city: profile.city, state: profile.state, country: profile.country
+            } }
         }).then(({ data, error }) => {
             if(data?.updateProfile?.success){
                 console.log('updated');

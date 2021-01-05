@@ -58,12 +58,7 @@ const UserTypeSelector = ({
             "value": 3,
             "label": "Industry",
             "icon": require('../../../../assets/icons/industry.png')
-        },
-        {
-            "value": 4,
-            "label": "International",
-            "icon": require('../../../../assets/icons/international.png')
-        },
+        }
     ]
 
     return <div>

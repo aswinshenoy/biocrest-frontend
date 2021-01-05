@@ -17,8 +17,7 @@ const AccountsViewer = () => {
         "0": "Admin",
         "1": "Student",
         "2": "Academician",
-        "3": "Industry",
-        "4": "International"
+        "3": "Industry"
     }
 
     const getTypeName = (type) => {
@@ -105,7 +104,6 @@ const AccountsViewer = () => {
                                 <option value={1}>Student</option>
                                 <option value={2}>Academician</option>
                                 <option value={3}>Industry</option>
-                                <option value={4}>International</option>
                             </select>
                         </div>
                         <div className="col-md-4 d-flex align-items-center p-1">
