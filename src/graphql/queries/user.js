@@ -14,6 +14,7 @@ mutation ($username: String!, $password: String!){
     user
     {
       id
+      title
       username
       name
       email
@@ -24,6 +25,14 @@ mutation ($username: String!, $password: String!){
       city
       state
       country
+      affiliationTitle {
+         value: id
+         label: name
+      }
+      affiliationBody {
+         value: id
+         label: name
+      }
       emailVerified: isEmailVerified
       phoneVerified: isPhoneVerified
     }
@@ -100,6 +109,7 @@ export const PROFILES_QUERY = `
 query ($key: String, $filters: ProfileQueryFilters){
   profiles(key: $key, filters: $filters){
     id
+    title
     name
     email
     phone
@@ -108,6 +118,12 @@ query ($key: String, $filters: ProfileQueryFilters){
     country
     state
     gender
+    affiliationTitle {
+        name
+    }
+    affiliationBody {
+        name
+    }
     isPhoneVerified
     isEmailVerified
     isIDVerified

@@ -49,11 +49,12 @@ const AccountsViewer = () => {
 
     const generateCSVData = () => {
         const d = [];
-        d.push(['#', 'Name', 'Type', 'Phone', 'Email', 'Status', 'Date Joined', 'City', 'State', 'County', 'Gender'])
+        d.push(['#', 'Title', 'Name', 'Type', 'Phone', 'Email', 'Status', 'Date Joined', 'City', 'State', 'County', 'Gender', 'AffiliationTitle', 'AffiliationBody'])
         if(data?.profiles.length > 0){
             data?.profiles.forEach((s, index) =>
                 d.push([
                     `${index+1}`,
+                    `${s.title}`,
                     `${s.name}`,
                     `${getTypeName(s.type)}`,
                     `${s.phone}`,
@@ -69,6 +70,8 @@ const AccountsViewer = () => {
                     `${s.state}`,
                     `${s.country}`,
                     `${s.gender}`,
+                    `${s.affiliationTitle?.name}`,
+                    `${s.affiliationBody?.name}`,
                 ])
             )
         }
@@ -151,7 +154,7 @@ const AccountsViewer = () => {
                 {data?.profiles.map((s, index) =>
                     <tr>
                         <td>{index+1}.</td>
-                        <td>{s.name}</td>
+                        <td>{s.title}. {s.name}</td>
                         <td>{getTypeName(s.type)}</td>
                         <td>{s.phone}</td>
                         <td>{s.email}</td>

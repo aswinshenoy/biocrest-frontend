@@ -11,6 +11,7 @@ import PhoneVerifyCard from "./phoneVerify";
 import IDUploader from "./idUpload";
 import {setUserInfo, useAuthState} from "../../../../states";
 import Header from "../../../shared/Header";
+import AffiliationForm from "./affiliation";
 
 const OnBoardWrap = styled.div`
     background: #EFEFEF;
@@ -54,13 +55,13 @@ const BodyCol = styled(Col)`
         min-height: 60vh;
         margin-bottom: 0;
     }
-`
+`;
+
 
 const OnBoarding = () => {
 
     const [profile] = useAuthState('userInfo');
     const [isSubmitting, setSubmitting] = useState(false);
-
 
     const stages_list = [
         {
@@ -72,6 +73,11 @@ const OnBoarding = () => {
             "value": "type_select",
             "label": "Profile Type",
             "icon": require('../../../../assets/icons/type.png'),
+        },
+        {
+            "value": "affiliation_form",
+            "label": "Institution / Organization",
+            "icon": require('../../../../assets/icons/organization.png'),
         },
         {
             "value": "email_verify",
@@ -114,6 +120,8 @@ const OnBoarding = () => {
             return setCompleted(setActive(stages_list, 'basic_profile'), 'basic_profile');
         if(!profile?.type?.length > 0)
             return setCompleted(setActive(stages_list, 'type_select'), 'type_select');
+        if(!profile?.affiliationBody)
+            return setCompleted(setActive(stages_list, 'affiliation_form'), 'affiliation_form');
         if(!profile?.emailVerified)
             return setCompleted(setActive(stages_list, 'email_verify'), 'email_verify');
         if(!profile?.phoneVerified)
@@ -145,7 +153,7 @@ const OnBoarding = () => {
         setUserInfo({ ...profile });
         updateProfile({
             variables: { update: {
-                name: profile.name, email: profile.email, gender: profile.gender,
+                title: profile.title, name: profile.name, email: profile.email, gender: profile.gender,
                 city: profile.city, state: profile.state, country: profile.country
             } }
         }).then(({ data, error }) => {
@@ -163,7 +171,20 @@ const OnBoarding = () => {
                 console.log('updated');
             }
         })
-        changeStage('type_select', 'email_verify');
+        changeStage('type_select', 'affiliation_form');
+    };
+
+    const handleAffiliationForm = (data) => {
+        setUserInfo(data);
+        updateProfile({ variables: { update: {
+            affiliationTitleID: data.affiliationTitle.value,
+            affiliationBodyID: data.affiliationBody.value,
+        } }}).then(({ data, error }) => {
+            if(data?.updateProfile?.success){
+                console.log('updated');
+            }
+        })
+        changeStage('affiliation_form', 'email_verify');
     };
 
     const handleVerifyEmail = (profile) => {
@@ -273,10 +294,15 @@ const OnBoarding = () => {
                         {stages.filter((s) => s.active === true).map((s) => {
                             if(s.value === 'basic_profile')
                                 return <BasicInfoForm profile={profile} onSave={handleInfoComplete} />;
-                            if (s.value === 'type_select')
+                            if(s.value === 'type_select')
                                 return <UserTypeSelector
                                     type={profile?.type ? parseInt(profile.type) : null}
                                     onComplete={handleTypeComplete}
+                                />;
+                            if(s.value === 'affiliation_form')
+                                return <AffiliationForm
+                                    profile={profile}
+                                    onSave={handleAffiliationForm}
                                 />;
                             if(s.value === 'email_verify')
                                 return <EmailVerifyCard
