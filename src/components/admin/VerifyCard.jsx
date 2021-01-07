@@ -1,7 +1,18 @@
 import React, {useState} from 'react';
 import styled from "@emotion/styled";
 import {useMutation} from "graphql-hooks";
-import {APPROVE_REGISTRATION_MUTATION, REJECT_VERIFICATION} from "../../graphql/queries/user";
+import Input from "../ui/form/Input";
+import Select from "../ui/form/Select";
+import PlacePicker from "../ui/form/PlacePicker";
+
+import AffiliationBody from "../fields/AffiliationBody";
+import AffiliationTitle from "../fields/AffiliationTitle";
+
+const genders = require('../../data/commons/gender.json');
+const userTypes = require('../../data/commons/user-types.json');
+const userTitles = require('../../data/commons/user-titles.json');
+
+import {APPROVE_REGISTRATION_MUTATION, REJECT_VERIFICATION} from "../../graphql/queries/verification";
 
 const StyledInput = styled.input`
     padding: 0.5rem 1rem;
@@ -42,7 +53,9 @@ const VerifyCard = ({
                     name: profile.name,
                     phone: profile.phone,
                     email: profile.email,
-                    type: profile.type
+                    type: profile.type,
+                    affiliationBodyID: profile?.affiliationBody?.value,
+                    affiliationTitleID: profile?.affiliationTitle?.value
                 },
                 remarks: remark
             }
@@ -81,45 +94,93 @@ const VerifyCard = ({
                     <div>
                         <div>
                             <div className="row mx-0">
-                                <div className="col-md-6 p-2">
-                                    <label>Name</label>
-                                    <TextInput
-                                        label="Name" placeholder="Full Name"
+                                <div className="col-12 d-flex align-items-center p-2">
+                                    <Select
+                                        label="Title"
+                                        value={profile?.title}
+                                        onChange={(v) => setProfile({...profile, title: v })}
+                                        options={userTitles}
+                                        className="mr-2"
+                                    />
+                                    <Input
+                                        label="Name"
+                                        placeholder="Enter your name"
                                         value={profile?.name}
-                                        onChange={(v) => setProfile({...profile, name: v })}
+                                        className="w-100"
+                                        onChange={(name) => { setProfile({...profile, name}) }}
                                     />
                                 </div>
                                 <div className="col-md-6 p-2">
-                                    <label>Type</label>
-                                    <StyledInput as="select" name="type" value={profile.type} onChange={(e) => setProfile({ ...profile, type: e.currentTarget.value })}>
-                                        <option value={1}>Student</option>
-                                        <option value={2}>Academician</option>
-                                        <option value={3}>Industry</option>
-                                        <option value={4}>International</option>
-                                    </StyledInput>
+                                    <Select
+                                        label="Type"
+                                        value={profile?.type}
+                                        onChange={(v) => setProfile({...profile, type: v })}
+                                        options={userTypes}
+                                        className="w-100"
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="row mx-0">
                             <div className="col-md-6 p-2">
-                                <label>Phone Number</label>
-                                <div className="d-flex">
-                                    <TextInput
-                                        label="Phone Number" placeholder="Phone Number"
-                                        value={profile?.phone}
-                                        onChange={(v) => setProfile({...profile, phone: v })}
-                                    />
-                                </div>
+                                <Select
+                                    label="Gender"
+                                    value={profile?.gender}
+                                    onChange={(v) => setProfile({...profile, gender: v })}
+                                    options={genders}
+                                    className="w-100"
+                                />
                             </div>
                             <div className="col-md-6 p-2">
-                                <label>Phone Number</label>
-                                <div className="d-flex">
-                                    <TextInput
-                                        label="Email" placeholder="Email Address"
-                                        value={profile?.email}
-                                        onChange={(v) => setProfile({...profile, email: v })}
-                                    />
-                                </div>
+                                <PlacePicker
+                                    label="Your City/Town"
+                                    city={profile?.city}
+                                    country={profile?.country}
+                                    state={profile?.state}
+                                    onChange={({ city, state, country }) => {
+                                        setProfile({
+                                            ...profile, city, state, country
+                                        })
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="row mx-0">
+                            <div className="col-md-6 p-2">
+                                <AffiliationTitle
+                                    value={profile?.affiliationTitle}
+                                    onChange={(affiliationTitle) => setProfile({...profile, affiliationTitle })}
+                                />
+                            </div>
+                            <div className="col-md-6 p-2">
+                                <AffiliationBody
+                                    value={profile?.affiliationBody}
+                                    onChange={(affiliationBody) => setProfile({...profile, affiliationBody })}
+                                />
+                            </div>
+                        </div>
+                        <div className="row mx-0">
+                            <div className="col-md-6 p-2">
+                                <Input
+                                    label="Phone"
+                                    placeholder="Enter phone"
+                                    value={profile?.phone}
+                                    autoComplete="email"
+                                    type="email"
+                                    className="w-100"
+                                    onChange={(phone) => setProfile({...profile, phone}) }
+                                />
+                            </div>
+                            <div className="col-md-6 p-2">
+                                <Input
+                                    label="Email"
+                                    placeholder="Enter email"
+                                    value={profile?.email}
+                                    autoComplete="email"
+                                    type="email"
+                                    className="w-100"
+                                    onChange={(email) => setProfile({...profile, email}) }
+                                />
                             </div>
                         </div>
                     </div>

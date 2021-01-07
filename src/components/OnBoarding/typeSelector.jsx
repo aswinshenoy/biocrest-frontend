@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from "@emotion/styled";
-import {Button, Col, Row} from "srx";
+import {Col, Row} from "srx";
+import FormButton from "../ui/styled-components/Button";
 
 const RoleButton = styled.button`
     background: ${({active, selected}) => active || !selected ? 'white' : '#DDD'};
@@ -26,17 +27,6 @@ const RoleButton = styled.button`
     }
 `
 
-const FormButton = styled(Button)`
-    color: white!important;
-    background: #AF0C3E!important;
-    transition: all 0.25s ease-in;
-    box-shadow: 3px 5px 8px rgba(0,0,0,0.3);
-    &:hover, &:focus{
-       box-shadow: none!important;
-       transition: all 0.25s ease-in;
-    }
-`;
-
 const UserTypeSelector = ({
     type: typeProp, onComplete = () => {},
 }) => {
@@ -47,17 +37,17 @@ const UserTypeSelector = ({
         {
             "value": 1,
             "label": "Student",
-            "icon": require('../../../../assets/icons/student.png')
+            "icon": require('../../assets/icons/student.png')
         },
         {
             "value": 2,
             "label": "Academician",
-            "icon": require('../../../../assets/icons/teacher.png')
+            "icon": require('../../assets/icons/teacher.png')
         },
         {
             "value": 3,
             "label": "Industry",
-            "icon": require('../../../../assets/icons/industry.png')
+            "icon": require('../../assets/icons/industry.png')
         }
     ]
 

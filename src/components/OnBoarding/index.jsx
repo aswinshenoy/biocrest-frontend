@@ -2,16 +2,16 @@ import React, {useEffect, useState} from 'react';
 import styled from "@emotion/styled";
 import {Col, Row} from "srx";
 import {useMutation} from "graphql-hooks";
-import {UPDATE_MUTATION} from "../../../../graphql/queries/user";
+import {UPDATE_MUTATION} from "../../graphql/queries/user";
 
-import BasicInfoForm from "./basicInfo";
 import UserTypeSelector from "./typeSelector";
 import EmailVerifyCard from "./emailVerify";
 import PhoneVerifyCard from "./phoneVerify";
 import IDUploader from "./idUpload";
-import {setUserInfo, useAuthState} from "../../../../states";
-import Header from "../../../shared/Header";
+import {setUserInfo, useAuthState} from "../../states";
+import Header from "../shared/Header";
 import AffiliationForm from "./affiliation";
+import BasicInfoForm from "./BasicInfo";
 
 const OnBoardWrap = styled.div`
     background: #EFEFEF;
@@ -67,32 +67,32 @@ const OnBoarding = () => {
         {
             "value": "basic_profile",
             "label": "Basic Info",
-            "icon": require('../../../../assets/icons/teacher.png'),
+            "icon": require('../../assets/icons/teacher.png'),
         },
         {
             "value": "type_select",
             "label": "Profile Type",
-            "icon": require('../../../../assets/icons/type.png'),
+            "icon": require('../../assets/icons/type.png'),
         },
         {
             "value": "affiliation_form",
             "label": "Institution / Organization",
-            "icon": require('../../../../assets/icons/organization.png'),
+            "icon": require('../../assets/icons/organization.png'),
         },
         {
             "value": "email_verify",
             "label": "Verify Email",
-            "icon": require('../../../../assets/icons/email.png'),
+            "icon": require('../../assets/icons/email.png'),
         },
         {
             "value": "phone_verify",
             "label": "Verify Phone",
-            "icon": require('../../../../assets/icons/phone.png')
+            "icon": require('../../assets/icons/phone.png')
         },
         {
             "value": "id_upload",
             "label": "Upload ID Card",
-            "icon": require('../../../../assets/icons/id_verify.png'),
+            "icon": require('../../assets/icons/id_verify.png'),
         }
     ];
 
@@ -258,7 +258,7 @@ const OnBoarding = () => {
         <StageButton onClick={() => onOpen(s)} disabled={!s?.complete&&!s?.active} complete={s?.complete && !s.active} active={s?.active}>
             {s.complete && !s.active ?
                 <img
-                    src={require('../../../../assets/icons/tick_box.png')}
+                    src={require('../../assets/icons/tick_box.png')}
                     alt="completed" draggable="false"
                 /> :
                 <img alt={s.label} draggable="false" src={s.icon} />
@@ -302,6 +302,9 @@ const OnBoarding = () => {
                             if(s.value === 'affiliation_form')
                                 return <AffiliationForm
                                     profile={profile}
+                                    isStudent={profile?.type === 1 || profile?.type === "1"}
+                                    isAcademician={profile?.type === 2 || profile?.type === "2"}
+                                    isIndustry={profile?.type === 3 || profile?.type === "3"}
                                     onSave={handleAffiliationForm}
                                 />;
                             if(s.value === 'email_verify')

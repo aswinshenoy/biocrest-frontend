@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RegistrationForm from "../src/components/registration/RegisterForm";
-import OnBoarding from "../src/components/registration/RegisterForm/OnBoarding";
+import OnBoarding from "../src/components/OnBoarding";
 
 import DashboardPage from "../src/components/dashboard";
 import Base from "../src/components/shared/Base";

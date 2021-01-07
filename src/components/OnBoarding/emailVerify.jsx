@@ -1,40 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import OtpInput from 'react-otp-input';
-import styled from "@emotion/styled";
-import {Button, Col, Row} from "srx";
+import {Col, Row} from "srx";
 import {useMutation} from "graphql-hooks";
 
-import {RESEND_EMAIL_MUTATION, VERIFY_EMAIL_MUTATION} from "../../../../graphql/queries/user";
+import {RESEND_EMAIL_MUTATION, VERIFY_EMAIL_MUTATION} from "../../graphql/queries/otp";
+import FormButton from "../ui/styled-components/Button";
+import OTP from "../ui/form/OTP";
 
-const OTPInput = styled(OtpInput)`
-    input {
-        padding: 0.5rem;
-        margin-right: min(5px, 2vw);
-        font-size: calc(0.8rem + 0.8vw);
-        width: min(50px, 13vw)!important;
-        height: min(50px, 13vw)!important;
-        border: ${({ success, failed }) => 
-            failed ? `2px solid red!important` :
-            success ? `2px solid green!important` 
-            : `2px solid white!important` 
-        };
-        &:focus {
-          outline: none!important;
-          border-color: #AF0C3E!important;
-        }
-    }
-`;
-
-const FormButton = styled(Button)`
-    color: white!important;
-    background: #AF0C3E!important;
-    transition: all 0.25s ease-in;
-    box-shadow: 3px 5px 8px rgba(0,0,0,0.3);
-    &:hover, &:focus{
-       box-shadow: none!important;
-       transition: all 0.25s ease-in;
-    }
-`;
 
 const EmailVerifyCard = ({
     profile, onVerify = () => {}, onRequestChange = () => {},
@@ -97,33 +68,17 @@ const EmailVerifyCard = ({
                 </button>,
                 please check your inbox and enter the code below to verify your email.
             </p>
-            <div className="px-2 py-3">
-                <div className="font-weight-bold mb-2">Enter Code</div>
-                <OTPInput
-                    success={isVerified}
-                    failed={isVerified===false&&otp.length===6}
-                    value={otp}
-                    onChange={setOtp}
-                    numInputs={6}
-                    separator={<span />}
-                    isInputNum
-                />
-                <div className="mt-4">
-                    Didn't get a code?
-                    <button
-                        onClick={handleRequestNewMail}
-                        type="button"
-                        className="plain-button px-1 font-weight-bold"
-                        style={{ color: '#AF0C3E' }}
-                    >
-                        Resend Email
-                    </button>
-                </div>
-            </div>
+            <OTP
+                isVerified={isVerified}
+                value={otp}
+                onChange={setOtp}
+                onRequestNewOTP={handleRequestNewMail}
+            />
         </React.Fragment>}
         <Row>
             <Col md={8} />
-            {(isVerified) && <Col md={4} p={1} flexHR>
+            {(isVerified) &&
+            <Col md={4} p={1} flexHR>
                 <FormButton
                     text="Continue"
                     type="submit" fw

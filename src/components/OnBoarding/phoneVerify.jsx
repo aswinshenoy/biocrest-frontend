@@ -1,28 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import styled from "@emotion/styled";
-import {Button, Col, Row, TextInput} from "srx";
+import {Col, Row} from "srx";
 import OtpInput from "react-otp-input";
 import {useMutation} from "graphql-hooks";
 
-import {RESEND_OTP_MUTATION, VERIFY_OTP_MUTATION} from "../../../../graphql/queries/user";
-
-const FormInput = styled(TextInput)`
-    input { 
-      font-size: 15px!important; 
-      border: 1px solid #AF0C3E!important; 
-      margin: 1px;
-      padding: 8px 10px; 
-      margin-top: 0.35rem!important;
-      &:focus {
-        border: 2px solid #AF0C3E!important;
-        margin: 0;
-      }
-    }
-    label { 
-      font-size: 12px; 
-      font-weight: 500!important; 
-    }
-`;
+import {RESEND_OTP_MUTATION, VERIFY_OTP_MUTATION} from "../../graphql/queries/otp";
+import FormButton from "../ui/styled-components/Button";
+import Input from "../ui/form/Input";
 
 const OTPInput = styled(OtpInput)`
     input {
@@ -40,17 +24,6 @@ const OTPInput = styled(OtpInput)`
           outline: none!important;
           border-color: #AF0C3E!important;
         }
-    }
-`;
-
-const FormButton = styled(Button)`
-    color: white!important;
-    background: #AF0C3E!important;
-    transition: all 0.25s ease-in;
-    box-shadow: 3px 5px 8px rgba(0,0,0,0.3);
-    &:hover, &:focus{
-       box-shadow: none!important;
-       transition: all 0.25s ease-in;
     }
 `;
 
@@ -73,14 +46,17 @@ const PhoneVerifyCard = ({
       }
    };
 
+   const [error, setError] = useState(null)
    const handleEnter = (e) => {
       e.preventDefault();
       requestOTP({ variables: { phone }}).then(({ data, error }) => {
          if(data?.resendOTP) {
-            console.log('OTP send')
+            console.log('OTP send');
+            setPhoneEntered(true);
+         } else {
+            setError(error)
          }
       })
-      setPhoneEntered(true);
    };
 
    useEffect(() => {
@@ -94,6 +70,13 @@ const PhoneVerifyCard = ({
          })
       }
    }, [otp]);
+
+   const renderError = () => {
+      if(error?.graphQLErrors?.length > 0){
+         return `${error.graphQLErrors[0].message} (Code: ${error.graphQLErrors[0].code})`
+      }
+      return `Unknown error occurred. Please try again.`;
+   }
 
    return <div>
       {profile?.phoneVerified ?
@@ -158,22 +141,20 @@ const PhoneVerifyCard = ({
           </p>
           <form onSubmit={handleEnter}>
              <div className="p-1">
+                {error && <div className="text-danger mb-1">{renderError()}</div>}
                 <div style={{ maxWidth: '450px' }}>
-                   <FormInput
+                   <Input
                        label="Phone Number"
-                       name="phone"
-                       title="Please enter your phone number"
+                       placeholder="Enter your Phone Number"
                        value={phone}
                        onChange={setPhone}
-                       placeholder="Enter Your Phone Number"
-                       alwaysShowLabel
-                       isRequired
                    />
                 </div>
                 <Row>
                    <Col md={8} />
                    <Col md={4} p={1} flexHR>
-                   {(phone?.length===13) && <FormButton
+                   {(phone?.length===13) &&
+                   <FormButton
                        text="Continue"
                        type="submit"
                        py={4} px={5} round={0}

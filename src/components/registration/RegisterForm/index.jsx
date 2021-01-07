@@ -121,8 +121,9 @@ const RegistrationForm = () => {
                                     left: 0,
                                     width: '100%',
                                     height: '100%',
-                                    background: `rgba(0,0,0,0.5)`
+                                    background: `rgba(0,0,0,0.85)`
                                 }}
+                                className="d-flex align-items-center text-light justify-content-center text-center"
                             >
                                 <h3>Registering</h3>
                             </div>}

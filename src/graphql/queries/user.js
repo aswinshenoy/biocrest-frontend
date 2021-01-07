@@ -46,36 +46,29 @@ mutation ($update: UserUpdationInput!){
   }
 }`;
 
-export const RESEND_EMAIL_MUTATION = `
-mutation {
-  resendConfirmationEmail
-}`;
-
-export const VERIFY_EMAIL_MUTATION = `
-mutation ($otp: String!){
-  verifyEmail(otp: $otp)
-}`;
-
-export const RESEND_OTP_MUTATION = `
-mutation ($phone: String){
-  resendOTP(phone: $phone)
-}`;
-
-export const VERIFY_OTP_MUTATION = `
-mutation ($otp: String!){
-  verifyOTP(otp: $otp)
-}`;
-
 export const PROFILES_TO_VERIFY_QUERY = `
 {
   profilesToVerify{
     user
     {
       id
+      title
       name
       email
       phone
       type
+      gender
+      city
+      state
+      country
+      affiliationTitle {
+        value: id
+        label: name
+      }
+      affiliationBody {
+        value: id
+        label: name
+      }
       isEmailVerified
       isPhoneVerified
       isIDVerified
@@ -83,16 +76,6 @@ export const PROFILES_TO_VERIFY_QUERY = `
     image
     timestamp
   }
-}`;
-
-export const APPROVE_REGISTRATION_MUTATION = `
-mutation ($userID: ID!, $update: UserUpdationInput, $remarks: String){
-  approveRegistration(userID: $userID, update: $update, remarks: $remarks)
-}`;
-
-export const REJECT_VERIFICATION =
-`mutation ($userID: ID!, $remarks: String){
-  rejectVerification(userID: $userID, remarks: $remarks)
 }`;
 
 export const MY_REGISTRATION_QUERY =
