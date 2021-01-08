@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styled from "@emotion/styled";
 import {Col, Row} from "srx";
 import { useMutation, useQuery} from "graphql-hooks";
+import Fade from "react-reveal/Fade";
+import shortid from "shortid";
 
 import UserTypeSelector from "./typeSelector";
 import EmailVerifyCard from "./emailVerify";
@@ -64,7 +66,7 @@ const BodyCol = styled(Col)`
 `;
 
 
-const OnBoarding = () => {
+const OnBoarding = ({ startZero = false, }) => {
 
     const [participate] = useMutation(PARTICIPATE_MUTATION);
 
@@ -168,7 +170,7 @@ const OnBoarding = () => {
     };
 
     const getInitialState = () => {
-        if(!(profile?.name.length > 0) || !(profile?.country?.length > 0))
+        if(startZero || !(profile?.name.length > 0) || !(profile?.country?.length > 0))
             return setCompleted(setActive(stages_list, 'basic_profile'), 'basic_profile');
         if(profile?.type == null)
             return setCompleted(setActive(stages_list, 'type_select'), 'type_select');
@@ -189,7 +191,7 @@ const OnBoarding = () => {
         if(!profileLoading && !eventProfileLoading && profile && stages.length === 0){
             setStages(getInitialState())
         }
-    }, [profile]);
+    }, [profile, eventProfileLoading, profileLoading]);
 
     const changeStage = (curr, next) => {
         let newStages = stages.map((s) => {
@@ -291,7 +293,7 @@ const OnBoarding = () => {
     }
 
     const onOpen = (stage) => {
-        if(stage.complete) {
+        if(stage.complete || startZero) {
             let newStages = stages.map((s) => {
                 if(s.value === stage.value) {
                     return { ...s, active: true }
@@ -323,17 +325,24 @@ const OnBoarding = () => {
     };
 
     const renderStages = (s) =>
-    s.map((s) =>
-        <StageButton onClick={() => onOpen(s)} disabled={!s?.complete&&!s?.active} complete={s?.complete && !s.active} active={s?.active}>
-            {s.complete && !s.active ?
-                <img
-                    src={require('../../assets/icons/tick_box.png')}
-                    alt="completed" draggable="false"
-                /> :
-                <img alt={s.label} draggable="false" src={s.icon} />
-            }
-            <div>{s.label}</div>
-        </StageButton>
+    s.map((s, index) =>
+        <Fade key={`${s.value}_${index}`} left delay={50*index}>
+            <StageButton
+                onClick={() => onOpen(s)}
+                disabled={!s?.complete&&!s?.active && !startZero}
+                complete={s?.complete && !s.active && !startZero}
+                active={s?.active}
+            >
+                {s.complete && !s.active && !startZero ?
+                    <img
+                        src={require('../../assets/icons/tick_box.png')}
+                        alt="completed" draggable="false"
+                    /> :
+                    <img alt={s.label} draggable="false" src={s.icon} />
+                }
+                <div>{s.label}</div>
+            </StageButton>
+        </Fade>
     );
 
     const renderSubmitting = () =>
@@ -363,36 +372,50 @@ const OnBoarding = () => {
                     <section className="bg-white p-3">
                         {stages.filter((s) => s.active === true).map((s) => {
                             if(s.value === 'basic_profile')
-                                return <BasicInfoForm profile={profile} onSave={handleInfoComplete} />;
+                                return <Fade key={shortid.generate()}>
+                                    <BasicInfoForm profile={profile} onSave={handleInfoComplete} />;
+                                </Fade>;
                             if(s.value === 'type_select')
-                                return <UserTypeSelector
-                                    type={profile?.type ? parseInt(profile.type) : null}
-                                    onComplete={handleTypeComplete}
-                                />;
+                                return <Fade key={shortid.generate()}>
+                                    <UserTypeSelector
+                                        type={profile?.type ? parseInt(profile.type) : null}
+                                        onComplete={handleTypeComplete}
+                                    />
+                                </Fade>;
                             if(s.value === 'affiliation_form')
-                                return <AffiliationForm
-                                    profile={profile}
-                                    isStudent={profile?.type === 1 || profile?.type === "1"}
-                                    isAcademician={profile?.type === 2 || profile?.type === "2"}
-                                    isIndustry={profile?.type === 3 || profile?.type === "3"}
-                                    onSave={handleAffiliationForm}
-                                />;
+                                return <Fade key={shortid.generate()}>
+                                    <AffiliationForm
+                                        profile={profile}
+                                        isStudent={profile?.type === 1 || profile?.type === "1"}
+                                        isAcademician={profile?.type === 2 || profile?.type === "2"}
+                                        isIndustry={profile?.type === 3 || profile?.type === "3"}
+                                        onSave={handleAffiliationForm}
+                                    />
+                                </Fade>
                             if(s.value === 'event_profile')
-                                return <EventFields
-                                    eventProfile={eventProfile}
-                                    onSave={handleEventProfileSave}
-                                />
+                                return <Fade key={shortid.generate()}>
+                                    <EventFields
+                                        eventProfile={eventProfile}
+                                        onSave={handleEventProfileSave}
+                                    />
+                                </Fade>
                             if(s.value === 'email_verify')
-                                return <EmailVerifyCard
-                                    profile={profile}
-                                    onVerify={handleVerifyEmail}
-                                    onRequestChange={() => openStage('basic_profile')}
-                                />;
+                                return <Fade key={shortid.generate()}>
+                                    <EmailVerifyCard
+                                        profile={profile}
+                                        onVerify={handleVerifyEmail}
+                                        onRequestChange={() => openStage('basic_profile')}
+                                    />
+                                </Fade>;
                             if(s.value === 'phone_verify')
-                                return <PhoneVerifyCard profile={profile} onVerify={handleVerifyPhone} />
+                                return <Fade key={shortid.generate()}>
+                                    <PhoneVerifyCard profile={profile} onVerify={handleVerifyPhone} />
+                                </Fade>
                             if(s.value === 'id_upload')
-                                return <IDUploader profile={profile} onContinue={handleUploadID} />
-                            return <div/>
+                                return <Fade key={shortid.generate()}>
+                                    <IDUploader profile={profile} onContinue={handleUploadID} />
+                                </Fade>
+                            return <div>Failed to Load. Please Try Again</div>;
                         })}
                     </section>
                 </BodyCol>
@@ -410,7 +433,8 @@ const OnBoarding = () => {
         <Header />
         {
             profileLoading ? <div >Loading Your Profile</div > :
-            (profile && !profile?.isProfileComplete) ? (isSubmitting ? renderSubmitting() : renderForm()) : <div />
+                (startZero || (profile && !profile?.isProfileComplete)) ?
+                    (isSubmitting ? renderSubmitting() : renderForm()) : <div />
         }
     </OnBoardWrap>;
 

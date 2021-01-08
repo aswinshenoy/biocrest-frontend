@@ -6,7 +6,7 @@ import { useMutation } from 'graphql-hooks'
 
 import RegisterForm from "./register";
 import LoginForm from "./login";
-import SocialLogin from "./socialLogin";
+// import SocialLogin from "./socialLogin";
 
 import RegistrationSideCover from "../SideCover";
 import {LOGIN_MUTATION, REGISTER_MUTATION} from "../../../graphql/queries/user";
@@ -132,9 +132,9 @@ const RegistrationForm = () => {
                                 <RegisterForm onRegister={handleRegisterFormSubmit} /> :
                                 <LoginForm onLogin={handleSignIn} />}
                         </div>
-                        <div className="p-2">
-                            <SocialLogin />
-                        </div>
+                        {/*<div className="p-2">*/}
+                        {/*    <SocialLogin />*/}
+                        {/*</div>*/}
                     </section>
                 </Col>
             </Row>

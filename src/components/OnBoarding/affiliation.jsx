@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from "@emotion/styled";
 import {Button, Col, Row} from "srx";
+import Fade from "react-reveal/Fade";
 
 import AffiliationTitle from "../fields/AffiliationTitle";
 import AffiliationBody from "../fields/AffiliationBody";
@@ -47,11 +48,13 @@ const AffiliationForm = ({
             </Col>
             <Col md={8} />
             <Col md={4} p={2} className="mt-4" flexHR>
-                <FormButton
-                    text="Continue"
-                    type="submit" fw
-                    py={4} px={5} round={0}
-                />
+                <Fade delay={350}>
+                    <FormButton
+                        text="Continue"
+                        type="submit" fw
+                        py={4} px={5} round={0}
+                    />
+                </Fade>
             </Col>
         </Row>
     </form>

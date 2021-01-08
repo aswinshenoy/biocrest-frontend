@@ -18,6 +18,10 @@ export default () => {
                 </div>
             </Base>
         }
+        renderAuth={() =>
+        <div>
+            <h1>Access Denied</h1>
+        </div>}
         renderPublic={() =>
             <Base meta={{ title: 'Registration' }}>
                 <RegistrationForm />

@@ -2,6 +2,7 @@ import React from 'react';
 import {useQuery} from "graphql-hooks";
 import {MY_EVENT_PROFILE_QUERY} from "../../graphql/queries/event";
 import MyIDCard from "./IDCard";
+import FormButton from "../ui/styled-components/Button";
 
 const eventID = process.env.eventID || 1;
 
@@ -29,13 +30,18 @@ const RegistrationStatus = () => {
                 <div className="font-weight-bold mb-1">Remarks</div>
                 {data?.myEventProfile?.remarks}
             </div>
+            <div className="my-2">
+                <FormButton link="/edit-profile">
+                    Edit Profile
+                </FormButton>
+            </div>
         </div> :
     <div className="alert-info p-3">
         <h3>Pending Verification</h3>
         <p>
             Our team will soon manually review your registration data for verification, and confirm
             your registration. Once that is done, you will receive an email, meanwhile you could
-            also keep tracking your status in this dashboard. Typically this process may take 48 hours.
+            also keep tracking your status in this dashboard. Typically this process may take 24-36 hours.
         </p>
     </div>
 };

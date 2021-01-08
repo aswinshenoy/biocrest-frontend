@@ -41,7 +41,7 @@ const Header = () => {
                 </a>
             </Col>
             <Col s={6} md={8} flexVC flexHR>
-                <button onClick={handleLogOut}>Logout</button>
+                <button style={{ background: 'white', border: 'none', fontSize: '15px', padding: '5px 10px' }} onClick={handleLogOut}>Logout</button>
             </Col>
         </Row>
     </HeaderWrap>;

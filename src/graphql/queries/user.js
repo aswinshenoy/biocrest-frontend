@@ -11,6 +11,15 @@ query {
     country
     gender
     type
+    affiliationTitle {
+         value: id
+         label: name
+    }
+    affiliationBody {
+         value: id
+         label: name
+    }
+    IDCardURL
     emailVerified: isEmailVerified
     phoneVerified: isPhoneVerified
   }

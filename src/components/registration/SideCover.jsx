@@ -10,7 +10,7 @@ const SideCoverContainer = styled.section`
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    min-height: 50vh;
+    min-height: 30vh;
     height: 100%;
     user-select: none;
     .branding-top-bar {
@@ -53,12 +53,12 @@ const RegistrationSideCover = () => {
         </div>
         <div className="text-center">
             <h3 className="text-uppercase">WELCOME!</h3>
-            <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type
-                specimen book.
-            </p>
+            {/*<p>*/}
+            {/*    Lorem Ipsum is simply dummy text of the printing and typesetting industry.*/}
+            {/*    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,*/}
+            {/*    when an unknown printer took a galley of type and scrambled it to make a type*/}
+            {/*    specimen book.*/}
+            {/*</p>*/}
         </div>
     </SideCoverContainer>
 

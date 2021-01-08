@@ -28,7 +28,8 @@ const FileSelectorWrap = styled.div`
 
 const IDUploader = ({ profile, onContinue = () => {} }) => {
 
-    const [file, setFile] = useState(null);
+    const [hasChanged, setChanged] = useState(false);
+    const [file, setFile] = useState(profile?.IDCardURL ? { url: profile.IDCardURL } : null);
     const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({ noClick: true, noKeyboard: true });
 
     const getFileURL = (file) => {
@@ -43,6 +44,7 @@ const IDUploader = ({ profile, onContinue = () => {} }) => {
 
     useEffect(() => {
         if(acceptedFiles && acceptedFiles.length>0) {
+            setChanged(true);
             setFile(processFile(acceptedFiles[0]));
         }
     }, [acceptedFiles]);
@@ -52,7 +54,6 @@ const IDUploader = ({ profile, onContinue = () => {} }) => {
     }
 
     return <div>
-        <div className="h3">One last step,</div>
         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="mb-3">Upload ID Card</h2>
         <p style={{ maxWidth: '600px' }}>
             We request you to upload a photo of your ID card, which we will use to manually verify your
@@ -99,11 +100,11 @@ const IDUploader = ({ profile, onContinue = () => {} }) => {
         <Row>
             <Col md={8} />
             <Col md={4} p={2} className="mt-4" flexHR>
-                <FormButton
+                {hasChanged && <FormButton
                     text="Complete Registration"
                     onClick={handleComplete} fw
                     py={4} px={5} round={0}
-                />
+                />}
             </Col>
         </Row>
     </div>
