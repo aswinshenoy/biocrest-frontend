@@ -8,10 +8,26 @@ import parseISO from 'date-fns/parseISO';
 import { CSVLink } from "react-csv";
 
 import {PROFILES_QUERY} from "../../graphql/queries/user";
+const eventID = process.env.eventID || 1;
 
 const AccountsViewer = () => {
+    const [keyword, setKeyword] = useState('');
+    const [type, setType] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState(null);
 
-    const { loading, error, data, refetch } = useQuery(PROFILES_QUERY)
+    const { loading, error, data, refetch } = useQuery(
+        PROFILES_QUERY, {
+        variables: {
+            eventID,
+            search: keyword,
+            filters: {
+                type,
+                startDate: startDate?.toISOString().substring(0, 10),
+                endDate: endDate?.toISOString().substring(0, 10)
+            }
+        }
+    });
 
     const typeMap = {
         "0": "Admin",
@@ -28,52 +44,77 @@ const AccountsViewer = () => {
         }
     };
 
-    const [keyword, setKeyword] = useState('');
-    const [type, setType] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [startDate, setStartDate] = useState(null);
+    const [reload, setReload] = useState(false);
     const fetchAgain = () => {
-        refetch({
-            variables: { key: keyword, filters: { type, startDate: startDate?.toISOString().substring(0, 10), endDate: endDate?.toISOString().substring(0, 10) } },
-            updateData(previousData, data) {
-                return data;
-            }
-        })
-    }
+        if(eventID && reload){
+            refetch({
+                variables: {
+                    eventID,
+                    search: keyword,
+                    filters: {
+                        type,
+                        startDate: startDate?.toISOString().substring(0, 10),
+                        endDate: endDate?.toISOString().substring(0, 10)
+                    }
+                },
+                updateData(previousData, data) {
+                    return data;
+                }
+            }).then(() => {
+                setReload(false);
+            })
+        }
+    };
+
+    useEffect(() => setReload(true), [type, startDate, endDate])
+
+
     const handleSearch = (e) => {
         e.preventDefault();
         fetchAgain()
     };
 
-    useEffect(fetchAgain, [type, startDate, endDate]);
+
 
     const generateCSVData = () => {
         const d = [];
-        d.push(['#', 'Title', 'Name', 'Type', 'Phone', 'Email', 'Status', 'Date Joined', 'City', 'State', 'County', 'Gender', 'AffiliationTitle', 'AffiliationBody'])
-        if(data?.profiles.length > 0){
-            data?.profiles.forEach((s, index) =>
-                d.push([
-                    `${index+1}`,
-                    `${s.title}`,
-                    `${s.name}`,
-                    `${getTypeName(s.type)}`,
-                    `${s.phone}`,
-                    `${s.email}`,
-                    `${
-                        !s.isProfileComplete ? "Incomplete Profile" :
-                            s.requiresCorrection ? "Correction Requested" :
-                                !s.isIDVerified ? "Pending Verification" :
-                                    "Verified"
-                    }`,
-                    `${format(parseISO(s.dateJoined), 'hh:MM a, dd-MM-yyyy')}`,
-                    `${s.city}`,
-                    `${s.state}`,
-                    `${s.country}`,
-                    `${s.gender}`,
-                    `${s.affiliationTitle?.name}`,
-                    `${s.affiliationBody?.name}`,
-                ])
-            )
+
+        if(data?.participants?.participants.length > 0){
+            const formfields = [];
+            if(data?.participants?.participants[0].formData.length > 0){
+                data?.participants?.participants[0].formData.map((f) => formfields.push(f.label));
+            }
+            d.push([
+                '#', 'Title', 'Name', 'Type', 'Phone', 'Email', 'Status', 'Date Joined', 'City', 'State', 'County', 'Gender', 'Affiliation Title', 'Affiliation Body',
+                ...formfields
+            ])
+            data.participants.participants.forEach(({ profile: s, formData: f }, index) => {
+                    const fieldData = [];
+                    if(f.length > 0)
+                        f.map((f) => fieldData.push(f.value));
+                    d.push([
+                        `${index+1}`,
+                        `${s.title}`,
+                        `${s.name}`,
+                        `${getTypeName(s.type)}`,
+                        `${s.phone}`,
+                        `${s.email}`,
+                        `${
+                            !s.isProfileComplete ? "Incomplete Profile" :
+                                s.requiresCorrection ? "Correction Requested" :
+                                    !s.isIDVerified ? "Pending Verification" :
+                                        "Verified"
+                        }`,
+                        `${format(parseISO(s.dateJoined), 'hh:MM a, dd-MM-yyyy')}`,
+                        `${s.city}`,
+                        `${s.state}`,
+                        `${s.country}`,
+                        `${s.gender}`,
+                        `${s.affiliationTitle?.label}`,
+                        `${s.affiliationBody?.label}`,
+                        ...fieldData
+                    ])
+            })
         }
         return d;
     }
@@ -127,7 +168,7 @@ const AccountsViewer = () => {
                     </div>
                 </div>
             </div>
-            {data?.profiles &&
+            {data?.participants?.participants &&
             <div className="my-2">
                 <div className="p-2 bg-white">
                     <CSVLink
@@ -139,31 +180,41 @@ const AccountsViewer = () => {
                     </CSVLink>
                 </div>
             </div>}
-            {data?.profiles?.length > 0 ?
+            {data?.participants?.participants?.length > 0 ?
             <table className="table bg-white p-2">
                 <thead className="font-weight-bold">
                     <td>#</td>
                     <td>Name</td>
+                    <td>Status</td>
                     <td>Type</td>
+                    <td>Affiliation</td>
+                    {data.participants.participants[0].formData.map((d) =>
+                        <td>{d.label}</td>
+                    )}
+                    <td>Gender</td>
                     <td>Phone</td>
                     <td>Email</td>
-                    <td>Status</td>
                     <td>Date Joined</td>
                 </thead>
                 <tbody>
-                {data?.profiles.map((s, index) =>
+                {data?.participants?.participants.map(({ profile: s, formData: f }, index) =>
                     <tr>
                         <td>{index+1}.</td>
                         <td>{s.title}. {s.name}</td>
+                        <td>
+                        {/*    !s.isProfileComplete ? "Incomplete Profile" :*/}
+                        {/*        s.requiresCorrection ? "Correction Requested" :*/}
+                        {/*            !s.isIDVerified ? "Pending Verification" :*/}
+                        {/*                "Verified"*/}
+                        </td>
                         <td>{getTypeName(s.type)}</td>
+                        <td>
+                            {s.affiliationTitle.label} {s.affiliationBody.label}
+                        </td>
+                        {f.map((d) => <td>{d.value}</td>)}
+                        <td>{s.gender}</td>
                         <td>{s.phone}</td>
                         <td>{s.email}</td>
-                        <td>{
-                            !s.isProfileComplete ? "Incomplete Profile" :
-                                s.requiresCorrection ? "Correction Requested" :
-                                    !s.isIDVerified ? "Pending Verification" :
-                                        "Verified"
-                        }</td>
                         <td>{format(parseISO(s.dateJoined), 'hh:MM a, dd-MM-yyyy')}</td>
                     </tr>
                 )}

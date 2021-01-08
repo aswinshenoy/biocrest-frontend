@@ -12,7 +12,7 @@ const OTPBoxes = styled(OtpInput)`
         border: ${({ success, failed }) =>
             failed ? `3px solid red!important` :
                 success ? `3px solid green!important`
-                    : `3px solid white!important`
+                    : `3px solid #999!important`
         };
         &:focus {
           outline: none!important;
@@ -42,7 +42,7 @@ const OTP = ({
                 separator={<span />}
                 isInputNum
             />
-            <div className="mt-4">
+            {!isVerified ? <div className="mt-4">
                 Didn't get a code?
                 <button
                     onClick={onRequestNewOTP}
@@ -52,7 +52,9 @@ const OTP = ({
                 >
                     Resend OTP
                 </button>
-            </div>
+            </div> : <div className="mt-4">
+                Verified successfully.
+            </div>}
         </div>
     </div>
 

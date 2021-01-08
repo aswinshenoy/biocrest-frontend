@@ -1,31 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import styled from "@emotion/styled";
 import {Col, Row} from "srx";
-import OtpInput from "react-otp-input";
 import {useMutation} from "graphql-hooks";
 
 import {RESEND_OTP_MUTATION, VERIFY_OTP_MUTATION} from "../../graphql/queries/otp";
 import FormButton from "../ui/styled-components/Button";
 import Input from "../ui/form/Input";
-
-const OTPInput = styled(OtpInput)`
-    input {
-        padding: 0.5rem;
-        margin-right: min(5px, 2vw);
-        font-size: calc(0.8rem + 0.8vw);
-        width: min(50px, 13vw)!important;
-        height: min(50px, 13vw)!important;
-        border: ${({ success, failed }) =>
-          failed ? `2px solid red!important` :
-              success ? `2px solid green!important`
-                  : `2px solid white!important`
-        };
-        &:focus {
-          outline: none!important;
-          border-color: #AF0C3E!important;
-        }
-    }
-`;
+import OTP from "../ui/form/OTP";
 
 const PhoneVerifyCard = ({
    profile, onVerify = () => {}
@@ -106,22 +86,12 @@ const PhoneVerifyCard = ({
              please check your messages and enter the code below to verify your phone.
           </p>
           <form onSubmit={handleVerify}>
-             <div className="px-2 py-3">
-                <div className="font-weight-bold mb-2">Enter Code</div>
-                <OTPInput
-                    success={isVerified}
-                    failed={isVerified===false&&otp.length===6}
-                    value={otp}
-                    onChange={setOtp}
-                    numInputs={6}
-                    separator={<span />}
-                    isInputNum
-                />
-                <div className="mt-4">
-                   Didn't get a code?
-                   <button className="plain-button px-1 font-weight-bold" style={{ color: '#AF0C3E' }}>Resend SMS</button>
-                </div>
-             </div>
+             <OTP
+                 isVerified={isVerified}
+                 value={otp}
+                 onChange={setOtp}
+                 onRequestNewOTP={handleEnter}
+             />
              <Row>
                 <Col md={8} />
                 {(isVerified) && <Col md={4} p={1} flexHR>

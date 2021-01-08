@@ -42,6 +42,10 @@ const customConfig = {
                 },
             },
         ],
+    },
+
+    env: {
+        eventID: 1,
     }
 
 };

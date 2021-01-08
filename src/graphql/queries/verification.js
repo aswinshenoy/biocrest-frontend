@@ -1,9 +1,10 @@
-export const APPROVE_REGISTRATION_MUTATION = `
-mutation ($userID: ID!, $update: UserUpdationInput, $remarks: String){
-  approveRegistration(userID: $userID, update: $update, remarks: $remarks)
-}`;
-
-export const REJECT_VERIFICATION =
-    `mutation ($userID: ID!, $remarks: String){
-  rejectVerification(userID: $userID, remarks: $remarks)
-}`;
+export const REVIEW_PARTICIPANT_MUTATION = `
+mutation ($approve: Boolean!, $participantID: ID!, $form: JSONString, $update: UserUpdationInput, $remarks: String) {
+  reviewParticipant(
+    approve: $approve
+    participantID: $participantID
+    formUpdate: $form
+    profileUpdate: $update
+    remarks: $remarks
+  )
+}`

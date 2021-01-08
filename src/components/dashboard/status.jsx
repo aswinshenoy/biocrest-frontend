@@ -1,18 +1,24 @@
 import React from 'react';
 import {useQuery} from "graphql-hooks";
-import {MY_REGISTRATION_QUERY} from "../../graphql/queries/user";
+import {MY_EVENT_PROFILE_QUERY} from "../../graphql/queries/event";
+import MyIDCard from "./IDCard";
+
+const eventID = process.env.eventID || 1;
 
 const RegistrationStatus = () => {
 
-    const { loading, data } = useQuery(MY_REGISTRATION_QUERY);
+    const { loading, data } = useQuery(MY_EVENT_PROFILE_QUERY, { variables: { eventID }});
 
     return loading ? <div>Loading</div> :
-    data?.me?.isIDVerified ?
+    data?.myEventProfile?.isApproved ?
     <div className="alert-success p-3">
         <h3 className="text-success">Registration Complete</h3>
         <p>Your profile has been successfully verified, and your registration is complete.</p>
+        <div className="p-2">
+            <MyIDCard {...data.myEventProfile} />
+        </div>
     </div> :
-    data?.me?.requiresCorrection ?
+    data?.myEventProfile?.remarks ?
         <div className="alert-warning p-3">
             <h3>Corrections Requested</h3>
             <p>
@@ -21,7 +27,7 @@ const RegistrationStatus = () => {
             </p>
             <div className="py-2">
                 <div className="font-weight-bold mb-1">Remarks</div>
-                {data?.me?.remarks}
+                {data?.myEventProfile?.remarks}
             </div>
         </div> :
     <div className="alert-info p-3">

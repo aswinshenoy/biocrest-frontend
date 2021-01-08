@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from "@emotion/styled";
 import {Col, Row} from "srx";
-import {useMutation} from "graphql-hooks";
-import {UPDATE_MUTATION} from "../../graphql/queries/user";
+import { useMutation, useQuery} from "graphql-hooks";
 
 import UserTypeSelector from "./typeSelector";
 import EmailVerifyCard from "./emailVerify";
@@ -12,6 +11,13 @@ import {setUserInfo, useAuthState} from "../../states";
 import Header from "../shared/Header";
 import AffiliationForm from "./affiliation";
 import BasicInfoForm from "./BasicInfo";
+
+import {MY_EVENT_PROFILE_QUERY, PARTICIPATE_MUTATION} from "../../graphql/queries/event";
+import {MY_PROFILE_QUERY, UPDATE_MUTATION} from "../../graphql/queries/user";
+import EventFields from "./eventFields";
+
+const eventID = process.env.eventID || 1;
+
 
 const OnBoardWrap = styled.div`
     background: #EFEFEF;
@@ -60,7 +66,48 @@ const BodyCol = styled(Col)`
 
 const OnBoarding = () => {
 
-    const [profile] = useAuthState('userInfo');
+    const [participate] = useMutation(PARTICIPATE_MUTATION);
+
+    const {
+        loading: eventProfileLoading,
+        error: eventProfileLoadingError,
+        data: eventProfileData
+    } = useQuery(MY_EVENT_PROFILE_QUERY, { variables: { eventID }});
+    const [eventProfile, setEventProfile] = useState(null);
+
+    useEffect(() => {
+        if(
+            eventProfileLoadingError?.graphQLErrors?.length > 0 &&
+            eventProfileLoadingError.graphQLErrors[0].code === 'NOT_PARTICIPANT'
+        ) {
+            console.log('registering user for the event')
+            participate({ variables: { eventID }}).then(({ data, error }) => {
+                if(data.participate){
+                    setEventProfile(data.participate);
+                }
+            });
+        }
+    }, [eventProfileLoadingError])
+
+    useEffect(() => {
+        if(!eventProfileLoadingError && !eventProfileLoading && eventProfileData) {
+            setEventProfile(eventProfileData?.myEventProfile);
+        }
+    }, [eventProfileLoading]);
+
+    const {
+        loading: profileLoading,
+        error: profileLoadError,
+        data: profileData,
+    } = useQuery(MY_PROFILE_QUERY);
+    const [profile, setProfile] = useState(null);
+
+    useEffect(() => {
+        if(!profileLoading && profileData) {
+            setProfile(profileData.me);
+        }
+    }, [profileLoading]);
+
     const [isSubmitting, setSubmitting] = useState(false);
 
     const stages_list = [
@@ -78,6 +125,11 @@ const OnBoarding = () => {
             "value": "affiliation_form",
             "label": "Institution / Organization",
             "icon": require('../../assets/icons/organization.png'),
+        },
+        {
+            "value": "event_profile",
+            "label": "Conference Preferences",
+            "icon": require('../../assets/icons/info.png'),
         },
         {
             "value": "email_verify",
@@ -118,10 +170,12 @@ const OnBoarding = () => {
     const getInitialState = () => {
         if(!(profile?.name.length > 0) || !(profile?.country?.length > 0))
             return setCompleted(setActive(stages_list, 'basic_profile'), 'basic_profile');
-        if(!profile?.type?.length > 0)
+        if(profile?.type == null)
             return setCompleted(setActive(stages_list, 'type_select'), 'type_select');
         if(!profile?.affiliationBody)
             return setCompleted(setActive(stages_list, 'affiliation_form'), 'affiliation_form');
+        if((eventProfile?.uuid?.length > 0 && eventProfile?.formData?.length === 0))
+            return setCompleted(setActive(stages_list, 'event_profile'), 'event_profile');
         if(!profile?.emailVerified)
             return setCompleted(setActive(stages_list, 'email_verify'), 'email_verify');
         if(!profile?.phoneVerified)
@@ -132,10 +186,10 @@ const OnBoarding = () => {
     const [stages, setStages] = useState([]);
 
     useEffect(() => {
-        if(profile && stages.length === 0){
+        if(!profileLoading && !eventProfileLoading && profile && stages.length === 0){
             setStages(getInitialState())
         }
-    }, [profile])
+    }, [profile]);
 
     const changeStage = (curr, next) => {
         let newStages = stages.map((s) => {
@@ -150,7 +204,7 @@ const OnBoarding = () => {
 
     const [updateProfile] = useMutation(UPDATE_MUTATION);
     const handleInfoComplete = (profile) => {
-        setUserInfo({ ...profile });
+        setProfile({ ...profile });
         updateProfile({
             variables: { update: {
                 title: profile.title, name: profile.name, email: profile.email, gender: profile.gender,
@@ -165,7 +219,7 @@ const OnBoarding = () => {
     }
 
     const handleTypeComplete = (type) => {
-        setUserInfo({...profile, type});
+        setProfile({...profile, type});
         updateProfile({ variables: { update: { type } }}).then(({ data, error }) => {
             if(data?.updateProfile?.success){
                 console.log('updated');
@@ -175,7 +229,7 @@ const OnBoarding = () => {
     };
 
     const handleAffiliationForm = (data) => {
-        setUserInfo(data);
+        setProfile(data);
         updateProfile({ variables: { update: {
             affiliationTitleID: data.affiliationTitle.value,
             affiliationBodyID: data.affiliationBody.value,
@@ -184,11 +238,22 @@ const OnBoarding = () => {
                 console.log('updated');
             }
         })
-        changeStage('affiliation_form', 'email_verify');
+        changeStage('affiliation_form', 'event_profile');
     };
 
+
+    const handleEventProfileSave = (data) => {
+        participate({ variables: { eventID, data: JSON.stringify(data) }}).then(({ data, error}) => {
+             if(!error && data?.participate){
+                 setEventProfile(data.participate);
+             }
+        })
+        changeStage('event_profile', 'email_verify')
+    }
+
+
     const handleVerifyEmail = (profile) => {
-        setUserInfo(profile);
+        setProfile(profile);
         changeStage('email_verify', 'phone_verify');
     };
 
@@ -202,6 +267,10 @@ const OnBoarding = () => {
         updateProfile({ variables: { update: { idCard: profile.idCard } }}).then(({ data, error }) => {
             setSubmitting(false);
             if(data?.updateProfile?.success){
+                setProfile({
+                    ...profile,
+                    isProfileComplete: true
+                })
                 setUserInfo({
                     ...profile,
                     isProfileComplete: true
@@ -277,6 +346,7 @@ const OnBoarding = () => {
         </div>
     </BodyContainer>;
 
+
     const renderForm = () =>
     <BodyContainer>
         <div className="container px-0" style={{ maxWidth: '1200px' }}>
@@ -289,8 +359,8 @@ const OnBoarding = () => {
                         {renderStages(beforeStages())}
                     </div>
                 </Col>
-                <BodyCol md={9} py={3}>
-                    <section className="pt-3 px-2">
+                <BodyCol md={9} px={2} py={0}>
+                    <section className="bg-white p-3">
                         {stages.filter((s) => s.active === true).map((s) => {
                             if(s.value === 'basic_profile')
                                 return <BasicInfoForm profile={profile} onSave={handleInfoComplete} />;
@@ -307,6 +377,11 @@ const OnBoarding = () => {
                                     isIndustry={profile?.type === 3 || profile?.type === "3"}
                                     onSave={handleAffiliationForm}
                                 />;
+                            if(s.value === 'event_profile')
+                                return <EventFields
+                                    eventProfile={eventProfile}
+                                    onSave={handleEventProfileSave}
+                                />
                             if(s.value === 'email_verify')
                                 return <EmailVerifyCard
                                     profile={profile}
@@ -333,7 +408,10 @@ const OnBoarding = () => {
 
     return <OnBoardWrap>
         <Header />
-        {(profile && !profile?.isProfileComplete) ? (isSubmitting ? renderSubmitting() : renderForm()) : <div />}
+        {
+            profileLoading ? <div >Loading Your Profile</div > :
+            (profile && !profile?.isProfileComplete) ? (isSubmitting ? renderSubmitting() : renderForm()) : <div />
+        }
     </OnBoardWrap>;
 
 };

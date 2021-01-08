@@ -1,4 +1,20 @@
-
+export const MY_PROFILE_QUERY = `
+query {
+  me{
+    username
+    title
+    name
+    email
+    phone
+    city
+    state
+    country
+    gender
+    type
+    emailVerified: isEmailVerified
+    phoneVerified: isPhoneVerified
+  }
+}`;
 
 export const REGISTER_MUTATION = `
 mutation ($input: UserCreationInput!){
@@ -20,11 +36,11 @@ mutation ($username: String!, $password: String!){
       email
       phone
       type
-      isProfileComplete
       gender
       city
       state
       country
+      isProfileComplete
       affiliationTitle {
          value: id
          label: name
@@ -46,38 +62,6 @@ mutation ($update: UserUpdationInput!){
   }
 }`;
 
-export const PROFILES_TO_VERIFY_QUERY = `
-{
-  profilesToVerify{
-    user
-    {
-      id
-      title
-      name
-      email
-      phone
-      type
-      gender
-      city
-      state
-      country
-      affiliationTitle {
-        value: id
-        label: name
-      }
-      affiliationBody {
-        value: id
-        label: name
-      }
-      isEmailVerified
-      isPhoneVerified
-      isIDVerified
-    }
-    image
-    timestamp
-  }
-}`;
-
 export const MY_REGISTRATION_QUERY =
 `{
   me{
@@ -89,29 +73,46 @@ export const MY_REGISTRATION_QUERY =
 }`;
 
 export const PROFILES_QUERY = `
-query ($key: String, $filters: ProfileQueryFilters){
-  profiles(key: $key, filters: $filters){
-    id
-    title
-    name
-    email
-    phone
-    type
-    city
-    country
-    state
-    gender
-    affiliationTitle {
+query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: ParticipantQueryFilters) {
+  participants(
+    eventID: $eventID
+    search: $search
+    count: $count
+    after: $after
+    filters: $filters
+  ) {
+    hasNext
+    totalCount
+    lastCursor
+    participants {
+      uuid
+      id
+      profile {
+        username
+        title
         name
+        email
+        phone
+        city
+        state
+        country
+        gender
+        type
+        affiliationTitle {
+          value: id
+          label: name
+        }
+        affiliationBody {
+          value: id
+          label: name
+        }
+        dateJoined
+        IDCardURL
+      }
+      formData {
+        label: key
+        value
+      }
     }
-    affiliationBody {
-        name
-    }
-    isPhoneVerified
-    isEmailVerified
-    isIDVerified
-    dateJoined
-    isProfileComplete
-    requiresCorrection
   }
 }`;

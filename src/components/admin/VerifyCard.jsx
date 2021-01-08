@@ -12,7 +12,7 @@ const genders = require('../../data/commons/gender.json');
 const userTypes = require('../../data/commons/user-types.json');
 const userTitles = require('../../data/commons/user-titles.json');
 
-import {APPROVE_REGISTRATION_MUTATION, REJECT_VERIFICATION} from "../../graphql/queries/verification";
+import { REVIEW_PARTICIPANT_MUTATION} from "../../graphql/queries/verification";
 
 const StyledInput = styled.input`
     padding: 0.5rem 1rem;
@@ -37,18 +37,21 @@ const TextInput = ({ as = 'input', label, placeholder, value, onChange }) => {
 }
 
 const VerifyCard = ({
-    user, image, timestamp
+    id, profile: profileProps, formData, timestamp
 }) => {
 
     const [isCompleted, setCompleted] = useState(false);
-    const [profile, setProfile] = useState(user);
+    const [profile, setProfile] = useState(profileProps);
+    const [form, setForm] = useState(formData);
     const [remark, setRemark] = useState('');
 
-    const [approveRegistration] = useMutation(APPROVE_REGISTRATION_MUTATION);
-    const handleVerify = () => {
-        approveRegistration({
+    const [reviewParticipant] = useMutation(REVIEW_PARTICIPANT_MUTATION);
+    const handleReview = (approve) => {
+        reviewParticipant({
             variables: {
-                userID: profile.id,
+                participantID: id,
+                approve,
+                formData: JSON.stringify(form),
                 update: {
                     name: profile.name,
                     phone: profile.phone,
@@ -60,21 +63,7 @@ const VerifyCard = ({
                 remarks: remark
             }
         }).then(({ data, error }) => {
-            if(data?.approveRegistration){
-                setCompleted(true)
-            }
-        });
-    };
-
-    const [rejectVerification] = useMutation(REJECT_VERIFICATION);
-    const handleReject = () => {
-        rejectVerification({
-            variables: {
-                userID: profile.id,
-                remarks: remark
-            }
-        }).then(({ data, error }) => {
-            if(data?.rejectVerification){
+            if(data?.reviewParticipant){
                 setCompleted(true)
             }
         });
@@ -85,8 +74,8 @@ const VerifyCard = ({
     <div className="card shadow-sm p-2">
         <div className="row mx-0">
             <div className="col-md-4 col-lg-6 px-1">
-                <a href={image} target="_blank">
-                    <img src={image} alt="ID Card" />
+                <a href={profile?.IDCardURL} target="_blank">
+                    <img src={profile?.IDCardURL} alt="ID Card" />
                 </a>
             </div>
             {profile && <div className="col-md-8 col-lg-6">
@@ -159,6 +148,18 @@ const VerifyCard = ({
                                 />
                             </div>
                         </div>
+                        {form.length > 0 &&
+                            form.map(({ label, value }) =>
+                                <div className="col-md-6 p-2">
+                                    <Input
+                                        label={label}
+                                        value={value}
+                                        className="w-100"
+                                        onChange={(value) => { setForm({...form, [label]: value }) }}
+                                    />
+                                </div>
+                            )
+                        }
                         <div className="row mx-0">
                             <div className="col-md-6 p-2">
                                 <Input
@@ -194,8 +195,8 @@ const VerifyCard = ({
                         />
                     </div>
                     <div className="d-flex align-items-center justify-content-end mt-2 p-2">
-                        <button onClick={handleReject} className="btn btn-danger font-weight-bold mx-2 px-4 py-3">Reject</button>
-                        <button onClick={handleVerify} className="btn btn-success font-weight-bold mx-1 px-4 py-3">Save & Approve</button>
+                        <button onClick={() => handleReview(false)} className="btn btn-danger font-weight-bold mx-2 px-4 py-3">Reject</button>
+                        <button onClick={() => handleReview(true)} className="btn btn-success font-weight-bold mx-1 px-4 py-3">Save & Approve</button>
                     </div>
                 </EditorForm>
             </div>}
