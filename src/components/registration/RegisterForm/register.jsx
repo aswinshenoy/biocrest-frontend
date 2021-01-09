@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Row, TextInput} from "srx";
 import styled from "@emotion/styled";
+import Fade from "react-reveal/Fade";
 
 
 const FormInput = styled(TextInput)`
@@ -56,70 +57,80 @@ const RegisterForm = ({ onRegister = () => {} }) => {
         }
     }, [passConfirm])
 
-    return <form className="py-2" onSubmit={handleSubmit}>
-        <FormInput
-            label="Name"
-            name="name"
-            title="Please enter your name"
-            value={name}
-            onChange={setName}
-            placeholder="Enter Your Name"
-            alwaysShowLabel
-            isRequired
-        />
-        <FormInput
-            label="Email"
-            name="email"
-            type="email"
-            value={email}
-            autoComplete="email"
-            onChange={setEmail}
-            placeholder="Enter Your Email"
-            alwaysShowLabel
-            isRequired
-        />
-        <FormInput
-            label="Password"
-            name="new-password"
-            type="password"
-            value={password}
-            onChange={setPassword}
-            autoComplete="new-password"
-            placeholder="Enter Your Password"
-            alwaysShowLabel
-            isRequired
-        />
-        <FormInput
-            label="Confirm Password"
-            name="repeat-password"
-            type="password"
-            value={passConfirm}
-            onChange={setPassConfirm}
-            placeholder="Confirm Your Password"
-            autoComplete="new-password"
-            alwaysShowLabel
-            isRequired
-            errorText={passwordMismatch ? 'Passwords do not match' : null}
-        />
-        <Row mt={2} p={2}>
-            <Col md={8} p={1} flexVC>
-                <div className="pr-2" style={{ fontSize: '10px', lineHeight: '1.6' }}>
-                    By registering for BIOCREST 2021, you accept our
-                    <span className="d-inline-block">
-                        <a href="/terms" className="font-weight-bold pr-1">Terms & Conditions</a> and
-                        <a href="/privacy" className="font-weight-bold pl-1">Privacy Policy</a>.
-                    </span>
-                </div>
-            </Col>
-            <Col md={4} p={1} flexHR>
-                <FormButton
-                    text="Register"
-                    type="submit"
-                    py={3} px={5} round={0}
-                    isDisabled={passwordMismatch}
-                />
-            </Col>
-        </Row>
+    return <form className="py-3" onSubmit={handleSubmit}>
+        <Fade up delay={200}>
+            <FormInput
+                label="Name"
+                name="name"
+                title="Please enter your name"
+                value={name}
+                onChange={setName}
+                placeholder="Enter Your Name"
+                alwaysShowLabel
+                isRequired
+            />
+        </Fade>
+        <Fade up delay={400}>
+            <FormInput
+                label="Email"
+                name="email"
+                type="email"
+                value={email}
+                autoComplete="email"
+                onChange={setEmail}
+                placeholder="Enter Your Email"
+                alwaysShowLabel
+                isRequired
+            />
+        </Fade>
+        <Fade up delay={600}>
+            <FormInput
+                label="Password"
+                name="new-password"
+                type="password"
+                value={password}
+                onChange={setPassword}
+                autoComplete="new-password"
+                placeholder="Enter Your Password"
+                alwaysShowLabel
+                isRequired
+            />
+        </Fade>
+        <Fade up delay={800}>
+            <FormInput
+                label="Confirm Password"
+                name="repeat-password"
+                type="password"
+                value={passConfirm}
+                onChange={setPassConfirm}
+                placeholder="Confirm Your Password"
+                autoComplete="new-password"
+                alwaysShowLabel
+                isRequired
+                errorText={passwordMismatch ? 'Passwords do not match' : null}
+            />
+        </Fade>
+        <Fade up delay={1200}>
+            <Row mt={2} p={2}>
+                <Col md={8} p={1} flexVC>
+                    <div className="pr-2 pb-3" style={{ fontSize: '10px', lineHeight: '1.6' }}>
+                        By registering for BIOCREST 2021, you accept our
+                        <span className="d-inline-block">
+                            <a href="/terms" className="font-weight-bold pr-1">Terms & Conditions</a> and
+                            <a href="/privacy" className="font-weight-bold pl-1">Privacy Policy</a>.
+                        </span>
+                    </div>
+                </Col>
+                <Col md={4} p={1} flexHR>
+                    <FormButton
+                        text="Register"
+                        type="submit"
+                        py={3} px={5} round={0}
+                        isDisabled={passwordMismatch}
+                    />
+                </Col>
+            </Row>
+        </Fade>
     </form>
 
 };

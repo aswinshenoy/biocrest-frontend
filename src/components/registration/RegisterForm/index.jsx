@@ -3,12 +3,13 @@ import styled from "@emotion/styled";
 import classNames from 'classnames';
 import {Col, Row} from "srx";
 import { useMutation } from 'graphql-hooks'
+import Fade from "react-reveal/Fade";
+import shortid from "shortid";
 
 import RegisterForm from "./register";
 import LoginForm from "./login";
 // import SocialLogin from "./socialLogin";
 
-import RegistrationSideCover from "../SideCover";
 import {LOGIN_MUTATION, REGISTER_MUTATION} from "../../../graphql/queries/user";
 import {setUserInfo} from "../../../states";
 
@@ -89,13 +90,24 @@ const RegistrationForm = () => {
     </div>
 
     return <RegisterPageWrapper>
-        <div className="container-lg px-0">
+        <div className="container-lg px-0" style={{ maxWidth: '900px' }}>
             <Row className="w-100">
-                <Col md={6} p={0}>
-                    <RegistrationSideCover />
+                <Col md={6} flexCenter className="p-0 p-md-2 p-lg-3" style={{ background: '#AF0C3E' }}>
+                    <Fade left>
+                        <img alt="biocrest" style={{ maxHeight: '100vh' }} draggable="false" src={require('../../../assets/branding/cover.jpg')} />
+                    </Fade>
                 </Col>
-                <Col md={6} className="px-0 px-md-4 pb-md-0 pb-5">
-                    <section>
+                <Col md={6} style={{ background: '#AF0C3E' }} className="px-0 pb-md-0">
+                    <section className="bg-white" style={{ minHeight: '80vh' }}>
+                        <div style={{ background: '#AF0C3E' }} className="d-none d-md-block text-light text-center p-4">
+                            <Fade delay={300}>
+                                <img
+                                    alt="Amrita"
+                                    style={{ width: '250px' }}
+                                    src={require('../../../assets/branding/amrita_vishwa_vidyapeetham_light_logo.png')}
+                                />
+                            </Fade>
+                        </div>
                         <TabSwitchers>
                             <button
                                 aria-label="Register for Biocrest"
@@ -112,7 +124,7 @@ const RegistrationForm = () => {
                                 Login
                             </button>
                         </TabSwitchers>
-                        <div className="position-relative px-3">
+                        <div className="position-relative h-100 p-3">
                             {isRegistering &&
                             <div
                                 style={{
@@ -130,11 +142,19 @@ const RegistrationForm = () => {
                             {error && renderError()}
                             {currentTab === 'register' ?
                                 <RegisterForm onRegister={handleRegisterFormSubmit} /> :
-                                <LoginForm onLogin={handleSignIn} />}
+                                <LoginForm onLogin={handleSignIn} />
+                            }
                         </div>
                         {/*<div className="p-2">*/}
                         {/*    <SocialLogin />*/}
                         {/*</div>*/}
+                        <div style={{ background: '#AF0C3E' }} className="d-block d-md-none text-light text-center p-4">
+                            <img
+                                alt="Amrita"
+                                style={{ width: '250px' }}
+                                src={require('../../../assets/branding/amrita_vishwa_vidyapeetham_light_logo.png')}
+                            />
+                        </div>
                     </section>
                 </Col>
             </Row>

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Button, Col, Row, TextInput} from "srx";
 import styled from "@emotion/styled";
+import Fade from "react-reveal/Fade";
 
 const FormInput = styled(TextInput)`
     input { 
@@ -41,48 +42,54 @@ const LoginForm = ({ onLogin = () => {} }) => {
         onLogin({ email, password });
     }
 
-    return <form className="py-2" onSubmit={handleSubmit}>
-        <FormInput
-            label="Email"
-            name="email"
-            type="email"
-            value={email}
-            onChange={setEmail}
-            autoComplete="email"
-            placeholder="Enter Your Email"
-            alwaysShowLabel
-            isRequired
-        />
-        <FormInput
-            label="Password"
-            name="current-password"
-            type="password"
-            value={password}
-            onChange={setPassword}
-            autoComplete="current-password"
-            placeholder="Enter Your Password"
-            alwaysShowLabel
-            isRequired
-        />
-        <Row mt={2} p={2}>
-            <Col s={8} px={1} flexVC>
-                Facing trouble to login?
-                <a
-                   href="#" title="Get help with login"
-                   style={{ color: '#AF0C3E' }}
-                   className="font-weight-bold px-1"
-                >
-                    Get Help
-                </a>
-            </Col>
-            <Col s={4} px={1} flexHR>
-                <FormButton
-                    text="Login"
-                    type="submit"
-                    py={3} px={5} round={0}
-                />
-            </Col>
-        </Row>
+    return <form className="py-3 h-100" onSubmit={handleSubmit}>
+        <Fade up delay={200}>
+            <FormInput
+                label="Email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={setEmail}
+                autoComplete="email"
+                placeholder="Enter Your Email"
+                alwaysShowLabel
+                isRequired
+            />
+        </Fade>
+        <Fade up delay={500}>
+            <FormInput
+                label="Password"
+                name="current-password"
+                type="password"
+                value={password}
+                onChange={setPassword}
+                autoComplete="current-password"
+                placeholder="Enter Your Password"
+                alwaysShowLabel
+                isRequired
+            />
+        </Fade>
+        <Fade up delay={700}>
+            <Row mt={2} p={2}>
+                <Col s={8} px={1} flexVC>
+                    Facing trouble to login?
+                    <a
+                       href="#" title="Get help with login"
+                       style={{ color: '#AF0C3E' }}
+                       className="font-weight-bold px-1"
+                    >
+                        Get Help
+                    </a>
+                </Col>
+                <Col s={4} px={1} flexHR>
+                    <FormButton
+                        text="Login"
+                        type="submit"
+                        py={3} px={5} round={0}
+                    />
+                </Col>
+            </Row>
+        </Fade>
     </form>
 
 };
