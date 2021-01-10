@@ -45,9 +45,8 @@ const Base = ({ children, meta }) => {
             <link href='/images/icons/icon-128x128.png' rel='icon' type='image/png' sizes='128x128' />
             <link href='/images/icons/icon-152x152.png' rel='icon' type='image/png' sizes='144x144' />
             <link href='/images/icons/icon-152x152.png' rel='icon' type='image/png' sizes='152x152' />
-            <link href='/images/icons/icon-192x192.png' rel='icon' type='image/png' sizes='192x192' />
-            <link href='/images/icons/icon-384x384.png' rel='icon' type='image/png' sizes='384x384' />
-            <link rel='apple-touch-icon' href='/images/icons/icon-512x512.png' />
+            <link href='/images/icons/icon-180x180.png' rel='icon' type='image/png' sizes='180x180' />
+            <link rel='apple-touch-icon' href='/images/icons/icon-180x180.png' />
             <link rel="shortcut icon" href="../images/icons/icon-72x72.png" />
             {GoogleAnalyticsID && <React.Fragment>
                 <script rel="preconnect" async src={`https://www.googletagmanager.com/gtag/js?id=${GoogleAnalyticsID}`} />
@@ -55,7 +54,7 @@ const Base = ({ children, meta }) => {
                     __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GoogleAnalyticsID}');`
                 }} />
             </React.Fragment>}
-            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
         </Head>
         <div className="app">
             <ClientContext.Provider value={client}>

@@ -105,7 +105,7 @@ const RegistrationForm = () => {
                     </a>
                 </div>
                 <Fade up timeout={500}>
-                    <section className="bg-white shadow" style={{ width: '450px', maxWidth: '100%', minHeight: '500px' }}>
+                    <section className="bg-white rounded-top shadow" style={{ width: '450px', maxWidth: '100%', minHeight: '500px' }}>
                         {/*<div className="d-block d-md-none ">*/}
                         {/*    <img*/}
                         {/*        alt="Amrita" draggable="false"*/}
@@ -153,7 +153,7 @@ const RegistrationForm = () => {
                         {/*    <SocialLogin />*/}
                         {/*</div>*/}
                     </section>
-                    <div style={{ background: '#AF0C3E' }} className="d-block text-light text-center p-3">
+                    <div style={{ background: '#AF0C3E' }} className="d-block rounded-bottom text-light text-center p-3">
                         <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
                             <img
                                 alt="Amrita Vishwa Vidyapeetham"
