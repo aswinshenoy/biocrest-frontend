@@ -40,6 +40,19 @@ const RegisterPageWrapper = styled.main`
   }
 `;
 
+const MenuNav = styled.nav`
+    a {
+        font-size: 18px;
+        color: white!important;
+        margin-right: 40px;
+        font-weight: 600;
+        text-decoration: none!important;
+        &:hover {
+             color: #fba930!important;
+        }
+    }
+`;
+
 
 const RegistrationForm = ({ type = 'register' }) => {
 
@@ -91,8 +104,39 @@ const RegistrationForm = ({ type = 'register' }) => {
         }
     </div>
 
-    return <RegisterPageWrapper style={{ backgroundImage: `url(${require('../../../assets/branding/login_page_cover.jpg')})`}}>
-        <div className="d-block d-md-flex align-items-center justify-content-center h-100 px-0" style={{ minHeight: '100vh' }}>
+    return <RegisterPageWrapper style={{ backgroundImage: `url(${require('../../../assets/branding/login_page_cover.jpg')})`, minHeight: '100vh' }}>
+        <div className="d-none d-md-block py-5 mb-2">
+            <div className="container px-1">
+                <div className="row mx-0">
+                    <div className="col-4 p-1">
+                        <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
+                            <img
+                                alt="Biocrest" draggable="false"
+                                style={{ maxHeight: '64px' }}
+                                src={require('../../../assets/branding/biocrest_logo_light.png')}
+                            />
+                        </a>
+                    </div>
+                    <div className="col-8 d-flex align-items-center p-1">
+                        <MenuNav className="d-flex align-items-center">
+                            <a href="https://amrita.edu/biocrest" rel="noreferrer nofollow">
+                                Home
+                            </a>
+                            <a href="https://www.amrita.edu/biocrest/?page_id=1098" rel="noreferrer nofollow">
+                                About
+                            </a>
+                            <a href="https://www.amrita.edu/biocrest/?page_id=1846" rel="noreferrer nofollow">
+                                Speakers
+                            </a>
+                            <a href="https://www.amrita.edu/biocrest/?page_id=75" rel="noreferrer nofollow">
+                                Blog
+                            </a>
+                        </MenuNav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className="d-block d-md-flex align-items-center justify-content-center px-0">
             <div>
                 <div className="d-block d-md-none text-light text-center p-4">
                     <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
@@ -105,12 +149,6 @@ const RegistrationForm = ({ type = 'register' }) => {
                 </div>
                 <Fade up timeout={500}>
                     <section className="bg-white rounded-top shadow" style={{ width: '450px', maxWidth: '100%', minHeight: '500px' }}>
-                        {/*<div className="d-block d-md-none ">*/}
-                        {/*    <img*/}
-                        {/*        alt="Amrita" draggable="false"*/}
-                        {/*        src={require('../../../assets/branding/cover.jpg')}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
                         <TabSwitchers>
                             <button
                                 aria-label="Register for Biocrest"
