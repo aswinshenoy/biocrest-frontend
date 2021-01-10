@@ -41,9 +41,9 @@ const RegisterPageWrapper = styled.main`
 `;
 
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ type = 'register' }) => {
 
-    const [currentTab, setTab] = useState('register');
+    const [currentTab, setTab] = useState(type);
 
     const [isRegistering, setRegistering] = useState(false);
     const [error, setError] = useState(null);
