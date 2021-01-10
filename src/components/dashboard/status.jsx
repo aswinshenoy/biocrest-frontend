@@ -12,32 +12,32 @@ const RegistrationStatus = () => {
 
     return loading ? <div>Loading</div> :
     data?.myEventProfile?.isApproved ?
-    <div className="alert-success p-3">
-        <h3 className="text-success">Registration Complete</h3>
+    <div className="alert-success shadow p-3">
+        <h3 className="font-weight-bold text-success">Registration Complete</h3>
         <p>Your profile has been successfully verified, and your registration is complete.</p>
         <div className="p-2">
             <MyIDCard {...data.myEventProfile} />
         </div>
     </div> :
     data?.myEventProfile?.remarks ?
-        <div className="alert-warning p-3">
-            <h3>Corrections Requested</h3>
+        <div className="alert-warning shadow p-3">
+            <h3 className="font-weight-bold">Corrections Requested</h3>
             <p>
                 We could not verify your profile for confirming your registration, and we expect
                 you to make some corrections so that we can complete your registration.
             </p>
-            <div className="py-2">
+            <div className="p-3 mb-3 d-inline-block bg-white">
                 <div className="font-weight-bold mb-1">Remarks</div>
                 {data?.myEventProfile?.remarks}
             </div>
             <div className="my-2">
-                <FormButton link="/edit-profile">
+                <FormButton link="/edit-profile" py={3}>
                     Edit Profile
                 </FormButton>
             </div>
         </div> :
-    <div className="alert-info p-3">
-        <h3>Pending Verification</h3>
+    <div className="alert-info shadow p-3">
+        <h3 className="font-weight-bold">Pending Verification</h3>
         <p>
             Our team will soon manually review your registration data for verification, and confirm
             your registration. Once that is done, you will receive an email, meanwhile you could

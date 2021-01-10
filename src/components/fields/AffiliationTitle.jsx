@@ -34,7 +34,15 @@ const AffiliationTitle = ({
                 setProfile({...profile, affiliationTitle: data.addAffiliationTitle });
             }
         })
-    }
+    };
+
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            borderRadius: 0,
+            border: '1px solid #AF0C3E'
+        }),
+    };
 
     return <div>
         <label style={{ fontWeight: 500 }} className="px-1 mb-1 text-dark">
@@ -52,6 +60,7 @@ const AffiliationTitle = ({
             cacheOptions
             defaultOptions={titleList?.affiliationTitles}
             loadOptions={asyncLoadTitles}
+            styles={customStyles}
         />
     </div>;
 

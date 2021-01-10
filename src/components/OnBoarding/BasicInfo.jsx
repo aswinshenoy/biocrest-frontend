@@ -29,7 +29,7 @@ const BasicInfoForm = ({
         value={profile?.title}
         onChange={(v) => setProfile({...profile, title: v })}
         options={userTitles}
-        className="mr-2"
+        className="mr-2 w-100"
     />;
 
     const renderPlacePicker = () =>
@@ -51,15 +51,22 @@ const BasicInfoForm = ({
     return <form onSubmit={handleSubmit}>
         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }}>About You</h2>
         <Row>
-            <Col md={6} p={2} className="d-flex align-items-center">
+            <Col md={6} p={2}>
                 <Fade delay={150}>
-                {renderUserTitleSelector()}
-                <Input
-                    label="Name"
-                    placeholder="Enter your name"
-                    value={profile?.name}
-                    onChange={(name) => { setValueChanged(true); setProfile({...profile, name}) }}
-                />
+                    <div className="row mx-0 d-flex align-items-center">
+                        <Col s={4} p={1}>
+                            {renderUserTitleSelector()}
+                        </Col>
+                        <Col s={8} p={1}>
+                            <Input
+                                label="Name"
+                                placeholder="Enter your name"
+                                value={profile?.name}
+                                className="w-100"
+                                onChange={(name) => { setValueChanged(true); setProfile({...profile, name}) }}
+                            />
+                        </Col>
+                    </div>
                 </Fade>
             </Col>
             <Col md={6} p={2}>

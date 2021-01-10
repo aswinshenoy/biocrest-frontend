@@ -33,7 +33,15 @@ const AffiliationBody = ({
                 onChange(data.addAffiliationBody);
             }
         })
-    }
+    };
+
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            borderRadius: 0,
+            border: '1px solid #AF0C3E'
+        }),
+    };
 
     return <div>
         <label style={{ fontWeight: 500 }} className="px-1 mb-1 text-dark">
@@ -52,6 +60,7 @@ const AffiliationBody = ({
             cacheOptions
             defaultOptions={bodyList?.affiliationBodies}
             loadOptions={asyncLoadBodies}
+            styles={customStyles}
         />
     </div>;
 

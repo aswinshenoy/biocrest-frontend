@@ -7,7 +7,8 @@ import {setUserInfo} from "../../states";
 const HeaderWrap = styled.header`
     width: 100%;
     padding: 1rem;
-    background: #AF0C3E;
+    background: #340853;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.35);
     img {
         max-height: 5vh;
     }
@@ -30,10 +31,6 @@ const Header = () => {
         <Row>
             <Col s={6} md={4} flexVC px={1}>
                 <a href="/">
-                    <img
-                        draggable="false" alt="Amrita Vishwa Vidyapeetham" className="mr-3"
-                        src={require('./../../assets/branding/amrita_vishwa_vidyapeetham_light_logo.png')}
-                    />
                     <img
                         draggable="false" alt="BIOCREST"
                         src={require('./../../assets/branding/biocrest_logo_light.png')}

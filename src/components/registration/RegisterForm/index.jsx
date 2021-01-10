@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import styled from "@emotion/styled";
 import classNames from 'classnames';
-import {Col, Row} from "srx";
+// import {Col, Row} from "srx";
 import { useMutation } from 'graphql-hooks'
 import Fade from "react-reveal/Fade";
-import shortid from "shortid";
 
 import RegisterForm from "./register";
 import LoginForm from "./login";
@@ -30,7 +29,7 @@ const TabSwitchers = styled.div`
 
 const RegisterPageWrapper = styled.main`
   width: 100%;
-  background-color: #AF0C3E;
+  background-color: #340853;
   background-size: cover;
   .container-lg{
       display: flex;
