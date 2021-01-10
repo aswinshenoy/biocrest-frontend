@@ -43,7 +43,7 @@ const LoginForm = ({ onLogin = () => {} }) => {
     }
 
     return <form className="py-3 h-100" onSubmit={handleSubmit}>
-        <Fade up delay={200}>
+        <Fade up delay={100}>
             <FormInput
                 label="Email"
                 name="email"
@@ -56,7 +56,7 @@ const LoginForm = ({ onLogin = () => {} }) => {
                 isRequired
             />
         </Fade>
-        <Fade up delay={500}>
+        <Fade up delay={200}>
             <FormInput
                 label="Password"
                 name="current-password"
@@ -69,23 +69,26 @@ const LoginForm = ({ onLogin = () => {} }) => {
                 isRequired
             />
         </Fade>
-        <Fade up delay={700}>
+        <Fade up delay={300}>
             <Row mt={2} p={2}>
-                <Col s={8} px={1} flexVC>
-                    Facing trouble to login?
-                    <a
-                       href="#" title="Get help with login"
-                       style={{ color: '#AF0C3E' }}
-                       className="font-weight-bold px-1"
-                    >
-                        Get Help
-                    </a>
+                <Col md={8} p={2} flexVC>
+                    <div className="pr-2 pb-3" style={{ fontSize: '13px', lineHeight: '1.6' }}>
+                        Facing trouble to login?
+                        <a
+                           href="#" title="Get help with login"
+                           style={{ color: '#AF0C3E' }}
+                           className="font-weight-bold px-1"
+                        >
+                            Get Help
+                        </a>
+                    </div>
                 </Col>
-                <Col s={4} px={1} flexHR>
+                <Col md={4} p={1} flexHR>
                     <FormButton
+                        key="login-button"
                         text="Login"
-                        type="submit"
-                        py={3} px={5} round={0}
+                        type="submit" fw
+                        py={4} px={5} round={0}
                     />
                 </Col>
             </Row>

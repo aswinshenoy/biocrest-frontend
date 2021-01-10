@@ -15,20 +15,23 @@ import {setUserInfo} from "../../../states";
 
 const TabSwitchers = styled.div`
     button {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 500;
       padding: 0.75rem;
-      border-bottom: 3px solid #AEAEAE;
+      border-bottom: 3.5px solid #AEAEAE;
       width: 50%;
     }
     .active {
-      border-bottom: 3px solid #D00846!important;
+      color: #AF0C3E;
+      border-bottom: 3.5px solid #AF0C3E!important;
     }
 `;
 
 
 const RegisterPageWrapper = styled.main`
   width: 100%;
+  background-color: #AF0C3E;
+  background-size: cover;
   .container-lg{
       display: flex;
       align-items: center;
@@ -89,25 +92,26 @@ const RegistrationForm = () => {
         }
     </div>
 
-    return <RegisterPageWrapper>
-        <div className="container-lg px-0" style={{ maxWidth: '900px' }}>
-            <Row className="w-100">
-                <Col md={6} flexCenter className="p-0 p-md-2 p-lg-3" style={{ background: '#AF0C3E' }}>
-                    <Fade left>
-                        <img alt="biocrest" style={{ maxHeight: '100vh' }} draggable="false" src={require('../../../assets/branding/cover.jpg')} />
-                    </Fade>
-                </Col>
-                <Col md={6} style={{ background: '#AF0C3E' }} className="px-0 pb-md-0">
-                    <section className="bg-white" style={{ minHeight: '80vh' }}>
-                        <div style={{ background: '#AF0C3E' }} className="d-none d-md-block text-light text-center p-4">
-                            <Fade delay={300}>
-                                <img
-                                    alt="Amrita"
-                                    style={{ width: '250px' }}
-                                    src={require('../../../assets/branding/amrita_vishwa_vidyapeetham_light_logo.png')}
-                                />
-                            </Fade>
-                        </div>
+    return <RegisterPageWrapper style={{ backgroundImage: `url(${require('../../../assets/branding/login_page_cover.jpg')})`}}>
+        <div className="d-block d-md-flex align-items-center justify-content-center h-100 px-0" style={{ minHeight: '100vh' }}>
+            <div>
+                <div className="d-block d-md-none text-light text-center p-4">
+                    <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
+                        <img
+                            alt="Biocrest" draggable="false"
+                            style={{ maxHeight: '64px' }}
+                            src={require('../../../assets/branding/biocrest_logo_light.png')}
+                        />
+                    </a>
+                </div>
+                <Fade up timeout={500}>
+                    <section className="bg-white shadow" style={{ width: '450px', maxWidth: '100%', minHeight: '500px' }}>
+                        {/*<div className="d-block d-md-none ">*/}
+                        {/*    <img*/}
+                        {/*        alt="Amrita" draggable="false"*/}
+                        {/*        src={require('../../../assets/branding/cover.jpg')}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                         <TabSwitchers>
                             <button
                                 aria-label="Register for Biocrest"
@@ -124,7 +128,7 @@ const RegistrationForm = () => {
                                 Login
                             </button>
                         </TabSwitchers>
-                        <div className="position-relative h-100 p-3">
+                        <div className="position-relative p-4">
                             {isRegistering &&
                             <div
                                 style={{
@@ -148,16 +152,18 @@ const RegistrationForm = () => {
                         {/*<div className="p-2">*/}
                         {/*    <SocialLogin />*/}
                         {/*</div>*/}
-                        <div style={{ background: '#AF0C3E' }} className="d-block d-md-none text-light text-center p-4">
+                    </section>
+                    <div style={{ background: '#AF0C3E' }} className="d-block text-light text-center p-3">
+                        <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
                             <img
-                                alt="Amrita"
-                                style={{ width: '250px' }}
+                                alt="Amrita Vishwa Vidyapeetham"
+                                style={{ maxHeight: '64px' }} draggable="false"
                                 src={require('../../../assets/branding/amrita_vishwa_vidyapeetham_light_logo.png')}
                             />
-                        </div>
-                    </section>
-                </Col>
-            </Row>
+                        </a>
+                    </div>
+                </Fade>
+            </div>
         </div>
     </RegisterPageWrapper>;
 

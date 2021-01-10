@@ -58,7 +58,7 @@ const RegisterForm = ({ onRegister = () => {} }) => {
     }, [passConfirm])
 
     return <form className="py-3" onSubmit={handleSubmit}>
-        <Fade up delay={200}>
+        <Fade up delay={100}>
             <FormInput
                 label="Name"
                 name="name"
@@ -70,7 +70,7 @@ const RegisterForm = ({ onRegister = () => {} }) => {
                 isRequired
             />
         </Fade>
-        <Fade up delay={400}>
+        <Fade up delay={200}>
             <FormInput
                 label="Email"
                 name="email"
@@ -83,7 +83,7 @@ const RegisterForm = ({ onRegister = () => {} }) => {
                 isRequired
             />
         </Fade>
-        <Fade up delay={600}>
+        <Fade up delay={300}>
             <FormInput
                 label="Password"
                 name="new-password"
@@ -96,7 +96,7 @@ const RegisterForm = ({ onRegister = () => {} }) => {
                 isRequired
             />
         </Fade>
-        <Fade up delay={800}>
+        <Fade up delay={400}>
             <FormInput
                 label="Confirm Password"
                 name="repeat-password"
@@ -110,7 +110,7 @@ const RegisterForm = ({ onRegister = () => {} }) => {
                 errorText={passwordMismatch ? 'Passwords do not match' : null}
             />
         </Fade>
-        <Fade up delay={1200}>
+        <Fade up delay={500}>
             <Row mt={2} p={2}>
                 <Col md={8} p={1} flexVC>
                     <div className="pr-2 pb-3" style={{ fontSize: '10px', lineHeight: '1.6' }}>
@@ -123,9 +123,10 @@ const RegisterForm = ({ onRegister = () => {} }) => {
                 </Col>
                 <Col md={4} p={1} flexHR>
                     <FormButton
+                        key="register-button"
                         text="Register"
-                        type="submit"
-                        py={3} px={5} round={0}
+                        type="submit" fw
+                        py={4} px={5} round={0}
                         isDisabled={passwordMismatch}
                     />
                 </Col>
