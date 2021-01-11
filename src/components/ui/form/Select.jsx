@@ -16,9 +16,10 @@ const FormSelect = styled.div`
       }
       label { 
           font-size: 12px; 
-          font-weight: 500!important; 
+          font-weight: 600!important; 
           margin-bottom: 0;
           display: block;
+          color: #333;
       }
 `;
 

@@ -130,7 +130,7 @@ const OnBoarding = ({ startZero = false, }) => {
         },
         {
             "value": "event_profile",
-            "label": "Conference Preferences",
+            "label": "Biocrest Registration",
             "icon": require('../../assets/icons/info.png'),
         },
         {
@@ -386,15 +386,16 @@ const OnBoarding = ({ startZero = false, }) => {
                                 return <Fade key={shortid.generate()}>
                                     <AffiliationForm
                                         profile={profile}
-                                        isStudent={profile?.type === 1 || profile?.type === "1"}
-                                        isAcademician={profile?.type === 2 || profile?.type === "2"}
-                                        isIndustry={profile?.type === 3 || profile?.type === "3"}
+                                        isStudent={profile?.type === 1}
+                                        isAcademician={profile?.type === 2}
+                                        isIndustry={profile?.type === 3}
                                         onSave={handleAffiliationForm}
                                     />
                                 </Fade>
                             if(s.value === 'event_profile')
                                 return <Fade key={shortid.generate()}>
                                     <EventFields
+                                        userType={profile.type}
                                         eventProfile={eventProfile}
                                         onSave={handleEventProfileSave}
                                     />

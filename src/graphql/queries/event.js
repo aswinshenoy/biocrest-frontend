@@ -27,6 +27,7 @@ query ($eventID: ID!){
         options{
           value
           label
+          allowedUserTypes
         }
       }
     }

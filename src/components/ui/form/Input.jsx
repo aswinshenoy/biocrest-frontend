@@ -16,9 +16,10 @@ const FormInput = styled.div`
     }
     label { 
       font-size: 12px; 
-      font-weight: 500!important; 
+      font-weight: 600!important; 
       display: block;
       margin-bottom: 0;
+      color: #333;
     }
 `;
 

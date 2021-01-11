@@ -35,7 +35,7 @@ const PlacePicker = ({
     };
 
     return <div>
-        <label style={{ fontWeight: 500 }} className="px-1 mb-1 text-dark">{label}</label>
+        <label style={{ fontWeight: 600 }} className="px-1 mb-1 text-dark">{label}</label>
         <GooglePlacesAutocomplete
             apiKey="AIzaSyDgv-EZdSfVUJViYdrcbaxGOdHWsX5AaN8"
             autocompletionRequest={{ types:  ['(cities)'] }}

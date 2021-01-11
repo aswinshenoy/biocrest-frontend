@@ -44,7 +44,7 @@ const AffiliationBody = ({
     };
 
     return <div>
-        <label style={{ fontWeight: 500 }} className="px-1 mb-1 text-dark">
+        <label style={{ fontWeight: 600, color: '#333' }} className="px-1 mb-1">
             {isStudent ? 'College / School' :
                 isAcademician ? 'Institution' :
                     isIndustry ? 'Organization / Company'
