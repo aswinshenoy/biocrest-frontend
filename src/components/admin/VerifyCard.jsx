@@ -148,7 +148,7 @@ const VerifyCard = ({
                                 />
                             </div>
                         </div>
-                        {form.length > 0 &&
+                        {form?.length > 0 &&
                             form.map(({ label, value }) =>
                                 <div className="col-md-6 p-2">
                                     <Input

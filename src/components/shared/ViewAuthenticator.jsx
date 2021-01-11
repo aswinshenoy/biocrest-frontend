@@ -15,7 +15,7 @@ const ViewAuthenticator = ({
     // prettier-ignore
     useEffect(() => { setLoaded(true); }, []);
 
-    return hasLoaded ? (isLoggedIn ? userInfo?.type === "0" ? renderAdmin(userInfo) : renderAuth(userInfo) : renderPublic()) : renderLoading();
+    return hasLoaded ? (isLoggedIn ? userInfo?.type === 0 ? renderAdmin(userInfo) : renderAuth(userInfo) : renderPublic()) : renderLoading();
 };
 
 export default ViewAuthenticator;

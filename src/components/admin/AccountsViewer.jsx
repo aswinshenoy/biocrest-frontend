@@ -209,7 +209,7 @@ const AccountsViewer = () => {
                         </td>
                         <td>{getTypeName(s.type)}</td>
                         <td>
-                            {s.affiliationTitle.label} {s.affiliationBody.label}
+                            {s?.affiliationTitle?.label} {s?.affiliationBody?.label}
                         </td>
                         {f.map((d) => <td>{d.value}</td>)}
                         <td>{s.gender}</td>
