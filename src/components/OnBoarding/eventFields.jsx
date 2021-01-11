@@ -4,6 +4,7 @@ import {Col, Row} from "srx";
 import FormButton from "../ui/styled-components/Button";
 import SmartSelect from "../ui/form/SmartSelect";
 import Radio from "../ui/form/Radio";
+import MultiSelect from "../ui/form/MultiSelect";
 
 const EventFields = ({
      userType, eventProfile, onSave = () => {},
@@ -54,7 +55,7 @@ const EventFields = ({
                             />
                         </div>
                     </Col>:
-                f.type === 'smart-select' ?
+                f.type === 'smartselect' ?
                     <Col md={6} p={2}>
                         <div className="w-100" style={{ zIndex: '6000' }}>
                             <SmartSelect
@@ -72,6 +73,17 @@ const EventFields = ({
                                 label={f?.label}
                                 value={f?.key ? form[f.key] : null}
                                 name={f.key}
+                                options={filteredOptions(f?.options)}
+                                onChange={(v) => setForm({...form, [f.key]: v })}
+                            />
+                        </div>
+                    </Col> :
+                f.type === 'multiselect' ?
+                    <Col md={6} p={2}>
+                        <div className="w-100" style={{ zIndex: '6000' }}>
+                            <MultiSelect
+                                label={f?.label}
+                                value={f?.key ? form[f.key] : null}
                                 options={filteredOptions(f?.options)}
                                 onChange={(v) => setForm({...form, [f.key]: v })}
                             />
