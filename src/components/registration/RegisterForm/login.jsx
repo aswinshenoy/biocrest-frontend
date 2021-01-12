@@ -32,7 +32,7 @@ const FormButton = styled(Button)`
     }
 `;
 
-const LoginForm = ({ onLogin = () => {} }) => {
+const LoginForm = ({ onLogin = () => {}, onReset = () => {} }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -74,13 +74,13 @@ const LoginForm = ({ onLogin = () => {} }) => {
                 <Col md={8} p={2} flexVC>
                     <div className="pr-2 pb-3" style={{ fontSize: '13px', lineHeight: '1.6' }}>
                         Facing trouble to login?
-                        <a
-                           href="#" title="Get help with login"
-                           style={{ color: '#AF0C3E' }}
-                           className="font-weight-bold px-1"
+                        <button
+                           onClick={onReset} title="Get help with login"
+                           style={{ color: '#AF0C3E' }} type="button"
+                           className="font-weight-bold plain-button px-1"
                         >
                             Get Help
-                        </a>
+                        </button>
                     </div>
                 </Col>
                 <Col md={4} p={1} flexHR>

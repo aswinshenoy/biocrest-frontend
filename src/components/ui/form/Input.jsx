@@ -24,7 +24,7 @@ const FormInput = styled.div`
 `;
 
 const Input = ({
-   label, type, value, className, autoComplete, placeholder, onChange = () => {},
+   label, type, value, className, autoComplete, placeholder, onChange = () => {}, isRequired = false
 }) => {
 
     return <FormInput>
@@ -37,6 +37,9 @@ const Input = ({
             autoComplete={autoComplete}
             className={className}
             onChange={(e) => onChange(e.currentTarget.value)}
+            required={isRequired}
+            aria-label={label}
+            aria-required={isRequired}
         />
     </FormInput>
 

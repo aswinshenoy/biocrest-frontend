@@ -27,6 +27,7 @@ const OTPBoxes = styled(OtpInput)`
 
 const OTP = ({
     isVerified, isVerifying, value, OTPLength = 6,
+    allowResend = true,
     onChange = () => {}, onRequestNewOTP = () => {},
 }) => {
 
@@ -42,7 +43,11 @@ const OTP = ({
                 separator={<span />}
                 isInputNum
             />
-            {!isVerified ? <div className="mt-4">
+            {isVerified ?
+            <div className="mt-4">
+                Verified successfully.
+            </div>:
+            allowResend ? <div className="mt-4">
                 Didn't get a code?
                 <button
                     onClick={onRequestNewOTP}
@@ -52,9 +57,7 @@ const OTP = ({
                 >
                     Resend OTP
                 </button>
-            </div> : <div className="mt-4">
-                Verified successfully.
-            </div>}
+            </div> : null}
         </div>
     </div>
 

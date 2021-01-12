@@ -11,6 +11,7 @@ import LoginForm from "./login";
 
 import {LOGIN_MUTATION, REGISTER_MUTATION} from "../../../graphql/queries/user";
 import {setUserInfo} from "../../../states";
+import ResetForm from "./forgot";
 
 const TabSwitchers = styled.div`
     button {
@@ -181,9 +182,11 @@ const RegistrationForm = ({ type = 'register' }) => {
                                 <h3>Registering</h3>
                             </div>}
                             {error && renderError()}
-                            {currentTab === 'register' ?
+                            {   currentTab === 'forgot' ?
+                                <ResetForm /> :
+                                currentTab === 'register' ?
                                 <RegisterForm onRegister={handleRegisterFormSubmit} /> :
-                                <LoginForm onLogin={handleSignIn} />
+                                <LoginForm onLogin={handleSignIn} onReset={() => setTab('forgot')} />
                             }
                         </div>
                         {/*<div className="p-2">*/}

@@ -64,6 +64,16 @@ mutation ($username: String!, $password: String!){
   }
 }`;
 
+export const REQUEST_PASSWORD_RESET =
+`mutation ($email: String!){
+  requestPasswordReset(email: $email)
+}`;
+
+export const RESET_PASSWORD__MUTATION =
+`mutation ($email: String!, $password: String!, $otp: String!){
+  resetPassword(email: $email,newPassword: $password, otp: $otp)
+}`;
+
 export const UPDATE_MUTATION = `
 mutation ($update: UserUpdationInput!){
   updateProfile(update: $update){
