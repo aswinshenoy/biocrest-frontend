@@ -5,6 +5,7 @@ import FormButton from "../ui/styled-components/Button";
 import SmartSelect from "../ui/form/SmartSelect";
 import Radio from "../ui/form/Radio";
 import MultiSelect from "../ui/form/MultiSelect";
+import Checkbox from "../ui/form/Checkbox";
 
 const EventFields = ({
      userType, eventProfile, onSave = () => {},
@@ -66,6 +67,18 @@ const EventFields = ({
                             />
                         </div>
                     </Col>:
+                f.type === 'checkbox'?
+                    <Col md={12} p={2}>
+                        <div className="w-100" style={{ zIndex: '6000' }}>
+                            <Checkbox
+                                label={f?.label}
+                                value={f?.key ? form[f.key] : null}
+                                name={f.key}
+                                options={filteredOptions(f?.options)}
+                                onChange={(v) => setForm({...form, [f.key]: v })}
+                            />
+                        </div>
+                    </Col> :
                 f.type === 'radio' ?
                     <Col md={12} p={2}>
                         <div className="w-100" style={{ zIndex: '6000' }}>

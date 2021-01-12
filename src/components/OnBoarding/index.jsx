@@ -279,7 +279,7 @@ const OnBoarding = ({ startZero = false, }) => {
                 })
             }
         });
-    }
+    };
 
     const openStage = (value) => {
         let newStages = stages.map((s) => {

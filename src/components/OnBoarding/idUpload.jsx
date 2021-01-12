@@ -29,7 +29,11 @@ const FileSelectorWrap = styled.div`
 const IDUploader = ({ profile, onContinue = () => {} }) => {
 
     const [hasChanged, setChanged] = useState(false);
-    const [file, setFile] = useState(profile?.IDCardURL ? { url: profile.IDCardURL } : null);
+    const [file, setFile] = useState(
+        profile?.idCard ? {url: URL.createObjectURL(profile?.idCard) }  :
+            profile?.IDCardURL ? { url: profile.IDCardURL }
+            : null
+    );
     const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({ noClick: true, noKeyboard: true });
 
     const getFileURL = (file) => {
@@ -54,7 +58,7 @@ const IDUploader = ({ profile, onContinue = () => {} }) => {
     }
 
     return <div>
-        <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="mb-3">Upload ID Card</h2>
+         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="mb-3">Upload ID Card</h2>
         <p style={{ maxWidth: '600px' }}>
             We request you to upload a photo of your ID card, which we will use to manually verify your
             registration. Please make sure that details on the card are matching to the information provided,
