@@ -22,19 +22,19 @@ const FormRadio = styled.div`
 `;
 
 const Checkbox = ({
-    label, name, className, options = [], value = [], onChange = () => {},
+    label, name, maxSelections = null, className, options = [], value = [], onChange = () => {},
 }) => {
 
     const processValue = (v) => {
-        if(value?.length > 0 && value.includes(v)){
-            return value.filter((c) => c !== v)
-        }
-        if(value.length === 0) {
-            return [v,];
+        if(value?.length > 0 && value.some((c) => c === v)) {
+            return value.filter((c) => c !== v);
         }
         if(value?.length > 0) {
-            return [...value, v];
+            if(maxSelections === null || maxSelections > value.length)
+                return [...value, v];
+            return value;
         }
+        return [v,];
     };
 
     return <FormRadio className={className}>
@@ -49,8 +49,9 @@ const Checkbox = ({
                                 type="checkbox"
                                 name={name}
                                 value={o.value}
+                                disabled={value && maxSelections===value.length && !(value && value.length > 0 && value.includes(o.value))}
                                 checked={value && value.length > 0 && value.includes(o.value)}
-                                onChange={() => onChange(processValue(o.value))}
+                                onChange={() => onChange(JSON.stringify(processValue(o.value)))}
                             />
                             <label htmlFor={`${o.name}_${o.value}`}>{o.label}</label>
                         </td>

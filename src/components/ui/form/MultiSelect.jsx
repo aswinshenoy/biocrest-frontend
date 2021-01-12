@@ -25,7 +25,7 @@ const FormSelect = styled.div`
 `;
 
 const MultiSelect = ({
- label, className, options = [], value, onChange = () => {},
+    label, maxSelections = null, className, options = [], value, onChange = () => {},
 }) => {
 
     const getValueObject = () => {
@@ -34,7 +34,6 @@ const MultiSelect = ({
                 return options.filter((o) => value.includes(o.value));
             }
         }
-        return null;
     };
 
     const customStyles = {
@@ -53,9 +52,13 @@ const MultiSelect = ({
     const onSelect = (selections) => {
         const values = [];
         if(selections?.length > 0) {
-            selections.forEach((o) => values.push(o.value));
+            if(maxSelections === null || maxSelections >= selections?.length) {
+                selections.forEach((o) => values.push(o.value));
+                onChange(JSON.stringify(values));
+            }
+        } else {
+            onChange(JSON.stringify(values));
         }
-        onChange(values);
     }
 
     return <FormSelect>

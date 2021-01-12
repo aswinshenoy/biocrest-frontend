@@ -72,8 +72,9 @@ const EventFields = ({
                         <div className="w-100" style={{ zIndex: '6000' }}>
                             <Checkbox
                                 label={f?.label}
-                                value={f?.key ? form[f.key] : null}
+                                value={f?.key && form[f.key] ? JSON.parse(form[f.key]) : null}
                                 name={f.key}
+                                maxSelections={f?.maxSelections}
                                 options={filteredOptions(f?.options)}
                                 onChange={(v) => setForm({...form, [f.key]: v })}
                             />
@@ -84,7 +85,7 @@ const EventFields = ({
                         <div className="w-100" style={{ zIndex: '6000' }}>
                             <Radio
                                 label={f?.label}
-                                value={f?.key ? form[f.key] : null}
+                                value={f?.key && form[f.key] ? JSON.parse(form[f.key]) : null}
                                 name={f.key}
                                 options={filteredOptions(f?.options)}
                                 onChange={(v) => setForm({...form, [f.key]: v })}
@@ -96,8 +97,9 @@ const EventFields = ({
                         <div className="w-100" style={{ zIndex: '6000' }}>
                             <MultiSelect
                                 label={f?.label}
-                                value={f?.key ? form[f.key] : null}
+                                value={f?.key && form[f.key] ? JSON.parse(form[f.key]): null}
                                 options={filteredOptions(f?.options)}
+                                maxSelections={f?.maxSelections}
                                 onChange={(v) => setForm({...form, [f.key]: v })}
                             />
                         </div>

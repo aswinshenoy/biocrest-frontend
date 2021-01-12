@@ -24,6 +24,7 @@ query ($eventID: ID!){
         type
         label
         key
+        maxSelections
         options{
           value
           label
