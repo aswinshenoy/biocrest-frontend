@@ -14,8 +14,8 @@ const AffiliationTitle = ({
         loading: affiliationLoading,
         error: affiliationLoadError,
         data: titleList,
-        refetch: refetchAffiliations
-    } = useQuery(AFFILIATION_TITLES_QUERY);
+        refetch: refetchAffiliations,
+    } = useQuery(AFFILIATION_TITLES_QUERY, { useCache: true });
 
     const [createAffiliationTitle] = useMutation(ADD_AFFILIATION_TITLE);
 

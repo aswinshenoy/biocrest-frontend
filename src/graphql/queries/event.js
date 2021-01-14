@@ -1,3 +1,22 @@
+export const EVENT_QUERY = `
+query ($eventID: ID!){
+  event(eventID: $eventID){
+    name
+    formFields{
+      type
+      label
+      key
+      options
+      {
+        value
+        label
+        allowedUserTypes
+      }
+      maxSelections
+    }
+  }
+}`;
+
 export const MY_EVENT_PROFILE_QUERY = `
 query ($eventID: ID!){
   myEventProfile(eventID: $eventID){
@@ -50,6 +69,7 @@ mutation ($eventID: ID!, $data: JSONString){
         type
         label
         key
+        maxSelections
         options{
           value
           label

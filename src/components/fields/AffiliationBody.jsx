@@ -15,7 +15,7 @@ const AffiliationBody = ({
         error: bodyError,
         data: bodyList,
         refetch: refetchBodies
-    } = useQuery(AFFILIATION_BODY_QUERY)
+    } = useQuery(AFFILIATION_BODY_QUERY, { useCache: true });
 
     const [createAffiliationBody] = useMutation(ADD_AFFILIATION_BODY);
 

@@ -18,7 +18,6 @@ const FormRadio = styled.div`
         color: #111;
       }
     }
-  
 `;
 
 const Checkbox = ({

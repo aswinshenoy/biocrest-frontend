@@ -21,7 +21,7 @@ const graphQLEndpoint = process.env.GRAPHQL_SERVER_ENDPOINT || '/api/graphql/';
 const Base = ({ children, meta }) => {
 
     const title = `${meta && meta.title ? `${meta.title} |` : '' } ${seoTags.siteName} - ${seoTags.tagLine}`;
-    const GoogleAnalyticsID = null;
+    const GoogleAnalyticsID = 'G-5EB35ZCBPT';
 
     const client = new GraphQLClient({
         url: graphQLEndpoint,
