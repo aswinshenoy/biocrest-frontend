@@ -78,16 +78,12 @@ export default ({
         return d;
     }
 
-    return  <div className="my-2">
-        <div className="p-2 bg-white">
-            <CSVLink
-                data={generateCSVData()}
-                filename={"registrations-export.csv"}
-                target="_blank"
-            >
-                Download CSV Export
-            </CSVLink>
-        </div>
-    </div>
+    return <CSVLink
+        data={generateCSVData()}
+        filename={"registrations-export.csv"}
+        target="_blank"
+    >
+        Download CSV Export
+    </CSVLink>
 
 }

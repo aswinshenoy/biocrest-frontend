@@ -12,9 +12,7 @@ export default () => {
         renderAdmin={() =>
             <Base meta={{ title: 'Verify Registrations' }}>
                 <Header />
-                <div className="container-lg px-2 py-5">
-                    <AccountsViewer />
-                </div>
+                <AccountsViewer />
             </Base>
         }
         renderAuth={() =>

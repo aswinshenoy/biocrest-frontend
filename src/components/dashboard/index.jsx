@@ -6,13 +6,13 @@ import Header from "../shared/Header";
 import RegistrationStatus from "./status";
 
 const CoverSection = styled.section`
-    background: #340853;
+    background: #a02541;
     color: white;
     min-height: 35vh;
     padding: 5vh 2.5vw;
     display: flex;
     align-items: flex-end;
-    box-shadow: 2px 3px 8px rgba(0,0,0,0.35);
+    box-shadow: 1px 8px 8px rgba(0,0,0,0.25);
 `;
 
 const DashboardPage = () => {

@@ -30,6 +30,8 @@ const AccountsViewer = () => {
     const [endDate, setEndDate] = useState(null);
     const [startDate, setStartDate] = useState(null);
 
+    const [totalCount, setTotalCount] = useState(null);
+
     const fetch = (forced = false) => {
         if(hasNext || forced){
             APIFetch({
@@ -47,6 +49,7 @@ const AccountsViewer = () => {
             }).then(({ success, data, errors }) => {
                 setLoaded(true);
                 if(success) {
+                    setTotalCount(data?.participants?.totalCount);
                     if(!forced && data?.participants?.participants?.length > 0 && profiles.length > 0){
                         setProfiles([...profiles, ...data?.participants?.participants]);
                     } else if(data?.participants?.participants?.length > 0){
@@ -71,41 +74,39 @@ const AccountsViewer = () => {
     }, [type, endDate, startDate])
 
     const SearchBoxTable = () =>
-    <div className="my-2">
-        <div className="bg-white p-2">
-            <div className="row w-100 mx-0">
-                <div className="col-md-4 p-1">
-                    <form className="d-flex align-items-center" onSubmit={(e) => { e.preventDefault(); fetch(true);} }>
-                        <TextInput
-                            className="w-100"
-                            label="Search" name="search"
-                            placeholder="Search by name, phone or email"
-                            value={keyword} onChange={setKeyword}
-                        />
-                        <button className="btn btn-primary p-2" type="submit">Search</button>
-                    </form>
+    <div className="bg-white p-2">
+        <div className="row w-100 mx-0">
+            <div className="col-md-4 p-1">
+                <form className="d-flex align-items-center" onSubmit={(e) => { e.preventDefault(); fetch(true);} }>
+                    <TextInput
+                        className="w-100"
+                        label="Search" name="search"
+                        placeholder="Search by name, phone or email"
+                        value={keyword} onChange={setKeyword}
+                    />
+                    <button className="btn btn-primary p-2" type="submit">Search</button>
+                </form>
+            </div>
+            <div className="col-md-4 d-flex align-items-center p-1">
+                <select
+                    value={type}
+                    onChange={(e) => setType(e.currentTarget.value)}
+                    className="w-100 px-3 py-2"
+                >
+                    <option value={0}>All</option>
+                    <option value={1}>Student</option>
+                    <option value={2}>Academician</option>
+                    <option value={3}>Industry</option>
+                </select>
+            </div>
+            <div className="col-md-4 d-flex align-items-center p-1">
+                <div className="p-1">
+                    <label className="mb-0">From</label>
+                    <DatePicker selected={startDate} onChange={setStartDate} />
                 </div>
-                <div className="col-md-4 d-flex align-items-center p-1">
-                    <select
-                        value={type}
-                        onChange={(e) => setType(e.currentTarget.value)}
-                        className="w-100 px-3 py-2"
-                    >
-                        <option value={0}>All</option>
-                        <option value={1}>Student</option>
-                        <option value={2}>Academician</option>
-                        <option value={3}>Industry</option>
-                    </select>
-                </div>
-                <div className="col-md-4 d-flex align-items-center p-1">
-                    <div className="p-1">
-                        <label className="mb-0">From</label>
-                        <DatePicker selected={startDate} onChange={setStartDate} />
-                    </div>
-                    <div className="p-1">
-                        <label className="mb-0">To</label>
-                        <DatePicker selected={endDate} onChange={setEndDate} />
-                    </div>
+                <div className="p-1">
+                    <label className="mb-0">To</label>
+                    <DatePicker selected={endDate} onChange={setEndDate} />
                 </div>
             </div>
         </div>
@@ -114,15 +115,21 @@ const AccountsViewer = () => {
     return error ? <div>Error occurred while loading. Please refresh to retry</div> :
         !hasLoaded ? <div>Loading</div> :
         <div>
-            <div>
-                <h2 className="mb-2">Registrations</h2>
-                <div className="mb-4">
-                    View all registered users
-                </div>
-            </div>
             <div className="my-2">
                 {SearchBoxTable()}
-                {profiles.length > 0 && <ExportBar profiles={profiles} fields={event?.event?.formFields} />}
+
+                {totalCount &&
+                <div className="bg-white p-2">
+                    <div className="row mx-0">
+                        <div className="col-md-4 px-2">
+                            <h4>Total Count - <b>{totalCount}</b></h4>
+                        </div>
+                        <div className="col-md-4 px-2">
+                            {profiles.length > 0 && <ExportBar profiles={profiles} fields={event?.event?.formFields} />}
+                        </div>
+                    </div>
+
+                </div>}
             </div>
             <Table
                 fields={event?.event?.formFields}

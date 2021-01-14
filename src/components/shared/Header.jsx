@@ -7,7 +7,7 @@ import {setUserInfo} from "../../states";
 const HeaderWrap = styled.header`
     width: 100%;
     padding: 1rem;
-    background: #340853;
+    background: #a02541;
     box-shadow: 2px 3px 8px rgba(0,0,0,0.35);
     img {
         max-height: 5vh;

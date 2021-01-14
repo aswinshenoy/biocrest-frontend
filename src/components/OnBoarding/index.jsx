@@ -28,10 +28,10 @@ const OnBoardWrap = styled.div`
 `;
 
 const StageButton = styled.button`
-  background: ${({ active, complete }) => complete ? '#00BFA5!important' : active ? 'white!important' : 'none!important'};
+  background: ${({ active, complete }) => complete ? '#a02541!important' : active ? 'white!important' : 'none!important'};
   border: none!important;
   border-radius: 0;
-  color: ${({active}) => active ? 'black!important' : '#444!important'};;
+  color: ${({active, complete }) => complete ? 'white!important' : '#444!important'};;
   padding: 8px;
   font-weight: 600;
   display: flex;
@@ -116,7 +116,7 @@ const OnBoarding = ({ startZero = false, }) => {
         {
             "value": "basic_profile",
             "label": "Basic Info",
-            "icon": require('../../assets/icons/teacher.png'),
+            "icon": require('../../assets/icons/basic_info.png'),
         },
         {
             "value": "type_select",

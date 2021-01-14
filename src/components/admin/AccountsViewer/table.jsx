@@ -8,13 +8,13 @@ const StyledTable = styled.div`
     overflow-x: auto;
     max-width: 100%;
     max-height: 70vh;
-    thead {
+    th {
       position: sticky;
       top: 0;
       left: 0;
-    }
-    tbody{
-      max-height: 60vh;
+      background: white;
+      box-shadow: 2px 0px 5px rgba(0,0,0,0.3);
+      border-bottom: 1px solid black;
     }
 `
 
@@ -62,17 +62,17 @@ export default ({
 
     return <StyledTable>
         <table className="table bg-white p-2">
-            <thead className="font-weight-bold sticky-top">
-                <td style={{ minWidth: '40px' }}>#</td>
-                <td style={{ minWidth: '150px' }}>Name</td>
-                <td style={{ minWidth: '90px' }}>Type</td>
-                <td style={{ minWidth: '180px' }}>Affiliation</td>
-                <td style={{ minWidth: '90px' }}>Gender</td>
-                <td style={{ minWidth: '90px' }}>Phone</td>
-                <td style={{ minWidth: '150px' }}>Email</td>
-                <td style={{ minWidth: '90px' }}>Date Joined</td>
+            <thead>
+                <th style={{ minWidth: '40px' }}>#</th>
+                <th style={{ minWidth: '150px' }}>Name</th>
+                <th style={{ minWidth: '90px' }}>Type</th>
+                <th style={{ minWidth: '180px' }}>Affiliation</th>
+                <th style={{ minWidth: '90px' }}>Gender</th>
+                <th style={{ minWidth: '90px' }}>Phone</th>
+                <th style={{ minWidth: '150px' }}>Email</th>
+                <th style={{ minWidth: '90px' }}>Date Joined</th>
                 {fields?.map((d) =>
-                    <td style={{ minWidth: '190px' }}>{d.label}</td>
+                    <th style={{ minWidth: '190px' }}>{d.label}</th>
                 )}
             </thead>
             {profiles?.length > 0 ?

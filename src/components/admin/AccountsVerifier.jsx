@@ -12,6 +12,7 @@ const AccountVerifier = () => {
     const [profiles, setProfiles] = useState([]);
     const [after, setAfter] = useState(null);
     const [hasNext, setHasNext] = useState(true);
+    const [count, setCount] = useState(null);
 
     const fetch = () => {
         if(hasNext){
@@ -26,6 +27,7 @@ const AccountVerifier = () => {
                 }
             }).then(({ success, data, errors }) => {
                 if(success) {
+                    setCount(data?.participants?.totalCount);
                     if(data?.participants?.participants?.length > 0 && profiles.length > 0){
                         setProfiles([...profiles, ...data?.participants?.participants]);
                     } else if(data?.participants?.participants?.length > 0){
@@ -43,7 +45,7 @@ const AccountVerifier = () => {
     return<div>
         {profiles?.length > 0 ?
             <div>
-                <h1 className="mb-4">Pending Verifications</h1>
+                <h1 className="mb-4">Pending Verifications ({count} total)</h1>
                 {profiles.map((p) =>
                     <div className="my-2">
                         <VerifyCard {...p} />

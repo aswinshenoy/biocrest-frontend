@@ -6,14 +6,18 @@ import Fade from "react-reveal/Fade";
 import FormButton from "../ui/styled-components/Button";
 
 const RoleButton = styled.button`
-    background: ${({active, selected}) => active || !selected ? 'white' : '#DDD'};
-    border: ${({ active, selected }) => active ? '5px solid #00BFA5!important' : selected ? '5px solid #DDD!important' : '5px solid white!important'};
-    color: ${({ active }) => active ? 'green' : 'black'};
+    background: ${({active, selected}) => active || !selected ? 'white' : '#EEE'};
+    border: ${({ active, selected }) => active ? '5px solid #a02541!important' : selected ? '5px solid #EEE!important' : '5px solid white!important'};
+    color: ${({ active }) => active ? '#a02541' : 'black'};
     border-radius: 0;
     width: 100%;
     padding: 5vh 1rem;
     transition: all 0.25s ease-in;
     box-shadow: 3px 5px 8px rgba(0,0,0,0.5);
+    height: 100%;
+    img {
+      max-height: 90px;
+    }
     h4 {
         margin-top: 1rem;
         margin-bottom: 0;
