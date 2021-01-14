@@ -49,9 +49,9 @@ const AccountVerifier = () => {
                         <VerifyCard {...p} />
                     </div>
                 )}
-                {hasNext && <Waypoint onEnter={fetch}>
+                {hasNext && <Waypoint onEnter={() => fetch()}>
                     <div className="my-3 p-2">
-                        <button onClick={fetch} className="btn btn-primary p-3">Load More</button>
+                        <button onClick={() => fetch()} className="btn btn-primary p-3">Load More</button>
                     </div>
                 </Waypoint>}
             </div>

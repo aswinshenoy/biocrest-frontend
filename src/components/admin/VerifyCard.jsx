@@ -37,13 +37,13 @@ const TextInput = ({ as = 'input', label, placeholder, value, onChange }) => {
 }
 
 const VerifyCard = ({
-    id, profile: profileProps, formData, timestamp
+    id, profile: profileProps, formData, timestamp, remarks
 }) => {
 
     const [isCompleted, setCompleted] = useState(false);
     const [profile, setProfile] = useState(profileProps);
     const [form, setForm] = useState(formData);
-    const [remark, setRemark] = useState('');
+    const [remark, setRemark] = useState(remarks);
 
     const [reviewParticipant] = useMutation(REVIEW_PARTICIPANT_MUTATION);
     const handleReview = (approve) => {
@@ -81,6 +81,10 @@ const VerifyCard = ({
             {profile && <div className="col-md-8 col-lg-6">
                 <EditorForm>
                     <div>
+                        {remarks &&
+                        <div className="alert-info alert my-2 p-2">
+                            Was already rejected with a remark. Please check if corrections are made, so that it can be approved
+                        </div>}
                         <div>
                             <div className="row mx-0">
                                 <div className="col-12 d-flex align-items-center p-2">

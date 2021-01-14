@@ -28,13 +28,13 @@ const MyIDCard = ({
                 <img alt="biocrest" src={require('../../assets/branding/biocrest_logo_light.png')} />
             </div>
             <div className="col-9 text-right small d-flex justify-content-end align-items-center text-light p-3">
-                <h3>{profile.type === 1 ? 'Student' : profile.type == 2 ? 'Academician' : 'Industry'}</h3>
+                <h3>{profile.type === 1 ? 'Student' : profile.type === 2 ? 'Academician' : 'Industry'}</h3>
             </div>
         </div>
         <div className="row w-100 p-3 mx-0">
             <div className="col-9 px-1">
                 <h2>{profile.title} {profile.name}</h2>
-                <div className="mb-1">ID: #{id}</div>
+                <div className="mb-1">{profile.email}</div>
                 <div>{profile.gender} | {profile.city}, {profile.state}, {profile.country}</div>
             </div>
             <div className="col-3 d-flex justify-content-end align-items-center px-1">

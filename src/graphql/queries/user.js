@@ -106,6 +106,7 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: Pa
     participants {
       uuid
       id
+      remarks
       profile {
         username
         title

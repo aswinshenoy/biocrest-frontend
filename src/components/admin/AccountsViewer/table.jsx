@@ -93,12 +93,12 @@ export default ({
                         </tr>
                     )}
                     <Waypoint onEnter={loadMore}>
-                        <div className="my-3 p-2">
+                        <div className="my-3 w-100 p-2">
                             <button onClick={loadMore} className="btn btn-primary p-3">Load More</button>
                         </div>
                     </Waypoint>
                 </tbody> :
-                <div>No profiles found</div>}
+                <div className="w-100">No profiles found</div>}
         </table>
     </StyledTable>;
 

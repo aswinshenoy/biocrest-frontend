@@ -36,6 +36,7 @@ query ($eventID: ID!){
         city
         state
         country
+        email
     }
     event{
       name
