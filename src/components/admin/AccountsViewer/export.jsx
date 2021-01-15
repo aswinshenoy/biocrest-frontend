@@ -31,10 +31,10 @@ export default ({
                 fields.map((f) => formfields.push(f.key));
             }
             d.push([
-                '#', 'Title', 'Name', 'Type', 'Phone', 'Email', 'Date Joined', 'City', 'State', 'County', 'Gender', 'Affiliation Title', 'Affiliation Body',
+                '#', 'Title', 'Name', 'Status', 'Type', 'Phone', 'Email', 'Date Joined', 'City', 'State', 'County', 'Gender', 'Affiliation Title', 'Affiliation Body',
                 ...formfields
             ])
-            profiles.forEach(({ profile: s, formData: f }, index) => {
+            profiles.forEach(({ profile: s, isApproved, remarks, formData: f }, index) => {
                 const fieldData = [];
                 fields?.map((d) => {
                     const list = f.filter((fd) => fd.label === d.key)
@@ -61,6 +61,14 @@ export default ({
                     `${index+1}`,
                     `${s.title}`,
                     `${s.name}`,
+                    `${ isApproved ? 'Approved' :
+                            remarks?.length > 0 ? 'Rejected with Remarks'
+                                : s?.IDCardURL?.length > 0 ? 'Ready for Review (ID Uploaded)'
+                                : !s?.isPhoneVerified ? 'Phone Not Verified'
+                                    : !s?.isEmailVerified ? 'Email Not Verified'
+                                        : s?.IDCardURL == null ? 'ID Not Uploaded' :
+                                            'Incomplete Profile'
+                    }`,
                     `${getTypeName(s.type)}`,
                     `${s.phone}`,
                     `${s.email}`,

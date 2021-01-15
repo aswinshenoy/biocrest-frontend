@@ -107,12 +107,15 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: Pa
       uuid
       id
       remarks
+      isApproved
       profile {
         username
         title
         name
         email
+        isEmailVerified
         phone
+        isPhoneVerified
         city
         state
         country

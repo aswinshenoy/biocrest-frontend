@@ -47,7 +47,7 @@ const UserTypeSelector = ({
         },
         {
             "value": 2,
-            "label": "Academician",
+            "label": "Academia",
             "icon": require('../../assets/icons/teacher.png')
         },
         {

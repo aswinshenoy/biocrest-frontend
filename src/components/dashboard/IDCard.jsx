@@ -28,7 +28,7 @@ const MyIDCard = ({
                 <img alt="biocrest" src={require('../../assets/branding/biocrest_logo_light.png')} />
             </div>
             <div className="col-9 text-right small d-flex justify-content-end align-items-center text-light p-3">
-                <h3>{profile.type === 1 ? 'Student' : profile.type === 2 ? 'Academician' : 'Industry'}</h3>
+                <h3>{profile.type === 1 ? 'Student' : profile.type === 2 ? 'Academia' : 'Industry'}</h3>
             </div>
         </div>
         <div className="row w-100 p-3 mx-0">

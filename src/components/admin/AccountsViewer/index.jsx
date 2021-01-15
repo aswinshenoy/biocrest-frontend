@@ -4,12 +4,12 @@ import {useQuery} from "graphql-hooks";
 import {PROFILES_QUERY} from "../../../graphql/queries/user"
 import {EVENT_QUERY} from "../../../graphql/queries/event";
 
-import SearchBar from './searchBar';
 import Table from './table';
 import APIFetch from "../../../utils/APIFetch";
 import ExportBar from "./export";
 import {TextInput} from "srx";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const eventID = process.env.eventID || 1;
 
@@ -27,6 +27,7 @@ const AccountsViewer = () => {
 
     const [keyword, setKeyword] = useState('');
     const [type, setType] = useState(null);
+    const [status, setStatus] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [startDate, setStartDate] = useState(null);
 
@@ -42,6 +43,7 @@ const AccountsViewer = () => {
                     search: keyword,
                     filters: {
                         type: type > 0 ? type : null,
+                        status: status !== 0 ? status : null,
                         endDate,
                         startDate
                     }
@@ -71,7 +73,9 @@ const AccountsViewer = () => {
 
     useEffect(() => {
         fetch(true);
-    }, [type, endDate, startDate])
+    }, [type, status, endDate, startDate])
+
+    console.log(status);
 
     const SearchBoxTable = () =>
     <div className="bg-white p-2">
@@ -88,24 +92,41 @@ const AccountsViewer = () => {
                 </form>
             </div>
             <div className="col-md-4 d-flex align-items-center p-1">
-                <select
-                    value={type}
-                    onChange={(e) => setType(e.currentTarget.value)}
-                    className="w-100 px-3 py-2"
-                >
-                    <option value={0}>All</option>
-                    <option value={1}>Student</option>
-                    <option value={2}>Academician</option>
-                    <option value={3}>Industry</option>
-                </select>
+                <div className="w-50 p-1">
+                    <label className="d-block mb-0">Type</label>
+                    <select
+                        value={type}
+                        onChange={(e) => setType(e.currentTarget.value)}
+                        className="w-100 px-3 py-2"
+                    >
+                        <option value={0}>All</option>
+                        <option value={1}>Student</option>
+                        <option value={2}>Academia</option>
+                        <option value={3}>Industry</option>
+                    </select>
+                </div>
+                <div className="w-50 p-1">
+                    <label className="d-block mb-0">Status</label>
+                    <select
+                        value={status}
+                        onChange={(e) => setStatus(e.currentTarget.value)}
+                        className="w-100 px-3 py-2"
+                    >
+                        <option value={0}>All</option>
+                        <option value='APPROVED'>Approved</option>
+                        <option value='NO_ID'>ID not uploaded</option>
+                        <option value='EMAIL_UNVERIFIED'>Email not verified</option>
+                        <option value='PHONE_UNVERIFIED'>Phone not verified</option>
+                    </select>
+                </div>
             </div>
             <div className="col-md-4 d-flex align-items-center p-1">
                 <div className="p-1">
-                    <label className="mb-0">From</label>
+                    <label className="d-block mb-0">From</label>
                     <DatePicker selected={startDate} onChange={setStartDate} />
                 </div>
                 <div className="p-1">
-                    <label className="mb-0">To</label>
+                    <label className="d-block mb-0">To</label>
                     <DatePicker selected={endDate} onChange={setEndDate} />
                 </div>
             </div>

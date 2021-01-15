@@ -65,6 +65,7 @@ export default ({
             <thead>
                 <th style={{ minWidth: '40px' }}>#</th>
                 <th style={{ minWidth: '150px' }}>Name</th>
+                <th style={{ minWidth: '120px' }}>Status</th>
                 <th style={{ minWidth: '90px' }}>Type</th>
                 <th style={{ minWidth: '180px' }}>Affiliation</th>
                 <th style={{ minWidth: '90px' }}>Gender</th>
@@ -77,17 +78,27 @@ export default ({
             </thead>
             {profiles?.length > 0 ?
                 <tbody>
-                    {profiles.map(({ profile: s, formData }, index) =>
-                        <tr>
+                    {profiles.map(({ profile: s, isApproved, remarks, formData }, index) =>
+                        <tr className={isApproved ? 'alert-success' : null}>
                             <td>{index+1}.</td>
                             <td>{s.title}. {s.name}</td>
+                            <td className={isApproved ? 'text-success font-weight-bold' : s.remarks?.length > 0 ? 'text-danger' : null}>
+                                { isApproved ? 'Approved' :
+                                    remarks?.length > 0 ? 'Rejected with Remarks'
+                                        : s?.IDCardURL?.length > 0 ? 'Ready for Review (ID Uploaded)'
+                                        : !s?.isPhoneVerified ? 'Phone Not Verified'
+                                        : !s?.isEmailVerified ? 'Email Not Verified'
+                                        : s?.IDCardURL == null ? 'ID Not Uploaded' :
+                                        'Incomplete Profile'
+                                }
+                            </td>
                             <td>{getTypeName(s.type)}</td>
                             <td>
                                 {s?.affiliationTitle?.label}, {s?.affiliationBody?.label}
                             </td>
                             <td>{s.gender}</td>
-                            <td>{s.phone}</td>
-                            <td>{s.email}</td>
+                            <td className={s.isPhoneVerified ? 'text-success' : 'text-danger font-weight-bold'}>{s.phone}</td>
+                            <td className={s.isEmailVerified ? 'text-success' : 'text-danger font-weight-bold'}>{s.email}</td>
                             <td>{format(parseISO(s.dateJoined), 'hh:MM a, dd-MM-yyyy')}</td>
                             {renderFormColumns(formData)}
                         </tr>
