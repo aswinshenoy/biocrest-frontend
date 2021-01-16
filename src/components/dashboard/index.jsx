@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import Base from "../shared/Base";
 import Header from "../shared/Header";
 import RegistrationStatus from "./status";
+import {Col, Row} from "srx";
 
 const CoverSection = styled.section`
     background: #a02541;
@@ -23,7 +24,21 @@ const DashboardPage = () => {
             <h1>Dashboard</h1>
         </CoverSection>
         <div className="container-lg px-2 py-5">
-            <RegistrationStatus />
+            <Row>
+                <Col md={6} p={2}>
+                    <RegistrationStatus />
+                </Col>
+                <Col md={6} p={1}>
+                    <div className="alert alert-warning shadow p-3">
+                        <h3 className="font-weight-bold">Competition Registrations Not Open</h3>
+                        <p>
+                            Individual competition registrations are not open at the moment, please
+                            check back this space later. We shall also intimate you by email
+                            when this process starts.
+                        </p>
+                    </div>
+                </Col>
+            </Row>
         </div>
     </Base>;
 

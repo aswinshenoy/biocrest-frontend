@@ -35,7 +35,7 @@ const MyIDCard = ({
             <div className="col-9 px-1">
                 <h2>{profile.title} {profile.name}</h2>
                 <div className="mb-1">{profile.email}</div>
-                <div>{profile.gender} | {profile.city}, {profile.state}, {profile.country}</div>
+                <div>{profile.gender} | {profile.city}, {profile.state && `${profile.state},`} {profile.country}</div>
             </div>
             <div className="col-3 d-flex justify-content-end align-items-center px-1">
                 <QRCode value={uuid} size={64} />,

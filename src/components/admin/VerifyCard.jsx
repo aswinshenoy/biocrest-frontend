@@ -141,7 +141,7 @@ const VerifyCard = ({
                         <div className="row mx-0">
                             <div className="col-md-6 p-2">
                                 <label>Affiliation Title </label>
-                                {profile?.affiliationTitle.label}
+                                {profile?.affiliationTitle?.label}
                                 {/*<AffiliationTitle*/}
                                 {/*    value={profile?.affiliationTitle}*/}
                                 {/*    onChange={(affiliationTitle) => setProfile({...profile, affiliationTitle })}*/}
@@ -149,7 +149,7 @@ const VerifyCard = ({
                             </div>
                             <div className="col-md-6 p-2">
                                 <label>Affiliation Body </label>
-                                {profile?.affiliationBody.label}
+                                {profile?.affiliationBody?.label}
                                 {/*<AffiliationBody*/}
                                 {/*    value={profile?.affiliationBody}*/}
                                 {/*    onChange={(affiliationBody) => setProfile({...profile, affiliationBody })}*/}

@@ -264,6 +264,10 @@ const OnBoarding = ({ startZero = false, }) => {
         changeStage('phone_verify', 'id_upload');
     };
 
+    const handleSkipPhone = () => {
+        changeStage('phone_verify', 'id_upload');
+    };
+
     const handleUploadID = (profile) => {
         setSubmitting(true);
         updateProfile({ variables: { update: { idCard: profile.idCard } }}).then(({ data, error }) => {
@@ -280,6 +284,13 @@ const OnBoarding = ({ startZero = false, }) => {
             }
         });
     };
+
+    const handleSkipID = (profile) => {
+        setUserInfo({
+            ...profile,
+            isProfileComplete: true
+        })
+    }
 
     const openStage = (value) => {
         let newStages = stages.map((s) => {
@@ -410,11 +421,19 @@ const OnBoarding = ({ startZero = false, }) => {
                                 </Fade>;
                             if(s.value === 'phone_verify')
                                 return <Fade key={shortid.generate()}>
-                                    <PhoneVerifyCard profile={profile} onVerify={handleVerifyPhone} />
+                                    <PhoneVerifyCard
+                                        profile={profile}
+                                        onVerify={handleVerifyPhone}
+                                        onSkip={handleSkipPhone}
+                                    />
                                 </Fade>
                             if(s.value === 'id_upload')
                                 return <Fade key={shortid.generate()}>
-                                    <IDUploader profile={profile} onContinue={handleUploadID} />
+                                    <IDUploader
+                                        profile={profile}
+                                        onContinue={handleUploadID}
+                                        onSkip={() => handleSkipID(profile)}
+                                    />
                                 </Fade>
                             return <div>Failed to Load. Please Try Again</div>;
                         })}

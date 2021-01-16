@@ -26,7 +26,7 @@ const FileSelectorWrap = styled.div`
 `;
 
 
-const IDUploader = ({ profile, onContinue = () => {} }) => {
+const IDUploader = ({ profile, onContinue = () => {}, onSkip = () => {} }) => {
 
     const [hasChanged, setChanged] = useState(false);
     const [file, setFile] = useState(
@@ -34,7 +34,10 @@ const IDUploader = ({ profile, onContinue = () => {} }) => {
             profile?.IDCardURL ? { url: profile.IDCardURL }
             : null
     );
-    const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({ noClick: true, noKeyboard: true });
+    const {getRootProps, getInputProps, open, acceptedFiles} = useDropzone({
+        noClick: true, noKeyboard: true,
+        accept: 'image/*'
+    });
 
     const getFileURL = (file) => {
         const fileSize = file.size / (1024 * 1024);
@@ -55,13 +58,14 @@ const IDUploader = ({ profile, onContinue = () => {} }) => {
 
     const handleComplete = (e) => {
         onContinue({ ...profile, idCard: file.file })
-    }
+    };
 
     return <div>
-         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="mb-3">Upload ID Card</h2>
+         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="mb-3">Upload ID Card (Optional)</h2>
         <p style={{ maxWidth: '600px' }}>
-            We request you to upload a photo of your ID card, which we will use to manually verify your
-            registration. Please make sure that details on the card are matching to the information provided,
+            We might need to manually verify your ID card for reviewing especially if you have won any prizes.
+            If you skip now, you will asked only if you win any prize at Biocrest.
+            Please make sure that details on the card are matching to the information provided,
             and are legible when you upload.
         </p>
         {file ?
@@ -102,11 +106,18 @@ const IDUploader = ({ profile, onContinue = () => {} }) => {
             </div>
         </FileSelectorWrap>}
         <Row>
-            <Col md={8} />
-            <Col md={4} p={2} className="mt-4" flexHR>
+            <Col md={6} />
+            <Col md={6} p={2} className="mt-4" flexHR>
+                <FormButton
+                    text="Skip"
+                    onClick={onSkip}
+                    py={4} px={5} round={0}
+                    className="mr-2"
+                    background="#333!important"
+                />
                 {hasChanged && <FormButton
-                    text="Complete Registration"
-                    onClick={handleComplete} fw
+                    text="Submit ID Card"
+                    onClick={handleComplete}
                     py={4} px={5} round={0}
                 />}
             </Col>
