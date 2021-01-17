@@ -1,0 +1,88 @@
+import React, { useEffect, useState } from 'react';
+import styled from "@emotion/styled";
+
+import Base from "../../src/components/shared/Base";
+import APIFetch from "../../src/utils/APIFetch";
+import {EVENT_DETAILS_QUERY} from "../../src/graphql/queries/event";
+import Header from "../../src/components/shared/Header";
+import MarkdownViewer from "../../src/components/shared/MarkdownViewer";
+
+const eventID = process.env.eventID || 1;
+
+const CoverSection = styled.section`
+    background: #a02541;
+    color: white;
+    min-height: 35vh;
+    padding: 5vh 2.5vw;
+    display: flex;
+    align-items: flex-end;
+    box-shadow: 1px 8px 8px rgba(0,0,0,0.25);
+`;
+
+const EventPage = ({ slug }) => {
+
+    const [event, setEvent] = useState(null);
+
+    const fetchEvent = () => {
+        APIFetch({
+            query: EVENT_DETAILS_QUERY,
+            variables: {
+                slug,
+                parentID: eventID
+            }
+        }).then(({ data, success, errors }) => {
+            if(success) {
+                setEvent(data.event);
+            }
+        })
+    }
+
+    useEffect(fetchEvent, []);
+
+    return event ?
+    <Base meta={{ title: event?.name ? `${event.name} - Event Page` : 'Event Page' }}>
+        <Header />
+        <CoverSection>
+            <div>
+                <h1 className="display-4 mb-1 font-weight-bold">{event?.name}</h1>
+                <div
+                    style={{ color: '#AF0C3E' }}
+                    className="bg-white d-inline-block shadow-sm px-2 py-1 mb-3 rounded"
+                >
+                    {event?.isTeamEvent ? 'Team Competition' : 'Individual Competition'}
+                </div>
+                <div style={{ fontSize: '18px'}}>{event?.shortDescription}</div>
+            </div>
+        </CoverSection>
+        <div className="container-lg py-3" style={{ maxWidth: '1333px' }}>
+            <div className="row mx-0">
+                <div className="col-md-8 px-2">
+                    <div className="bg-white shadow card my-2 p-3">
+                        <h2  style={{ color: '#AF0C3E', fontWeight: '600' }} className="mt-3 mb-2">Event Details</h2>
+                        <MarkdownViewer
+                            content={event?.details}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-4 px-1">
+                    <div className="card p-3 my-2 shadow">
+                        <div className="font-weight-bold text-danger" style={{ fontSize: '18px' }}>
+                            Registrations Not Open.
+                        </div>
+                        <div>Please check back this space in few days.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Base> : <Base meta={{ title: 'Loading Event Details' }}>
+        <Header />
+        <h1>Loading</h1>
+    </Base>
+
+};
+
+EventPage.getInitialProps = async ({ query }) => {
+    return { slug: query.slug };
+};
+
+export default EventPage;

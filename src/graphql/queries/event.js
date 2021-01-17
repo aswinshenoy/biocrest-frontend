@@ -17,6 +17,34 @@ query ($eventID: ID!){
   }
 }`;
 
+export const EVENT_DETAILS_QUERY = `
+query ($parentID: ID, $slug: String) {
+  event(parentID: $parentID, slug: $slug) {
+    name
+    slug
+    shortDescription
+    coverURL
+    details
+    isTeamEvent
+    minTeamSize
+    maxTeamSize
+  }
+}
+`;
+
+export const EVENTS_QUERY = `
+query ($parentID: ID){
+  events(parentID: $parentID){
+    totalCount
+    events{
+      name
+      slug
+      shortDescription
+      coverURL
+    }
+  }
+}`;
+
 export const MY_EVENT_PROFILE_QUERY = `
 query ($eventID: ID!){
   myEventProfile(eventID: $eventID){
