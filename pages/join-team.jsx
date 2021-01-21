@@ -1,16 +1,12 @@
 import React from 'react';
-
-import RegistrationForm from "../src/components/registration/RegisterForm";
-import OnBoarding from "../src/components/OnBoarding";
-
-import Base from "../src/components/shared/Base";
-import AdminPanel from "../src/components/admin";
 import ViewAuthenticator from "../src/components/shared/ViewAuthenticator";
+import Base from "../src/components/shared/Base";
 import Header from "../src/components/shared/Header";
+import AdminPanel from "../src/components/admin";
+import RegistrationForm from "../src/components/registration/RegisterForm";
+import JoinTeam from "../src/components/teams/JoinTeam";
 
-
-
-const RegisterPage = () => {
+const JoinTeamPage = () => {
 
     return <ViewAuthenticator
         renderAdmin={() =>
@@ -22,8 +18,11 @@ const RegisterPage = () => {
             </Base>
         }
         renderAuth={() =>
-            <Base meta={{ title: 'Complete Your Profile' }}>
-                <OnBoarding startZero />
+            <Base meta={{ title: 'Join A Team' }}>
+                <Header />
+                <div className="container my-3">
+                    <JoinTeam />
+                </div>
             </Base>
         }
         renderPublic={() =>
@@ -35,4 +34,4 @@ const RegisterPage = () => {
 
 };
 
-export default RegisterPage;
+export default JoinTeamPage;

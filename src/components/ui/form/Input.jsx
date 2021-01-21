@@ -24,11 +24,25 @@ const FormInput = styled.div`
 `;
 
 const Input = ({
-   label, type, value, className, autoComplete, placeholder, onChange = () => {}, isRequired = false
+   label, type, value, className, charLimit, autoComplete, placeholder, onChange = () => {}, isRequired = false
 }) => {
 
     return <FormInput>
         <label>{label}</label>
+        {type === 'textarea' ?
+        <textarea
+            title={label}
+            placeholder={placeholder}
+            required={isRequired}
+            aria-label={label}
+            aria-required={isRequired}
+            value={value}
+            onChange={(e) =>
+                e.currentTarget.value.length <= charLimit ? onChange(e.currentTarget.value) : null
+            }
+            className={className}
+            rows={3}
+        /> :
         <input
             title={label}
             placeholder={placeholder}
@@ -36,11 +50,15 @@ const Input = ({
             type={type}
             autoComplete={autoComplete}
             className={className}
-            onChange={(e) => onChange(e.currentTarget.value)}
+            onChange={(e) =>
+                charLimit ? (e.currentTarget.value.length <= charLimit ? onChange(e.currentTarget.value) : null) :
+                    onChange(e.currentTarget.value)
+            }
             required={isRequired}
             aria-label={label}
             aria-required={isRequired}
-        />
+        />}
+        {charLimit && <div>Maximum Characters: {charLimit}</div>}
     </FormInput>
 
 };

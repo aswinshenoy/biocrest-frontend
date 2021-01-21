@@ -109,7 +109,7 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: Pa
       remarks
       isApproved
       profile {
-        username
+        id
         title
         name
         email
@@ -131,6 +131,12 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: Pa
         }
         dateJoined
         IDCardURL
+      }
+      submissions {
+        id
+        url
+        fileURL
+        key
       }
       formData {
         label: key

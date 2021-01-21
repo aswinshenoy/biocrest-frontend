@@ -11,9 +11,7 @@ import {TextInput} from "srx";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const eventID = process.env.eventID || 1;
-
-const AccountsViewer = () => {
+const AccountsViewer = ({ eventID }) => {
 
     const { loading: loadingEvent, error: eventError , data: event, refetch: refetchEvent } = useQuery(
         EVENT_QUERY, { variables: { eventID,} }
@@ -74,8 +72,6 @@ const AccountsViewer = () => {
     useEffect(() => {
         fetch(true);
     }, [type, status, endDate, startDate])
-
-    console.log(status);
 
     const SearchBoxTable = () =>
     <div className="bg-white p-2">

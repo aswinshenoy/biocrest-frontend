@@ -16,7 +16,7 @@ import BasicInfoForm from "./BasicInfo";
 
 import {MY_EVENT_PROFILE_QUERY, PARTICIPATE_MUTATION} from "../../graphql/queries/event";
 import {MY_PROFILE_QUERY, UPDATE_MUTATION} from "../../graphql/queries/user";
-import EventFields from "./eventFields";
+import EventFieldsForm from "../fields/EventForm";
 
 const eventID = process.env.eventID || 1;
 
@@ -45,7 +45,7 @@ const StageButton = styled.button`
     width: 45px;
     margin-right: 10px;
   }
-  &:focus, hover {
+  &:focus, &:hover {
     outline: none!important;
   }
 `;
@@ -405,10 +405,12 @@ const OnBoarding = ({ startZero = false, }) => {
                                 </Fade>
                             if(s.value === 'event_profile')
                                 return <Fade key={shortid.generate()}>
-                                    <EventFields
-                                        userType={profile.type}
-                                        eventProfile={eventProfile}
+                                    <EventFieldsForm
+                                        eventName="Biocrest"
+                                        formFields={eventProfile?.event?.formFields}
+                                        formData={eventProfile?.formData}
                                         onSave={handleEventProfileSave}
+                                        userType={profile.type}
                                     />
                                 </Fade>
                             if(s.value === 'email_verify')

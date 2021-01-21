@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from "@emotion/styled";
+import {Col, Row} from "srx";
 
 import Base from "../shared/Base";
 import Header from "../shared/Header";
 import RegistrationStatus from "./status";
-import {Col, Row} from "srx";
 import EventsListing from "./Events";
+import MyEventRegistrations from "./MyEvents";
+import MyTeams from "../teams/MyTeams";
 
 const CoverSection = styled.section`
     background: #a02541;
@@ -28,14 +30,18 @@ const DashboardPage = () => {
             <Row>
                 <Col md={4} p={2}>
                     <RegistrationStatus />
-                    <div className="alert alert-warning my-3 shadow p-3">
-                        <h4 className="font-weight-bold">Competition Registrations Not Open</h4>
-                        <p>
-                            Individual competition registrations are not open at the moment, please
-                            check back this space later. We shall also intimate you by email
-                            when this process starts.
-                        </p>
+                    {/*<div className="alert alert-warning my-3 shadow p-3">*/}
+                    {/*    <h4 className="font-weight-bold">Competition Registrations Not Open</h4>*/}
+                    {/*    <p>*/}
+                    {/*        Individual competition registrations are not open at the moment, please*/}
+                    {/*        check back this space later. We shall also intimate you by email*/}
+                    {/*        when this process starts.*/}
+                    {/*    </p>*/}
+                    {/*</div>*/}
+                    <div className="my-2">
+                        <MyEventRegistrations />
                     </div>
+                    <MyTeams />
                 </Col>
                 <Col md={8} p={2}>
                     <EventsListing />

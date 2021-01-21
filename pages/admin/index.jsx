@@ -6,26 +6,26 @@ import ViewAuthenticator from "../../src/components/shared/ViewAuthenticator";
 import Header from "../../src/components/shared/Header";
 import RegistrationForm from "../../src/components/registration/RegisterForm";
 
+const eventID = process.env.eventID || 1;
+
 export default () => {
 
     return <ViewAuthenticator
         renderAdmin={() =>
-            <Base meta={{ title: 'Admin Panel' }}>
-                <Header />
-                <div className="container-lg px-2 py-5">
-                    <AdminPanel />
-                </div>
-            </Base>
-        }
+        <Base meta={{ title: 'Admin Panel' }}>
+            <Header />
+            <div className="container-lg px-2 py-5">
+                <AdminPanel eventID={eventID} />
+            </div>
+        </Base>}
         renderAuth={() =>
         <div>
             <h1>Access Denied</h1>
         </div>}
         renderPublic={() =>
-            <Base meta={{ title: 'Registration' }}>
-                <RegistrationForm />
-            </Base>
-        }
-    />
+        <Base meta={{ title: 'Registration' }}>
+            <RegistrationForm />
+        </Base>}
+    />;
 
 };

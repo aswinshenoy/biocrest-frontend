@@ -6,6 +6,7 @@ import APIFetch from "../../src/utils/APIFetch";
 import {EVENT_DETAILS_QUERY} from "../../src/graphql/queries/event";
 import Header from "../../src/components/shared/Header";
 import MarkdownViewer from "../../src/components/shared/MarkdownViewer";
+import FormButton from "../../src/components/ui/styled-components/Button";
 
 const eventID = process.env.eventID || 1;
 
@@ -42,34 +43,35 @@ const EventPage = ({ slug }) => {
     return event ?
     <Base meta={{ title: event?.name ? `${event.name} - Event Page` : 'Event Page' }}>
         <Header />
-        <CoverSection>
-            <div>
-                <h1 className="display-4 mb-1 font-weight-bold">{event?.name}</h1>
-                <div
-                    style={{ color: '#AF0C3E' }}
-                    className="bg-white d-inline-block shadow-sm px-2 py-1 mb-3 rounded"
-                >
-                    {event?.isTeamEvent ? 'Team Competition' : 'Individual Competition'}
+        <div className="row mx-0">
+            <div className="col-md-4 px-0">
+                <CoverSection>
+                    <div>
+                        <h1 className="display-4 mb-1 font-weight-bold">{event?.name}</h1>
+                        <div
+                            style={{ color: '#AF0C3E' }}
+                            className="bg-white d-inline-block shadow-sm px-2 py-1 mb-3 rounded"
+                        >
+                            {event?.isTeamEvent ? 'Team Competition' : 'Individual Competition'}
+                        </div>
+                        <div style={{ fontSize: '18px'}}>{event?.shortDescription}</div>
+                    </div>
+                </CoverSection>
+                <div className="card w-100 p-3 my-2 shadow">
+                    <FormButton
+                        text="Register Now"
+                        link={`/register/${slug}`}
+                        py={3} px={4} fw
+                    />
                 </div>
-                <div style={{ fontSize: '18px'}}>{event?.shortDescription}</div>
             </div>
-        </CoverSection>
-        <div className="container-lg py-3" style={{ maxWidth: '1333px' }}>
-            <div className="row mx-0">
-                <div className="col-md-8 px-2">
+            <div className="col-md-8 px-4">
+                <div>
                     <div className="bg-white shadow card my-2 p-3">
                         <h2  style={{ color: '#AF0C3E', fontWeight: '600' }} className="mt-3 mb-2">Event Details</h2>
                         <MarkdownViewer
                             content={event?.details}
                         />
-                    </div>
-                </div>
-                <div className="col-md-4 px-1">
-                    <div className="card p-3 my-2 shadow">
-                        <div className="font-weight-bold text-danger" style={{ fontSize: '18px' }}>
-                            Registrations Not Open.
-                        </div>
-                        <div>Please check back this space in few days.</div>
                     </div>
                 </div>
             </div>

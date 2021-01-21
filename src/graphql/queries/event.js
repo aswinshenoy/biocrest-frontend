@@ -32,6 +32,35 @@ query ($parentID: ID, $slug: String) {
 }
 `;
 
+export const EVENT_REG_FORM_QUERY = `
+query ($parentID: ID, $slug: String, $eventID: ID) {
+  event(parentID: $parentID, slug: $slug, eventID: $eventID) {
+    name
+    id
+    requireApproval
+    isTeamEvent
+    minTeamSize
+    maxTeamSize
+    formFields{
+      type
+      label
+      key
+      options
+      {
+        value
+        label
+        allowedUserTypes
+      }
+      charLimit
+      maxSelections
+      isPublic
+      isURL
+      formats
+    }
+  }
+}
+`;
+
 export const EVENTS_QUERY = `
 query ($parentID: ID){
   events(parentID: $parentID){
@@ -39,6 +68,7 @@ query ($parentID: ID){
     events{
       name
       slug
+      id
       shortDescription
       coverURL
     }
@@ -84,8 +114,8 @@ query ($eventID: ID!){
 }`;
 
 export const PARTICIPATE_MUTATION = `
-mutation ($eventID: ID!, $data: JSONString){
-  participate(eventID: $eventID, data: $data){
+mutation ($eventID: ID!, $teamID: ID, $data: JSONString){
+  participate(eventID: $eventID, teamID: $teamID, data: $data){
     uuid
     id
     formData{
@@ -105,5 +135,36 @@ mutation ($eventID: ID!, $data: JSONString){
         }
       }
     }
+  }
+}`;
+
+export const SUBMIT_MUTATION = `
+mutation ($file: Upload!, $key: String!, $participantID: ID!) {
+  submit(file: $file, key: $key, participantID: $participantID){
+    id
+  }
+}`;
+
+export const MY_BASIC_EVENT_PROFILE_QUERY = `
+query ($eventID: ID!){
+  myEventProfile(eventID: $eventID){
+    isApproved
+    timestampRegistered
+    formData{
+      key
+      value
+    }
+  }
+}`;
+
+export const MY_EVENT_REGS = `
+query ($eventID: ID!){
+  myEvents(parentID: $eventID){
+    isApproved
+    event{
+      name
+      slug
+    }
+    timestampRegistered
   }
 }`;

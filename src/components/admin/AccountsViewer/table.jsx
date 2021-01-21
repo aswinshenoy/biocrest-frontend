@@ -81,7 +81,11 @@ export default ({
                     {profiles.map(({ profile: s, isApproved, remarks, formData }, index) =>
                         <tr className={isApproved ? 'alert-success' : null}>
                             <td>{index+1}.</td>
-                            <td>{s.title}. {s.name}</td>
+                            <td>
+                                <a title="Click to view profile" href={`/admin/profile/${s.id}`} target="_blank">
+                                    {s.title && `${s.title}.`} {s.name}
+                                </a>
+                            </td>
                             <td className={isApproved ? 'text-success font-weight-bold' : s.remarks?.length > 0 ? 'text-danger' : null}>
                                 { isApproved ? 'Approved' :
                                     remarks?.length > 0 ? 'Rejected with Remarks'
