@@ -21,7 +21,7 @@ const JoinTeamPage = () => {
             <Base meta={{ title: 'Join A Team' }}>
                 <Header />
                 <div className="container my-3">
-                    <JoinTeam />
+                    <JoinTeam showContinue={false} />
                 </div>
             </Base>
         }

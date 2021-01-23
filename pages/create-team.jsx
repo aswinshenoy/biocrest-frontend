@@ -21,7 +21,7 @@ const CreateTeamPage = () => {
             <Base meta={{ title: 'Create A Team' }}>
                 <Header />
                 <div className="container my-3">
-                    <CreateTeam />
+                    <CreateTeam showContinue={false} />
                 </div>
             </Base>
         }

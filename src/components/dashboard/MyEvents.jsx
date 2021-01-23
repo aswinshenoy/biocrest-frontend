@@ -32,15 +32,20 @@ const MyEventRegistrations = () => {
         {events?.length > 0 ?
         <div>{events.map((e) =>
             <div className="row mx-0 border-bottom py-2">
-                <div className="col-md-8 p-1">
+                <div className="col-md-6 p-1">
                     <div className="font-weight-bold mb-0">
                         {e.event.name}
                     </div>
                 </div>
-                <div className="col-md-4 p-1">{
+                <div className="col-md-3 p-1">{
                     e.isApproved ? <div className="text-success">Approved</div>
                         : <div className="text-danger">Pending</div>
                 }</div>
+                <div className="col-md-3 d-flex justify-content-end p-1">
+                    <a href={`/register/${e.event.slug}`} className="text-primary">
+                        Edit
+                    </a>
+                </div>
             </div>
         )}</div> :
         <div>

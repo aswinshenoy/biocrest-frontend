@@ -139,8 +139,8 @@ mutation ($eventID: ID!, $teamID: ID, $data: JSONString){
 }`;
 
 export const SUBMIT_MUTATION = `
-mutation ($file: Upload!, $key: String!, $participantID: ID!) {
-  submit(file: $file, key: $key, participantID: $participantID){
+mutation ($file: Upload, $url: String, $key: String!, $participantID: ID!) {
+  submit(file: $file, url: $url, key: $key, participantID: $participantID){
     id
   }
 }`;
@@ -150,9 +150,15 @@ query ($eventID: ID!){
   myEventProfile(eventID: $eventID){
     isApproved
     timestampRegistered
+    remarks
     formData{
       key
       value
+    }
+    submissions{
+      url
+      fileURL
+      key
     }
   }
 }`;

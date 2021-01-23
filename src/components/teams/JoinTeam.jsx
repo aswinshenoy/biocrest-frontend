@@ -29,8 +29,8 @@ const JoinTeam = () => {
         <div className="p-2">
             <form onSubmit={joinTeam} style={{ maxWidth: '500px' }}>
                 <Input
-                    label="Name"
-                    placeholder="Enter your name"
+                    label="Invite Code"
+                    placeholder="Invite Code"
                     value={code}
                     className="w-100"
                     onChange={setCode}

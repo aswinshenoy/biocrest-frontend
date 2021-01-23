@@ -31,9 +31,12 @@ const EventsListing = () => {
         <Row>{events.map((e) =>
             <Col md={4} p={2}>
                 <a href={`/event/${e.slug}`} className="plain-link">
-                    <Card bg="white" p={4} shadow={2} round={0}>
-                        <h3 style={{ color: '#AF0C3E', fontWeight: '600' }}>{e.name}</h3>
-                        <div>{e.shortDescription}</div>
+                    <Card bg="white" p={0} shadow={2} round={0}>
+                        {e.coverURL && <img draggable="false" src={e.coverURL} alt={e.name} />}
+                        <div className="p-3">
+                            <h3 style={{ color: '#AF0C3E', fontWeight: '600' }}>{e.name}</h3>
+                            <div>{e.shortDescription}</div>
+                        </div>
                     </Card>
                 </a>
             </Col>

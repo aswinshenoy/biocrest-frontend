@@ -5,6 +5,7 @@ import Header from "../../src/components/shared/Header";
 import APIFetch from "../../src/utils/APIFetch";
 import {EVENT_REG_FORM_QUERY, MY_BASIC_EVENT_PROFILE_QUERY} from "../../src/graphql/queries/event";
 import EventRegister from "../../src/components/register";
+import FormButton from "../../src/components/ui/styled-components/Button";
 
 const eventID = process.env.eventID || 1;
 
@@ -13,6 +14,7 @@ const EventRegistrationPage = ({ slug }) => {
     const [event, setEvent] = useState(null);
     const [myProfile, setProfile] = useState(null);
     const [isRegistered, setRegistered] = useState(false);
+    const [isEditor, showEditor] = useState(false);
 
     const fetchForm = () => {
         APIFetch({
@@ -31,7 +33,7 @@ const EventRegistrationPage = ({ slug }) => {
                 }).then(({ success, data: profile, errors }) => {
                     setEvent(data.event);
                     if(success) {
-                        setProfile(data.myEventProfile);
+                        setProfile(profile.myEventProfile);
                         setRegistered(true);
                     }
                 })
@@ -44,7 +46,14 @@ const EventRegistrationPage = ({ slug }) => {
 
     return <Base meta={{ title: 'Competition Registration' }}>
         <Header />
-        {isRegistered ?
+        {isEditor ?
+        <EventRegister
+            isEditor
+            myProfile={myProfile}
+            event={event}
+            onRegister={(p) => { fetchForm(); showEditor(false); setProfile(p); setRegistered(true) }}
+        /> :
+        isRegistered ?
         <div className="container p-2 my-3 d-flex align-items-center justify-content-center">
             <div className="bg-white p-3 shadow-sm" style={{ width: '720px', maxWidth: '100%' }}>
                 <h1 style={{ color: '#AF0C3E', fontWeight: '600' }}>
@@ -58,6 +67,14 @@ const EventRegistrationPage = ({ slug }) => {
                 <p>
                     You have successfully registered for the event
                 </p>}
+                {!myProfile?.isApproved &&
+                <div>
+                    <FormButton
+                        text="Edit Registration"
+                        onClick={() => showEditor(true)}
+                        px={4} py={3}
+                    />
+                </div>}
             </div>
         </div> :
         event ?

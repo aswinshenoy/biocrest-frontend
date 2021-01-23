@@ -19,9 +19,7 @@ const EventSubmission = ({
     const [file, setFile] = useState(null);
     const [url, setURL] = useState(null);
 
-    useEffect(() => {
-        onChange(isURL ? { url } : { file })
-    }, [file, url]);
+    useEffect(() => { onChange(isURL ? { url } : { file }) }, [file, url]);
 
     return <div>
         {isURL ?
@@ -34,23 +32,25 @@ const EventSubmission = ({
                 type="url"
             />
         </div> :
-        <div>
-            {file ?
+        <div>{file ?
             <div>
                 <label className="font-weight-bold">File Selected</label>
                 <div>{file?.file?.name}</div>
             </div> :
-            <FileUploader
-                formats={formats}
-                onUpload={setFile}
-            />}
+            <div>
+                <label className="font-weight-bold">{label}</label>
+                <FileUploader
+                    formats={formats}
+                    onUpload={setFile}
+                />
+            </div>}
         </div>}
     </div>
 
 };
 
 const EventFieldsForm = ({
-     eventName, userType, formData, formFields, onSave = () => {},
+     eventName, userType, formData, submissions, formFields, isEditor, onSave = () => {},
  }) => {
 
     const getFormData = () => {
@@ -174,13 +174,39 @@ const EventFieldsForm = ({
         </div>
     </Col>;
 
-    const renderSubmission = (f) =>
-    <Col md={12} p={2}>
-        <EventSubmission
-            {...f}
-            onChange={(v) => setForm({...form, [f.key]: v })}
-        />
-    </Col>;
+    const getSubmissionURLByKey = (key) => {
+        if(submissions?.length > 0 && submissions.some((s) => s.key === key)){
+            return submissions.filter((s) => s.key === key)[0];
+        }
+        return null;
+    }
+
+    const renderSubmission = (f) => {
+        let submission = f?.key ? getSubmissionURLByKey(f.key) : null;
+        return <Col md={12} p={2}>
+            {submission &&
+            <div className="card p-1">
+                <div>Current Submission</div>
+                {submission?.url && <div>
+                    URL: <a target="_blank" href={submission.url}>{submission.url}</a>
+                </div>}
+                {submission?.fileURL && <div>
+                    {f.formats === 'image/*' ?
+                        <div style={{ width: '200px', maxWidth: '100%', maxHeight: '500px' }}>
+                            <img draggable="false" src={submission.fileURL} alt={f?.label} />
+                        </div> :
+                        <div>
+                            <a target="_blank" href={submission.fileURL}>Download Submission File</a>
+                        </div>
+                    }
+                </div>}
+            </div>}
+            <EventSubmission
+                {...f}
+                onChange={(v) => setForm({...form, [f.key]: v })}
+            />
+        </Col>
+    };
 
     return <form onSubmit={handleSubmit}>
         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }}>{eventName} Registration</h2>
@@ -197,7 +223,7 @@ const EventFieldsForm = ({
                     f.type === 'submission' ? renderSubmission(f)
                     : <div>Unsupported Field</div>
                 ) : null}
-            {formFields.some((f) => f.isPublic) &&
+            {(!isEditor && formFields.some((f) => f.isPublic)) &&
             <div className="mt-4 p-2 d-flex">
                 <input
                     type="checkbox"
@@ -214,12 +240,12 @@ const EventFieldsForm = ({
             <Col md={8} />
             <Col md={4} p={2} className="mt-4" flexHR>
                 {(
-                    isChecked ||
+                    (isChecked || isEditor) ||
                     formFields?.length === 0 ||
                     !(formFields?.length > 0 && formFields.some((f) => f.isPublic))
                 ) &&
                 <FormButton
-                    text="Continue"
+                    text={isEditor ? "Save" : "Continue"}
                     type="submit" fw
                     py={4} px={5} round={0}
                 />}
