@@ -34,7 +34,7 @@ const CreateTeam = ({
             <form onSubmit={createTeam} style={{ maxWidth: '500px' }}>
                 <Input
                     label="Team Name"
-                    placeholder="Enter your name"
+                    placeholder="Enter your team name"
                     value={name}
                     className="w-100"
                     onChange={setName}

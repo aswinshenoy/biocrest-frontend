@@ -26,6 +26,7 @@ query ($parentID: ID, $slug: String) {
     coverURL
     acceptRegistrations
     isUserAllowedToRegister
+    registrationCloseTimestamp
     details
     isTeamEvent
     minTeamSize
@@ -38,6 +39,7 @@ export const EVENT_REG_FORM_QUERY = `
 query ($parentID: ID, $slug: String, $eventID: ID) {
   event(parentID: $parentID, slug: $slug, eventID: $eventID) {
     name
+    slug
     id
     requireApproval
     isTeamEvent
@@ -74,7 +76,8 @@ query ($parentID: ID){
       acceptRegistrations
       isUserAllowedToRegister
       shortDescription
-      coverURL
+      registrationCloseTimestamp
+      posterURL
     }
   }
 }`;

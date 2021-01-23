@@ -20,9 +20,9 @@ const MenuButton = styled.a`
 `;
 
 
-const AdminPanel = ({ eventID }) => {
+const defaultEventID = process.env.eventID || 1;
 
-    console.log(eventID);
+const AdminPanel = ({ eventID = defaultEventID }) => {
 
     return <div className="row mx-0">
         <div className="col-md-4 px-2">

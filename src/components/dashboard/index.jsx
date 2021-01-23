@@ -27,7 +27,7 @@ const DashboardPage = () => {
         <CoverSection>
             <h1>Dashboard</h1>
         </CoverSection>
-        <div style={{ minHeight: '75vh' }} className="px-2 py-5">
+        <div style={{ minHeight: '100vh' }} className="px-2 py-5">
             <Row>
                 <Col md={4} p={2}>
                     <RegistrationStatus />

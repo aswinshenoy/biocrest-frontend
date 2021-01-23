@@ -3,6 +3,8 @@ import APIFetch from "../../utils/APIFetch";
 import {EVENTS_QUERY} from "../../graphql/queries/event";
 import {Card, Col, Row} from "srx";
 import EventCard from "./EventCard";
+import shortid from "shortid";
+import Fade from "react-reveal/Fade";
 
 const eventID = process.env.eventID || 1;
 
@@ -29,9 +31,11 @@ const EventsListing = () => {
     return <div className="my-3">
         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold">Competitions</h2>
         {events?.filter((e) => !(!e.isUserAllowedToRegister)).length > 0 ?
-        <Row>{events.filter((e) => !(!e.isUserAllowedToRegister)).map((e) =>
+        <Row>{events.filter((e) => !(!e.isUserAllowedToRegister)).map((e, i) =>
             <Col md={4} p={2}>
-                <EventCard {...e} />
+                <Fade delay={i*200} key={shortid.generate()}>
+                    <EventCard {...e} />
+                </Fade>
             </Col>
         )}</Row> : <div>
             <h3>No events listed now</h3>

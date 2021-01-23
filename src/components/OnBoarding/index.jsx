@@ -17,6 +17,7 @@ import BasicInfoForm from "./BasicInfo";
 import {MY_EVENT_PROFILE_QUERY, PARTICIPATE_MUTATION} from "../../graphql/queries/event";
 import {MY_PROFILE_QUERY, UPDATE_MUTATION} from "../../graphql/queries/user";
 import EventFieldsForm from "../fields/EventForm";
+import Base from "../shared/Base";
 
 const eventID = process.env.eventID || 1;
 
@@ -434,6 +435,7 @@ const OnBoarding = ({ startZero = false, }) => {
                                     <IDUploader
                                         profile={profile}
                                         onContinue={handleUploadID}
+                                        hideSkip={startZero}
                                         onSkip={() => handleSkipID(profile)}
                                     />
                                 </Fade>

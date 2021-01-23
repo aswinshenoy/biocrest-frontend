@@ -21,6 +21,12 @@ const JoinTeamPage = () => {
             <Base meta={{ title: 'Join A Team' }}>
                 <Header />
                 <div className="container my-3">
+                    <nav aria-label="breadcrumb">
+                        <ol className="mb-3 breadcrumb bg-white shadow-sm">
+                            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li className="breadcrumb-item active" aria-current="page">Join A Team</li>
+                        </ol>
+                    </nav>
                     <JoinTeam showContinue={false} />
                 </div>
             </Base>

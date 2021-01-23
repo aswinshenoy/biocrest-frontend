@@ -4,7 +4,7 @@ import {Button, Col, Row} from "srx";
 import FormButton from "../ui/styled-components/Button";
 import FileUploader from "../ui/form/FileUploader";
 
-const IDUploader = ({ profile, onContinue = () => {}, onSkip = () => {} }) => {
+const IDUploader = ({ profile, hideSkip = false, onContinue = () => {}, onSkip = () => {} }) => {
 
     const [hasChanged, setChanged] = useState(false);
     const [file, setFile] = useState(
@@ -46,13 +46,14 @@ const IDUploader = ({ profile, onContinue = () => {}, onSkip = () => {} }) => {
         <Row>
             <Col md={6} />
             <Col md={6} p={2} className="mt-4" flexHR>
+                {!hideSkip &&
                 <FormButton
                     text="Skip"
                     onClick={onSkip}
                     py={4} px={5} round={0}
                     className="mr-2"
                     background="#333!important"
-                />
+                />}
                 {hasChanged && <FormButton
                     text="Submit ID Card"
                     onClick={handleComplete}

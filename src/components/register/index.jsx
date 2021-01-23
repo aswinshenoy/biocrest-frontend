@@ -61,8 +61,8 @@ const EventRegister = ({ isEditor, myProfile, teamID: teamIDProps, event, onRegi
                 eventName={event.name}
                 onSave={processRegistration}
             /> :
-            <div className="text-center">
-                <h1>{isEditor ? `Edit Registration for ${event.name}` : `Register for ${event.name}`}</h1>
+            <div className="text-center py-3">
+                <h2 className="font-weight-bold my-3">{isEditor ? `Edit Registration for ${event.name}` : `Register for ${event.name}`}</h2>
                 <FormButton
                     text="Register"
                     onClick={() => processRegistration({})}
