@@ -123,13 +123,16 @@ const RegistrationForm = ({ type = 'register' }) => {
                             <a href="https://amrita.edu/biocrest" rel="noreferrer nofollow">
                                 Home
                             </a>
-                            <a href="https://www.amrita.edu/biocrest/?page_id=1098" rel="noreferrer nofollow">
+                            <a href="https://www.amrita.edu/biocrest/the-symposia/" rel="noreferrer nofollow">
                                 About
                             </a>
-                            <a href="https://www.amrita.edu/biocrest/?page_id=1846" rel="noreferrer nofollow">
+                            <a href="https://www.amrita.edu/biocrest/speakers/" rel="noreferrer nofollow">
                                 Speakers
                             </a>
-                            <a href="https://www.amrita.edu/biocrest/?page_id=75" rel="noreferrer nofollow">
+                            <a href="https://www.amrita.edu/biocrest/schedule/" rel="noreferrer nofollow">
+                                Schedule
+                            </a>
+                            <a href="https://www.amrita.edu/biocrest/blog/" rel="noreferrer nofollow">
                                 Blog
                             </a>
                         </MenuNav>

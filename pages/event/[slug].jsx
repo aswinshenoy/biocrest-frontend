@@ -7,6 +7,7 @@ import {EVENT_DETAILS_QUERY} from "../../src/graphql/queries/event";
 import Header from "../../src/components/shared/Header";
 import MarkdownViewer from "../../src/components/shared/MarkdownViewer";
 import FormButton from "../../src/components/ui/styled-components/Button";
+import Footer from "../../src/components/shared/Footer";
 
 const eventID = process.env.eventID || 1;
 
@@ -43,7 +44,7 @@ const EventPage = ({ slug }) => {
     return event ?
     <Base meta={{ title: event?.name ? `${event.name} - Event Page` : 'Event Page' }}>
         <Header />
-        <div className="row mx-0">
+        <div style={{ minHeight: '85vh' }} className="row mx-0">
             <div className="col-md-4 px-0">
                 <CoverSection>
                     <div>
@@ -76,6 +77,7 @@ const EventPage = ({ slug }) => {
                 </div>
             </div>
         </div>
+        <Footer />
     </Base> : <Base meta={{ title: 'Loading Event Details' }}>
         <Header />
         <h1>Loading</h1>

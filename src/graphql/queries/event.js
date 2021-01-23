@@ -24,6 +24,8 @@ query ($parentID: ID, $slug: String) {
     slug
     shortDescription
     coverURL
+    acceptRegistrations
+    isUserAllowedToRegister
     details
     isTeamEvent
     minTeamSize
@@ -69,6 +71,8 @@ query ($parentID: ID){
       name
       slug
       id
+      acceptRegistrations
+      isUserAllowedToRegister
       shortDescription
       coverURL
     }

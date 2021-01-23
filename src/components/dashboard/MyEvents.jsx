@@ -27,11 +27,23 @@ const MyEventRegistrations = () => {
     useEffect(fetchEvents, []);
 
     return isLoaded ?
-    <div className="bg-white rounded p-3 my-1 shadow-sm">
-        <h3 style={{ color: '#AF0C3E', fontWeight: '600' }}>My Competition Registrations</h3>
+    <div className="bg-white rounded shadow-sm">
+        <div className="rounded-top p-3" style={{ backgroundColor: '#AF0C3E' }}>
+            <h3 className="mb-0" style={{ color: '#FFF', fontWeight: '600' }}>My Competition Registrations</h3>
+        </div>
         {events?.length > 0 ?
-        <div>{events.map((e) =>
-            <div className="row mx-0 border-bottom py-2">
+        <div>
+            <div className="row mx-0 p-2 alert-danger font-weight-bold py-2">
+                <div className="col-md-6 p-1">
+                        Event Name
+                </div>
+                <div className="col-md-3 p-1">Status</div>
+                <div className="col-md-3 d-flex justify-content-end p-1">
+
+                </div>
+            </div>
+            {events.map((e) =>
+            <div className="row mx-0 border-top p-2">
                 <div className="col-md-6 p-1">
                     <div className="font-weight-bold mb-0">
                         {e.event.name}

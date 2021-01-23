@@ -33,7 +33,7 @@ const CreateTeam = ({
         <div className="p-2">
             <form onSubmit={createTeam} style={{ maxWidth: '500px' }}>
                 <Input
-                    label="Name"
+                    label="Team Name"
                     placeholder="Enter your name"
                     value={name}
                     className="w-100"

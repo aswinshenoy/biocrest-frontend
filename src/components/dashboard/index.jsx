@@ -8,6 +8,7 @@ import RegistrationStatus from "./status";
 import EventsListing from "./Events";
 import MyEventRegistrations from "./MyEvents";
 import MyTeams from "../teams/MyTeams";
+import Footer from "../shared/Footer";
 
 const CoverSection = styled.section`
     background: #a02541;
@@ -26,7 +27,7 @@ const DashboardPage = () => {
         <CoverSection>
             <h1>Dashboard</h1>
         </CoverSection>
-        <div className="px-2 py-5">
+        <div style={{ minHeight: '75vh' }} className="px-2 py-5">
             <Row>
                 <Col md={4} p={2}>
                     <RegistrationStatus />
@@ -38,7 +39,7 @@ const DashboardPage = () => {
                     {/*        when this process starts.*/}
                     {/*    </p>*/}
                     {/*</div>*/}
-                    <div className="my-2">
+                    <div className="my-3">
                         <MyEventRegistrations />
                     </div>
                     <MyTeams />
@@ -48,6 +49,7 @@ const DashboardPage = () => {
                 </Col>
             </Row>
         </div>
+        <Footer />
     </Base>;
 
 };

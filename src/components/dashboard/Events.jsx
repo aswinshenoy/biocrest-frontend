@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import APIFetch from "../../utils/APIFetch";
 import {EVENTS_QUERY} from "../../graphql/queries/event";
 import {Card, Col, Row} from "srx";
+import EventCard from "./EventCard";
 
 const eventID = process.env.eventID || 1;
 
@@ -27,18 +28,10 @@ const EventsListing = () => {
 
     return <div className="my-3">
         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold">Competitions</h2>
-        {events?.length > 0 ?
-        <Row>{events.map((e) =>
+        {events?.filter((e) => !(!e.isUserAllowedToRegister)).length > 0 ?
+        <Row>{events.filter((e) => !(!e.isUserAllowedToRegister)).map((e) =>
             <Col md={4} p={2}>
-                <a href={`/event/${e.slug}`} className="plain-link">
-                    <Card bg="white" p={0} shadow={2} round={0}>
-                        {e.coverURL && <img draggable="false" src={e.coverURL} alt={e.name} />}
-                        <div className="p-3">
-                            <h3 style={{ color: '#AF0C3E', fontWeight: '600' }}>{e.name}</h3>
-                            <div>{e.shortDescription}</div>
-                        </div>
-                    </Card>
-                </a>
+                <EventCard {...e} />
             </Col>
         )}</Row> : <div>
             <h3>No events listed now</h3>

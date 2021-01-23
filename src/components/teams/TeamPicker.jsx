@@ -41,8 +41,8 @@ const TeamPicker = ({
                     </div>
                 )}
             </div> :
-            <div>
-                <h6 className="font-weight-bold mb-3">You're not part of any teams (yet)</h6>
+            <div className="text-center py-5">
+                <h3 className="font-weight-bold mb-0">You're not part of any teams (yet)</h3>
             </div>}
         <div className="d-flex align-items-center justify-content-end my-2">
             <a href="/create-team" className="btn btn-danger font-weight-bold text-light m-1 px-4 py-2">Create A Team</a>
