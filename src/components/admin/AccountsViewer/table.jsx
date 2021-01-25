@@ -19,7 +19,7 @@ const StyledTable = styled.div`
 `
 
 export default ({
-    fields, profiles, loadMore = () => {}
+    fields, isTeamEvent, profiles, loadMore = () => {}
 }) => {
 
     const typeMap = {
@@ -62,6 +62,7 @@ export default ({
 
     return <StyledTable>
         <table className="table bg-white p-2">
+            {!isTeamEvent ?
             <thead>
                 <th style={{ minWidth: '40px' }}>#</th>
                 <th style={{ minWidth: '150px' }}>Name</th>
@@ -75,10 +76,19 @@ export default ({
                 {fields?.map((d) =>
                     <th style={{ minWidth: '190px' }}>{d.label}</th>
                 )}
-            </thead>
+            </thead> :
+            <thead>
+                <th style={{ minWidth: '40px' }}>#</th>
+                <th style={{ minWidth: '150px' }}>Team Name</th>
+                <th style={{ minWidth: '150px' }}>Members</th>
+                {fields?.map((d) =>
+                    <th style={{ minWidth: '190px' }}>{d.label}</th>
+                )}
+            </thead>}
             {profiles?.length > 0 ?
                 <tbody>
-                    {profiles.map(({ profile: s, isApproved, remarks, formData }, index) =>
+                    {profiles.map(({ profile: s, team, isApproved, remarks, formData }, index) =>
+                        s ?
                         <tr className={isApproved ? 'alert-success' : null}>
                             <td>{index+1}.</td>
                             <td>
@@ -105,7 +115,21 @@ export default ({
                             <td className={s.isEmailVerified ? 'text-success' : 'text-danger font-weight-bold'}>{s.email}</td>
                             <td>{format(parseISO(s.dateJoined), 'hh:MM a, dd-MM-yyyy')}</td>
                             {renderFormColumns(formData)}
-                        </tr>
+                        </tr> :
+                        team ? <tr>
+                            <td>{index+1}.</td>
+                            <td>
+                                {team.name}
+                            </td>
+                            <td>
+                                {team.members?.length > 0 &&
+                                team.members.map((t) =>
+                                    <div>{t.title} {t.name}, </div>
+                                )
+                                }
+                            </td>
+                            {renderFormColumns(formData)}
+                        </tr> : null
                     )}
                     <Waypoint onEnter={loadMore}>
                         <div className="my-3 w-100 p-2">

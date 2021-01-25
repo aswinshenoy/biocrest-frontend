@@ -2,6 +2,7 @@ export const EVENT_QUERY = `
 query ($eventID: ID!){
   event(eventID: $eventID){
     name
+    isTeamEvent
     formFields{
       type
       label

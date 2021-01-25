@@ -134,7 +134,6 @@ const AccountsViewer = ({ eventID }) => {
         <div>
             <div className="my-2">
                 {SearchBoxTable()}
-
                 {totalCount &&
                 <div className="bg-white p-2">
                     <div className="row mx-0">
@@ -142,13 +141,19 @@ const AccountsViewer = ({ eventID }) => {
                             <h4>Total Count - <b>{totalCount}</b></h4>
                         </div>
                         <div className="col-md-4 px-2">
-                            {profiles.length > 0 && <ExportBar profiles={profiles} fields={event?.event?.formFields} />}
+                            {profiles.length > 0 &&
+                            <ExportBar
+                                isTeamEvent={event?.event?.isTeamEvent}
+                                profiles={profiles}
+                                fields={event?.event?.formFields}
+                            />}
                         </div>
                     </div>
 
                 </div>}
             </div>
             <Table
+                isTeamEvent={event?.event?.isTeamEvent}
                 fields={event?.event?.formFields}
                 profiles={profiles}
                 loadMore={() => fetch()}

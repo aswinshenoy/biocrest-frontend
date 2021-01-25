@@ -108,6 +108,17 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: Pa
       id
       remarks
       isApproved
+      team{
+        id
+        name
+        members{
+          id
+          title
+          name
+          phone
+          email
+        }
+      }
       profile {
         id
         title

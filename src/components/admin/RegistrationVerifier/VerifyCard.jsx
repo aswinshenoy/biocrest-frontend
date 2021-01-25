@@ -35,7 +35,7 @@ const TextInput = ({ as = 'input', label, placeholder, value, onChange }) => {
 }
 
 const VerifyCard = ({
-    id, profile: profileProps, formData, timestamp, event, remarks, submissions
+    id, profile: profileProps, team, formData, timestamp, event, remarks, submissions
 }) => {
 
     const [isCompleted, setCompleted] = useState(false);
@@ -76,53 +76,72 @@ const VerifyCard = ({
 
     return isCompleted ? <div /> :
         <div className="card shadow-sm p-3">
-            <h2 className="my-2">
-                {profile?.title && `${profile?.title}.`} {profile.name}
-            </h2>
-            <div className="row alert-info p-2 mx-0">
-                <div className="col-12 p-0">
-                    <h4>User Profile</h4>
-                </div>
-                <div className="col-md-4 p-1">
-                    <h5 style={{ color: '#AF0C3E' }}>Basic Info</h5>
-                    <div>
+            {profile ?
+            <React.Fragment>
+                <h2 className="my-2">
+                    {profile?.title && `${profile?.title}.`} {profile.name}
+                </h2>
+                <div className="row alert-info p-2 mx-0">
+                    <div className="col-12 p-0">
+                        <h4>User Profile</h4>
+                    </div>
+                    <div className="col-md-4 p-1">
+                        <h5 style={{ color: '#AF0C3E' }}>Basic Info</h5>
                         <div>
-                            <b>Type:</b> {
-                            profile?.type === 0 ? 'Admin' :
-                                profile?.type === 1 ? 'Student' :
-                                    profile?.type === 2 ? 'Academia' :
-                                        profile?.type === 3 ? 'Industry' : 'Other'
-                        }
+                            <div>
+                                <b>Type:</b> {
+                                profile?.type === 0 ? 'Admin' :
+                                    profile?.type === 1 ? 'Student' :
+                                        profile?.type === 2 ? 'Academia' :
+                                            profile?.type === 3 ? 'Industry' : 'Other'
+                            }
+                            </div>
+                            <div>
+                                <b>Location:</b> {profile.country ?
+                                `${profile?.city}, ${profile.state}, ${profile.country}`
+                                : 'N/A'}
+                            </div>
+                            <div>
+                                <b>Gender:</b> {profile.gender ? profile.gender : 'N/A'}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 p-1">
+                        <h5 style={{ color: '#AF0C3E' }}>Contact Information</h5>
+                        <div>
+                            <b>Phone No.:</b> {profile.phone ? profile.phone : 'N/A'}
                         </div>
                         <div>
-                            <b>Location:</b> {profile.country ?
-                            `${profile?.city}, ${profile.state}, ${profile.country}`
-                            : 'N/A'}
+                            <b>Email Address.:</b> {profile.email ? profile.email : 'N/A'}
+                        </div>
+                    </div>
+                    <div className="col-md-4 p-1">
+                        <h4 style={{ color: '#AF0C3E' }}>Affiliation Information</h4>
+                        <div>
+                            <b>Affiliation Title:</b> {profile.affiliationTitle ? profile.affiliationTitle.name ||  profile.affiliationTitle.label : 'N/A'}
                         </div>
                         <div>
-                            <b>Gender:</b> {profile.gender ? profile.gender : 'N/A'}
+                            <b>Affiliation Body.:</b> {profile.affiliationBody ? profile.affiliationBody.name || profile.affiliationBody.label : 'N/A'}
                         </div>
                     </div>
                 </div>
-                <div className="col-md-4 p-1">
-                    <h5 style={{ color: '#AF0C3E' }}>Contact Information</h5>
-                    <div>
-                        <b>Phone No.:</b> {profile.phone ? profile.phone : 'N/A'}
-                    </div>
-                    <div>
-                        <b>Email Address.:</b> {profile.email ? profile.email : 'N/A'}
-                    </div>
-                </div>
-                <div className="col-md-4 p-1">
-                    <h4 style={{ color: '#AF0C3E' }}>Affiliation Information</h4>
-                    <div>
-                        <b>Affiliation Title:</b> {profile.affiliationTitle ? profile.affiliationTitle.name ||  profile.affiliationTitle.label : 'N/A'}
-                    </div>
-                    <div>
-                        <b>Affiliation Body.:</b> {profile.affiliationBody ? profile.affiliationBody.name || profile.affiliationBody.label : 'N/A'}
-                    </div>
-                </div>
-            </div>
+            </React.Fragment> :
+            team ? <React.Fragment>
+                <h2 className="my-2">
+                    {team.name}
+                </h2>
+                {team?.members?.length > 0 &&
+                <div className="row mx-0">
+                    {team.members.map((m) =>
+                        <div className="col-md-4 p-2">
+                            <a href={`/admin/profile/${m.id}`} className="p-2 card">
+                                <div>{m.title} {m.name}</div>
+                                <div>{m.phone} | {m.email}</div>
+                            </a>
+                        </div>
+                    )}
+                </div>}
+            </React.Fragment> : null}
             {formData?.length > 0 &&
             <div className="row p-2 alert-info my-3 mx-0">
                 <div className="col-12 p-0">
@@ -133,7 +152,6 @@ const VerifyCard = ({
                     const value = (() => {
                         if(field?.options?.length > 0){
                             if(field.type === 'checkbox' || field.type === 'multiselect'){
-                                console.log(field.options);
                                 try{
                                     const list = JSON.parse(f.value)
                                     let val = '';
@@ -173,12 +191,14 @@ const VerifyCard = ({
                 )}
             </div>}
             <div className="row mx-0">
+                {profile &&
                 <div className="col-md-6 p-2">
                     <a href={profile?.IDCardURL} target="_blank">
                         <img src={profile?.IDCardURL} alt="ID Card" />
                     </a>
-                </div>
-                {profile && <div className="col-md-6 p-2">
+                </div>}
+                {(profile||team) &&
+                <div className="col-md-6 p-2">
                     <EditorForm>
                         <div>
                             {remarks &&
