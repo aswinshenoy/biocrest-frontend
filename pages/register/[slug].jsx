@@ -77,7 +77,7 @@ const EventRegistrationPage = ({ slug }) => {
                             <p>
                                 You have successfully registered for the event
                             </p>}
-                        {!myProfile?.isApproved &&
+                        {(!myProfile?.isApproved && event?.formFields?.length > 0) &&
                         <div>
                             <FormButton
                                 text="Edit Registration"
