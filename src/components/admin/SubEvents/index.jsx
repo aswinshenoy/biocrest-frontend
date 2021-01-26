@@ -5,7 +5,7 @@ import APIFetch from "../../../utils/APIFetch";
 import {EVENTS_QUERY} from "../../../graphql/queries/event";
 
 
-const AdminSubEventsLister = ({ eventID }) => {
+const AdminSubEventsLister = ({ event, eventID }) => {
 
     const [events, setEvents] = useState([]);
 
@@ -23,7 +23,7 @@ const AdminSubEventsLister = ({ eventID }) => {
     useEffect(fetchEvents, []);
 
     return <div className="my-5">
-        <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold mb-2">Sub Events</h2>
+        <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold mb-2">Sub Events of {event?.name}</h2>
         {events?.length > 0 ?
         <Row>{events.map((e) =>
             <Col md={4} p={2}>
@@ -36,7 +36,7 @@ const AdminSubEventsLister = ({ eventID }) => {
             </Col>
         )}</Row> :
         <div>
-            <div>No events listed now</div>
+            <div>No sub-events found for this event.</div>
         </div>}
     </div>;
 

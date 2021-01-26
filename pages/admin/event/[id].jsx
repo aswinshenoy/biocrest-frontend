@@ -9,8 +9,6 @@ import ViewAuthenticator from "../../../src/components/shared/ViewAuthenticator"
 
 const EventAdmin = ({ id }) => {
 
-    console.log(id);
-
     return <ViewAuthenticator
         renderAdmin={() =>
         <Base meta={{ title: 'Admin Panel' }}>
