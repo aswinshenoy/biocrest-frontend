@@ -18,6 +18,11 @@ const RegistrationStatus = () => {
         <div className="p-2">
             <MyIDCard {...data.myEventProfile} />
         </div>
+        <div className="my-2">
+            <FormButton link="/edit-profile" py={3}>
+                Edit Profile
+            </FormButton>
+        </div>
     </div> :
     data?.myEventProfile?.remarks ?
         <div className="alert-warning shadow p-3">
@@ -43,6 +48,11 @@ const RegistrationStatus = () => {
             your registration. Once that is done, you will receive an email, meanwhile you could
             also keep tracking your status in this dashboard. Typically this process may take 24-36 hours.
         </p>
+        <div className="my-2">
+            <FormButton link="/edit-profile" py={3}>
+                Edit Profile
+            </FormButton>
+        </div>
     </div>
 };
 

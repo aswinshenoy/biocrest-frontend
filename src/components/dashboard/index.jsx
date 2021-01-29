@@ -31,14 +31,6 @@ const DashboardPage = () => {
             <Row>
                 <Col md={4} p={2}>
                     <RegistrationStatus />
-                    {/*<div className="alert alert-warning my-3 shadow p-3">*/}
-                    {/*    <h4 className="font-weight-bold">Competition Registrations Not Open</h4>*/}
-                    {/*    <p>*/}
-                    {/*        Individual competition registrations are not open at the moment, please*/}
-                    {/*        check back this space later. We shall also intimate you by email*/}
-                    {/*        when this process starts.*/}
-                    {/*    </p>*/}
-                    {/*</div>*/}
                     <div className="my-3">
                         <MyEventRegistrations />
                     </div>
