@@ -117,7 +117,7 @@ export default ({
                     })
                     d.push([
                         `${index+1}`,
-                        `${team.name}`,
+                        `${team?.name}`,
                         `${team?.members?.length > 0 ? team.members.map((m) => `${m.name}, `) : ''}`,
                         ...fieldData
                     ])

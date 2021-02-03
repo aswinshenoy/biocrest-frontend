@@ -13,6 +13,7 @@ query ($eventID: ID!){
         label
         allowedUserTypes
       }
+      formats
       maxSelections
     }
   }

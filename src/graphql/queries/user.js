@@ -92,12 +92,13 @@ export const MY_REGISTRATION_QUERY =
 }`;
 
 export const PROFILES_QUERY = `
-query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: ParticipantQueryFilters) {
+query ($eventID: ID!, $search: String, $count: Int, $after: String, $publicListing: Boolean, $filters: ParticipantQueryFilters) {
   participants(
     eventID: $eventID
     search: $search
     count: $count
     after: $after
+    publicListing: $publicListing,
     filters: $filters
   ) {
     hasNext
@@ -142,6 +143,54 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $filters: Pa
         }
         dateJoined
         IDCardURL
+      }
+      submissions {
+        id
+        url
+        fileURL
+        key
+      }
+      formData {
+        label: key
+        value
+      }
+    }
+  }
+}`;
+
+
+export const JUDGE_PROFILES_QUERY = `
+query ($eventID: ID!, $search: String, $count: Int, $after: String, $publicListing: Boolean, $filters: ParticipantQueryFilters) {
+  participants(
+    eventID: $eventID
+    search: $search
+    count: $count
+    after: $after
+    publicListing: $publicListing,
+    filters: $filters
+  ) {
+    hasNext
+    totalCount
+    lastCursor
+    participants {
+      uuid
+      id
+      remarks
+      isApproved
+      myPoints
+      team{
+        id
+        name
+        members{
+          title
+          name
+        }
+      }
+      profile {
+        id
+        title
+        name
+        type
       }
       submissions {
         id

@@ -12,7 +12,9 @@ const SubmissionPreview = ({
         {submission.url}
         <div>
             {field?.formats === 'image/*' ?
-                <img draggable="false" src={submission.fileURL} /> :
+                <a target="_blank" href={submission.fileURL}>
+                    <img alt={field.label} draggable="false" src={submission.fileURL} />
+                </a> :
                 <a target="_blank" href={submission.fileURL}>Download</a>
             }
         </div>

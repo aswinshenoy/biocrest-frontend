@@ -48,22 +48,28 @@ const AdminPanel = ({ eventID = defaultEventID }) => {
         <div className="col-12 p-3">
             {event && <h1>{event.name} Registrations</h1>}
         </div>
-        <div className="col-md-4 px-2">
+        <div className="col-md-4 p-2">
             <MenuButton href={`/admin/verify/${eventID}`}>
                 <img alt="ID Verification" src={require('../../assets/icons/check.png')} />
                 <div>Verify Registrations</div>
             </MenuButton>
         </div>
-        <div className="col-md-4 px-2">
+        <div className="col-md-4 p-2">
             <MenuButton href={`/admin/view/${eventID}`}>
                 <img alt="Search User" src={require('../../assets/icons/search-user.png')} />
                 <div>View & Search Participants</div>
             </MenuButton>
         </div>
-        <div className="col-md-4 px-2">
+        <div className="col-md-4 p-2">
             <MenuButton href={`/admin/email/${eventID}`}>
                 <img alt="Send Email" src={require('../../assets/icons/send-email.png')} />
                 <div>Send Emails</div>
+            </MenuButton>
+        </div>
+        <div className="col-md-4 p-2">
+            <MenuButton href={`/admin/judge/${eventID}`}>
+                <img alt="Judge" src={require('../../assets/icons/rating.png')} />
+                <div>Judge Participants</div>
             </MenuButton>
         </div>
         <div className="col-md-12 px-2">

@@ -22,9 +22,9 @@ const AdminSubEventsLister = ({ event, eventID }) => {
 
     useEffect(fetchEvents, []);
 
-    return <div className="my-5">
+    return events?.length > 0 ?
+    <div className="my-5">
         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold mb-2">Sub Events of {event?.name}</h2>
-        {events?.length > 0 ?
         <Row>{events.map((e) =>
             <Col md={4} p={2}>
                 <a href={`/admin/event/${e.id}`} className="plain-link">
@@ -34,11 +34,8 @@ const AdminSubEventsLister = ({ event, eventID }) => {
                     </Card>
                 </a>
             </Col>
-        )}</Row> :
-        <div>
-            <div>No sub-events found for this event.</div>
-        </div>}
-    </div>;
+        )}</Row>
+    </div> : <div />;
 
 };
 

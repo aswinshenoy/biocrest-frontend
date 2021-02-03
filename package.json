@@ -36,6 +36,7 @@
     "react-markdown": "^5.0.3",
     "react-otp-input": "^2.3.0",
     "react-qr-code": "^1.0.5",
+    "react-rating-stars-component": "^2.2.0",
     "react-reveal": "^1.2.2",
     "react-select": "^3.1.1",
     "react-waypoint": "^9.0.3",
