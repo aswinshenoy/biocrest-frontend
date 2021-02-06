@@ -49,15 +49,6 @@ const VerifyCard = ({
             variables: {
                 participantID: id,
                 approve,
-                formData: JSON.stringify(form),
-                update: {
-                    name: profile.name,
-                    phone: profile.phone,
-                    email: profile.email,
-                    type: profile.type,
-                    affiliationBodyID: profile?.affiliationBody?.value,
-                    affiliationTitleID: profile?.affiliationTitle?.value
-                },
                 remarks: remark
             }
         }).then(({ data, error }) => {
