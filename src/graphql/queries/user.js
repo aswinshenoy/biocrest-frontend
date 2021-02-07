@@ -205,3 +205,27 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $publicListi
     }
   }
 }`;
+
+
+export const JUDGE_SCORES_QUERY = `
+query ($eventID: ID!){
+  scores(eventID: $eventID){
+    avgPoints
+    participant{
+      id
+      profile{
+        id
+        title
+        name
+        type
+      }
+      team{
+        id
+        name
+        members{
+          name
+        }
+      }
+    }
+  }
+}`;

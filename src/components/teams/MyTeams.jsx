@@ -19,6 +19,21 @@ const MyTeams = () => {
 
     useEffect(fetchTeams, []);
 
+    const leaveTeam = (id) => {
+        APIFetch({
+            query: `mutation ($id: ID!){
+              leaveTeam(id: $id){
+                id
+              }
+            }`,
+            variables: { id }
+        }).then(({ success, data, errors }) => {
+            if(success){
+                fetchTeams()
+            }
+        })
+    }
+
     return <div className="bg-white rounded shadow-sm">
         <div className="p-3 rounded-top" style={{ backgroundColor: '#AF0C3E' }}>
             <h3 className="mb-0" style={{ color: '#FFF', fontWeight: '600' }}>
@@ -42,6 +57,9 @@ const MyTeams = () => {
                     <div className="row p-2 border-bottom mx-0">
                         <div className="col-md-4 p-1">
                             {t.name}
+                            <button onClick={() => leaveTeam(t.id)} className="ml-2 p-2 btn btn-danger">
+                                Leave Team
+                            </button>
                         </div>
                         <div className="col-md-3 p-1">
                             {t.inviteCode}

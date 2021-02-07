@@ -72,6 +72,12 @@ const AdminPanel = ({ eventID = defaultEventID }) => {
                 <div>Judge Participants</div>
             </MenuButton>
         </div>
+        <div className="col-md-4 p-2">
+            <MenuButton href={`/admin/scores/${eventID}`}>
+                <img alt="Judge" src={require('../../assets/icons/rating.png')} />
+                <div>View Scores</div>
+            </MenuButton>
+        </div>
         <div className="col-md-12 px-2">
             <AdminSubEventsLister event={event} eventID={eventID} />
         </div>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useQuery} from "graphql-hooks";
 import {TextInput} from "srx";
 
-import {JUDGE_PROFILES_QUERY, PROFILES_QUERY} from "../../../graphql/queries/user"
+import {JUDGE_PROFILES_QUERY} from "../../../graphql/queries/user"
 import {EVENT_QUERY} from "../../../graphql/queries/event";
 
 import APIFetch from "../../../utils/APIFetch";
