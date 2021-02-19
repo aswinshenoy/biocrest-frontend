@@ -61,6 +61,14 @@ const EventPage = ({ slug }) => {
                     </div>
                 </CoverSection>
                 <div className="bg-white w-100 p-3 shadow">
+                    {event?.hasGallery &&
+                    <div className="mb-2">
+                        <FormButton
+                            text="View Gallery"
+                            link={`/gallery/${event?.id}`}
+                            py={3} px={4} fw
+                        />
+                    </div>}
                     {(event?.acceptRegistrations && event?.isUserAllowedToRegister) ?
                     <div>
                         <FormButton

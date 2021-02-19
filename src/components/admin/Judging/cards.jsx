@@ -115,10 +115,10 @@ export default ({
         </div>}
         <ReactStars
             count={10}
-            onChange={(p) => { setPoints(p); judge(p) }}
-            value={points}
+            onChange={(p) => { setPoints(Math.round(p*2)); judge(p) }}
+            value={points/2}
             size={64}
-            activeColor="#ffd700"
+            isHalf={true}
         />
         {isUpdated ? <div>Your Points Recorded</div> : <div>Updating Your Points</div>}
     </div>;

@@ -22,6 +22,7 @@ query ($eventID: ID!){
 export const EVENT_DETAILS_QUERY = `
 query ($parentID: ID, $slug: String) {
   event(parentID: $parentID, slug: $slug) {
+    id
     name
     slug
     shortDescription
@@ -33,6 +34,7 @@ query ($parentID: ID, $slug: String) {
     isTeamEvent
     minTeamSize
     maxTeamSize
+    hasGallery
   }
 }
 `;
@@ -183,3 +185,25 @@ query ($eventID: ID!){
     timestampRegistered
   }
 }`;
+
+export const EVENT_GALLERY_QUERY = `
+query ($eventID: ID!){
+  event(eventID: $eventID){
+    name
+    formFields{
+      formats
+      key
+    }
+  }
+  gallery(eventID: $eventID){
+    fileURL
+    url
+    key
+    participant{
+      profile{
+        title
+        name
+      }
+    }
+  }
+}`
