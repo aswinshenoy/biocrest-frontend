@@ -6,6 +6,7 @@ const ViewAuthenticator = ({
    renderAuth = () => <div />,
    renderPublic = () => <div />,
    renderLoading = () => <div />,
+   renderJudge = () => <div />
 }) => {
 
     const [hasLoaded, setLoaded] = useState(false);
@@ -15,7 +16,11 @@ const ViewAuthenticator = ({
     // prettier-ignore
     useEffect(() => { setLoaded(true); }, []);
 
-    return hasLoaded ? (isLoggedIn ? userInfo?.type === 0 ? renderAdmin(userInfo) : renderAuth(userInfo) : renderPublic()) : renderLoading();
+    return hasLoaded ? (isLoggedIn ?
+        userInfo?.type === 4 ? renderJudge(userInfo) :
+        userInfo?.type === 0 ? renderAdmin(userInfo) :
+        renderAuth(userInfo) : renderPublic()
+    ) : renderLoading();
 };
 
 export default ViewAuthenticator;

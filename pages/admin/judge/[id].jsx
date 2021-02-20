@@ -17,6 +17,14 @@ const EventAdmin = ({ id }) => {
                     <JudgingPanel eventID={id} />
                 </div>
             </Base>}
+        renderJudge={() =>
+            <Base meta={{ title: 'Judging Panel' }}>
+                <Header />
+                <div className="container-lg px-2 py-5">
+                    <JudgingPanel eventID={id} />
+                </div>
+            </Base>
+        }
         renderAuth={() =>
             <div>
                 <h1>Access Denied</h1>

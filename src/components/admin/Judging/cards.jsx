@@ -115,7 +115,7 @@ export default ({
         </div>}
         <ReactStars
             count={10}
-            onChange={(p) => { setPoints(Math.round(p*2)); judge(p) }}
+            onChange={(p) => { setPoints(Math.round(p*2)); judge(p*2) }}
             value={points/2}
             size={64}
             isHalf={true}
