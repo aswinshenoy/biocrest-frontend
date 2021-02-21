@@ -4,16 +4,19 @@ import {Col, Row} from "srx";
 
 import Base from "../shared/Base";
 import Header from "../shared/Header";
-import RegistrationStatus from "./status";
-import EventsListing from "./Events";
-import MyEventRegistrations from "./MyEvents";
-import MyTeams from "../teams/MyTeams";
 import Footer from "../shared/Footer";
+
+import EventListing from "./Listing";
+import MobileView from "./MobileView";
+import MyProfile from "./MyProfile";
+import NextEvents from "./NextEvents";
+import LiveEvents from "./LiveEvents";
+import UpcomingEvents from "./UpcomingEvents";
 
 const CoverSection = styled.section`
     background: #a02541;
     color: white;
-    min-height: 35vh;
+    min-height: 15vh;
     padding: 5vh 2.5vw;
     display: flex;
     align-items: flex-end;
@@ -24,24 +27,27 @@ const DashboardPage = () => {
 
     return <Base meta={{ title: 'Dashboard' }}>
         <Header />
-        <CoverSection>
-            <h1>Dashboard</h1>
-        </CoverSection>
-        <div style={{ minHeight: '100vh' }} className="px-2 py-5">
-            <Row>
-                <Col md={4} p={2}>
-                    <RegistrationStatus />
-                    <div className="my-3">
-                        <MyEventRegistrations />
-                    </div>
-                    <MyTeams />
-                </Col>
-                <Col md={8} p={2}>
-                    <EventsListing />
-                </Col>
-            </Row>
+        <div className="d-none d-md-block">
+            <CoverSection>
+                <h1>Dashboard</h1>
+            </CoverSection>
+            <div style={{ minHeight: '100vh' }} className="px-2 py-5">
+                <UpcomingEvents />
+                <Row>
+                    <Col md={4} p={2}>
+                      <MyProfile />
+                    </Col>
+                    <Col md={8} p={2}>
+                        <EventListing />
+                    </Col>
+                </Row>
+            </div>
+            <Footer />
         </div>
-        <Footer />
+        <div className="d-block d-md-none">
+            <MobileView />
+        </div>
+
     </Base>;
 
 };

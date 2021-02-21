@@ -3,8 +3,6 @@ import styled from '@emotion/styled';
 
 import APIFetch from "../utils/APIFetch";
 import {EVENT_GALLERY_QUERY} from "../graphql/queries/event";
-import Base from "./shared/Base";
-import Header from "./shared/Header";
 
 
 const GalleryCard = styled.div`

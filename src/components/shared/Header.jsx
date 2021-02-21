@@ -45,7 +45,7 @@ const Header = () => {
     </a>
 
 
-               return <HeaderWrap>
+   return <HeaderWrap>
         <Row>
             <Col s={6} md={4} flexVC px={1}>
                 <a href="/">

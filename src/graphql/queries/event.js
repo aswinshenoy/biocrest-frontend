@@ -99,8 +99,8 @@ query ($parentID: ID, $slug: String, $eventID: ID) {
 `;
 
 export const EVENTS_QUERY = `
-query ($parentID: ID){
-  events(parentID: $parentID){
+query ($parentID: ID, $eventType: Int){
+  events(parentID: $parentID, eventType: $eventType){
     totalCount
     events{
       name
@@ -110,7 +110,10 @@ query ($parentID: ID){
       isUserAllowedToRegister
       shortDescription
       registrationCloseTimestamp
+      startTimestamp
+      endTimestamp
       posterURL
+      webinarLink
     }
   }
 }`;
@@ -227,7 +230,7 @@ query ($eventID: ID!){
 }`;
 
 export const EVENT_GALLERY_QUERY = `
-query ($eventID: ID!) {
+query ($eventID: ID, $count: Int, $after: String) {
   event(eventID: $eventID) {
     name
     formFields {
@@ -241,18 +244,80 @@ query ($eventID: ID!) {
       label
     }
   }
-  gallery(eventID: $eventID) {
-    submissions {
-      fileURL
-      url
-      key
-    }
-    participant {
-      profile {
-        title
-        name
+  gallery(eventID: $eventID, count: $count, after: $after) {
+    hasNext
+    lastCursor
+    posts {
+      participant {
+        profile {
+          title
+          name
+        }
+        timestampApproved
+      }
+      submissions {
+        fileURL
+        url
+        key
       }
     }
   }
-}
-`
+}`;
+
+export const GALLERY_QUERY = `
+query ($eventID: ID, $count: Int, $after: String) {
+  gallery(eventID: $eventID, count: $count, after: $after) {
+    hasNext
+    lastCursor
+    posts {
+      event {
+        name
+        formFields {
+          formats
+          key
+          label
+        }
+        postApprovalFields {
+          formats
+          key
+          label
+        }
+      }
+      participant {
+        profile {
+          title
+          name
+        }
+        timestampApproved
+      }
+      submissions {
+        fileURL
+        url
+        key
+      }
+    }
+  }
+}`;
+
+export const UPCOMING_EVENTS_QUERY = `
+query ($eventType: Int, $parentID: ID){
+  upcomingEvents(eventType: $eventType, parentID: $parentID){
+    name
+    startTimestamp
+    shortDescription
+    webinarLink
+    webinarPlatform
+  }
+}`;
+
+export const LIVE_EVENTS_QUERY = `
+query ($eventType: Int, $parentID: ID){
+  liveEvents(eventType: $eventType, parentID: $parentID){
+    name
+    shortDescription
+    startTimestamp
+    webinarLink
+    webinarPlatform
+  }
+}`;
+

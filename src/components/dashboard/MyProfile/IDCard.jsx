@@ -4,6 +4,8 @@ import QRCode from "react-qr-code";
 
 const IDCardWrap = styled.div`
     background: white;
+    box-shadow: 2px 3px 5px rgba(0,0,0,0.35);
+    border-radius: 0.25rem;
     color: black;
     width: 550px;
     max-width: 100%;
@@ -23,9 +25,9 @@ const MyIDCard = ({
 }) => {
 
     return <IDCardWrap>
-        <div style={{ background: '#AF0C3E' }} className="row w-100 mx-0">
+        <div style={{ background: '#AF0C3E' }} className="row rounded-top w-100 mx-0">
             <div className="col-3 p-3">
-                <img alt="biocrest" src={require('../../assets/branding/biocrest_logo_light.png')} />
+                <img alt="biocrest" src={require('../../../assets/branding/biocrest_logo_light.png')} />
             </div>
             <div className="col-9 text-right small d-flex justify-content-end align-items-center text-light p-3">
                 <h3>{profile.type === 1 ? 'Student' : profile.type === 2 ? 'Academia' : 'Industry'}</h3>

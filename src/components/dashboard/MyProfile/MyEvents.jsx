@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import APIFetch from "../../utils/APIFetch";
-import {MY_EVENT_REGS} from "../../graphql/queries/event";
+import APIFetch from "../../../utils/APIFetch";
+import {MY_EVENT_REGS} from "../../../graphql/queries/event";
 
 const eventID = process.env.eventID || 1;
 
@@ -64,9 +64,12 @@ const MyEventRegistrations = () => {
                 </div>
             </div>
         )}</div> :
-        <div>
-            You have not registered for any competitions.
-        </div>}
+            <div className="p-2 d-flex align-items-center justify-content-center text-center" style={{ minHeight: '18vh' }}>
+                <div>
+                    <h3>No Registrations</h3>
+                    <div className="font-weight-bold mb-3">You have not registered for any event (yet)</div>
+                </div>
+            </div>}
     </div> : <div />;
 
 

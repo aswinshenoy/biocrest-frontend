@@ -11,6 +11,7 @@ import Footer from "../../src/components/shared/Footer";
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
 import SubmissionGallery from "../../src/components/GalleryPage";
+import SubmissionFeed from "../../src/components/dashboard/Feed";
 
 const eventID = process.env.eventID || 1;
 
@@ -104,7 +105,7 @@ const EventPage = ({ slug }) => {
             </div>
         </CoverSection>
         {event?.hasGallery &&
-        <div className="p-2 d-flex align-items-center justify-content-center bg-white">
+        <div className="p-0 d-flex align-items-center justify-content-center bg-white">
             <TabButton onClick={() => setShowGallery(false)} active={!showGallery}>
                 About Event
             </TabButton>
@@ -116,7 +117,7 @@ const EventPage = ({ slug }) => {
         <div className="container px-2">
             {showGallery ?
             <div className="my-3">
-                <SubmissionGallery id={event?.id} />
+                <SubmissionFeed eventID={event?.id} event={event} />
             </div> :
             <div className="bg-white p-3 my-3 shadow">
                 <MarkdownViewer content={event?.details}/>

@@ -1,8 +1,8 @@
 import React from 'react';
 import {useQuery} from "graphql-hooks";
-import {MY_EVENT_PROFILE_QUERY} from "../../graphql/queries/event";
+import {MY_EVENT_PROFILE_QUERY} from "../../../graphql/queries/event";
 import MyIDCard from "./IDCard";
-import FormButton from "../ui/styled-components/Button";
+import FormButton from "../../ui/styled-components/Button";
 
 const eventID = process.env.eventID || 1;
 
@@ -12,13 +12,15 @@ const RegistrationStatus = () => {
 
     return loading ? <div>Loading</div> :
     data?.myEventProfile?.isApproved ?
-    <div className="alert-success shadow p-3">
-        <h3 className="font-weight-bold text-success">Registered as Attendee</h3>
-        <p>Your profile has been successfully verified, and you have been registered as an attendee.</p>
+    <div className="alert-success shadow p-1">
         <div className="p-2">
+            <h3 className="font-weight-bold text-success">Registered as Attendee</h3>
+            <p>Your profile has been successfully verified, and you have been registered as an attendee.</p>
+        </div>
+        <div className="p-1">
             <MyIDCard {...data.myEventProfile} />
         </div>
-        <div className="my-2">
+        <div className="p-3">
             <FormButton link="/edit-profile" py={3}>
                 Edit Profile
             </FormButton>
