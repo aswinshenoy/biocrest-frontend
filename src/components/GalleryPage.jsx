@@ -41,13 +41,36 @@ const SubmissionGallery = ({ id }) => {
 
     useEffect(fetchItems, []);
 
-    const getFormats = (key) => {
+    const getField = (key) => {
         if(event?.formFields?.length){
             const fil = event.formFields.filter((f) => f.key === key);
             if(fil?.length > 0) {
-                return fil[0]['formats']
+                return fil[0]
             }
         }
+        if(event?.postApprovalFields?.length){
+            const fil = event.postApprovalFields.filter((f) => f.key === key);
+            if(fil?.length > 0) {
+                return fil[0]
+            }
+        }
+    };
+
+    const renderSubmission = (e) => {
+        const field = getField(e.key);
+        return <div>
+            {field['formats'] === 'image/*' ?
+            e.fileURL ? <img draggable="false" src={e.fileURL}/> : <img draggable="false"  src={e.url} />
+            : <div>
+                <a
+                    target="_blank"
+                    className="text-capitalize"
+                    href={e.fileURL ? e.fileURL : e.url}
+                >
+                    View {field['key']}
+                </a>
+            </div>}
+        </div>
     }
 
     return <Base meta={{ title: event?.name ? `${event.name} Gallery`  : 'Event Gallery' }}>
@@ -57,15 +80,14 @@ const SubmissionGallery = ({ id }) => {
                 <h1>{event.name} Submissions</h1>
                 <div>
                     <div className="row mx-0">
-                        {items.map((e) => {
-                            const format = getFormats(e.key);
-                            return <div className="col-4 p-2">
+                        {items.map((e) =>
+                            <div className="col-4 p-2">
                                 <GalleryCard>
-                                    {format === 'image/*' ?
-                                        e.fileURL ? <img draggable="false" src={e.fileURL}/> : <img draggable="false"  src={e.url} />
-                                        : <div>
-                                            <a target="_blank" href={e.fileURL ? e.fileURL : e.url}>View Submission</a>
-                                        </div>}
+                                    {e?.submissions?.length > 0 &&
+                                        e.submissions.map((e) =>  <div className="p-1">
+                                            {renderSubmission(e)}
+                                        </div>)
+                                    }
                                     <div className="line-height-1 p-2">
                                         <div>Submitted by</div>
                                         <div style={{ fontSize: '16px' }} className="text-primary font-weight-bold">
@@ -74,7 +96,7 @@ const SubmissionGallery = ({ id }) => {
                                     </div>
                                 </GalleryCard>
                             </div>
-                        })}
+                        )}
                     </div>
 
                 </div>

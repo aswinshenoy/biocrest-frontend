@@ -50,7 +50,9 @@ const EventSubmission = ({
 };
 
 const EventFieldsForm = ({
-     eventName, userType, formData, submissions, formFields, isEditor, onSave = () => {},
+     eventName, userType, formData, submissions, formFields, isEditor,
+     titleLabel = 'Registration',
+     onSave = () => {},
  }) => {
 
     const getFormData = () => {
@@ -209,7 +211,7 @@ const EventFieldsForm = ({
     };
 
     return <form onSubmit={handleSubmit}>
-        <h2 style={{ color: '#AF0C3E', fontWeight: '600' }}>{eventName} Registration</h2>
+        <h2 style={{ color: '#AF0C3E', fontWeight: '600' }}>{eventName} {titleLabel}</h2>
         <Row>
             {formFields?.length > 0 ?
                 formFields.map((f) =>

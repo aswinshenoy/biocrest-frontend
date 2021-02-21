@@ -16,6 +16,19 @@ query ($eventID: ID!){
       formats
       maxSelections
     }
+    postApprovalFields{
+      type
+      label
+      key
+      options
+      {
+        value
+        label
+        allowedUserTypes
+      }
+      formats
+      maxSelections
+    }
   }
 }`;
 
@@ -49,6 +62,22 @@ query ($parentID: ID, $slug: String, $eventID: ID) {
     isTeamEvent
     minTeamSize
     maxTeamSize
+    postApprovalFields{
+      type
+      label
+      key
+      options
+      {
+        value
+        label
+        allowedUserTypes
+      }
+      charLimit
+      maxSelections
+      isPublic
+      isURL
+      formats
+    }
     formFields{
       type
       label
@@ -125,11 +154,15 @@ query ($eventID: ID!){
 }`;
 
 export const PARTICIPATE_MUTATION = `
-mutation ($eventID: ID!, $teamID: ID, $data: JSONString){
-  participate(eventID: $eventID, teamID: $teamID, data: $data){
+mutation ($eventID: ID!, $teamID: ID, $data: JSONString, $postApprovalData: JSONString){
+  participate(eventID: $eventID, teamID: $teamID, data: $data, postApprovalData: $postApprovalData){
     uuid
     id
     formData{
+      key
+      value
+    }
+    postApprovalData{
       key
       value
     }
@@ -166,6 +199,10 @@ query ($eventID: ID!){
       key
       value
     }
+    postApprovalData{
+      key
+      value
+    }
     submissions{
       url
       fileURL
@@ -187,23 +224,32 @@ query ($eventID: ID!){
 }`;
 
 export const EVENT_GALLERY_QUERY = `
-query ($eventID: ID!){
-  event(eventID: $eventID){
+query ($eventID: ID!) {
+  event(eventID: $eventID) {
     name
-    formFields{
+    formFields {
       formats
       key
+      label
+    }
+    postApprovalFields {
+      formats
+      key
+      label
     }
   }
-  gallery(eventID: $eventID){
-    fileURL
-    url
-    key
-    participant{
-      profile{
+  gallery(eventID: $eventID) {
+    submissions {
+      fileURL
+      url
+      key
+    }
+    participant {
+      profile {
         title
         name
       }
     }
   }
-}`
+}
+`

@@ -99,6 +99,21 @@ const JudgingPanel = ({ eventID }) => {
             </div>
         </div>;
 
+    const getFields = () => {
+        let fields = [];
+        if(event?.event?.formFields?.length > 0) {
+            fields = [...event.event.formFields];
+        }
+        if(event?.event?.postApprovalFields?.length > 0) {
+            if(fields?.length > 0){
+                fields = [...fields, ...event.event.postApprovalFields];
+            } else {
+                fields = [...event.event.postApprovalFields]
+            }
+        }
+        return fields;
+    };
+
     return error ? <div>Error occurred while loading. Please refresh to retry</div> :
     !hasLoaded ? <div>Loading</div> :
     <div>
@@ -116,7 +131,7 @@ const JudgingPanel = ({ eventID }) => {
         <div>
         {profiles?.length > 0 ?
             <div>
-                {profiles.map((p) => <JudgingCard fields={event?.event?.formFields} {...p} />)}
+                {profiles.map((p) => <JudgingCard fields={getFields()} {...p} />)}
                 <Waypoint onEnter={() => fetch()}>
                     <div className="my-3 w-100 p-2">
                         <button onClick={() => fetch()} className="btn btn-primary p-3">Load More</button>

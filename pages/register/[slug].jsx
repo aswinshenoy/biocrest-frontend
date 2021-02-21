@@ -10,6 +10,7 @@ import Footer from "../../src/components/shared/Footer";
 import AdminPanel from "../../src/components/admin";
 import ViewAuthenticator from "../../src/components/shared/ViewAuthenticator";
 import RegistrationForm from "../../src/components/registration/RegisterForm";
+import EventWorkSubmit from "../../src/components/register/work";
 
 const eventID = process.env.eventID || 1;
 
@@ -19,6 +20,7 @@ const EventRegistrationPage = ({ slug }) => {
     const [myProfile, setProfile] = useState(null);
     const [isRegistered, setRegistered] = useState(false);
     const [isEditor, showEditor] = useState(false);
+    const [isWorkEditor, showWorkEditor] = useState(false);
 
     const fetchForm = () => {
         APIFetch({
@@ -61,7 +63,14 @@ const EventRegistrationPage = ({ slug }) => {
         <Base meta={{ title: 'Competition Registration' }}>
             <Header />
             <div style={{ minHeight: '90vh' }}>
-            {isEditor ?
+            {isWorkEditor ?
+                <EventWorkSubmit
+                    isEditor
+                    myProfile={myProfile}
+                    event={event}
+                    onRegister={(p) => { showWorkEditor(false);  }}
+                /> :
+            isEditor ?
                 <EventRegister
                     isEditor
                     myProfile={myProfile}
@@ -95,6 +104,14 @@ const EventRegistrationPage = ({ slug }) => {
                                 <FormButton
                                     text="Edit Registration"
                                     onClick={() => showEditor(true)}
+                                    px={4} py={3}
+                                />
+                            </div>}
+                            {(myProfile?.isApproved && event?.postApprovalFields?.length > 0) &&
+                            <div>
+                                <FormButton
+                                    text="Submit Work"
+                                    onClick={() => showWorkEditor(true)}
                                     px={4} py={3}
                                 />
                             </div>}
