@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from "srx";
 
 import APIFetch from "../../utils/APIFetch";
+import EventsListing from "../dashboard/Events";
 
 const JudgeDashboard = () => {
 
@@ -28,7 +29,8 @@ const JudgeDashboard = () => {
 
     return <div>
         <div className="my-5">
-            <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold mb-2">Judge Dashboard</h2>
+            <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold mb-2">Judgement Panel</h2>
+            <p>Select an event below to start judging</p>
             {events?.length > 0 ?
             <Row>{events.map((e) =>
                 <Col md={4} p={2}>
@@ -44,6 +46,8 @@ const JudgeDashboard = () => {
                 <h3>No Events Found</h3>
             </div>}
         </div>
+        <hr />
+        <EventsListing showAll />
     </div>
 
 };

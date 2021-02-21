@@ -9,7 +9,7 @@ import Fade from "react-reveal/Fade";
 const eventID = process.env.eventID || 1;
 
 
-const EventsListing = () => {
+const EventsListing = ({ showAll = false }) => {
 
     const [events, setEvents] = useState([]);
 
@@ -30,8 +30,8 @@ const EventsListing = () => {
 
     return <div className="my-3">
         <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold">Competitions</h2>
-        {events?.filter((e) => !(!e.isUserAllowedToRegister)).length > 0 ?
-        <Row>{events.filter((e) => !(!e.isUserAllowedToRegister)).map((e, i) =>
+        {events?.filter((e) => !(!e.isUserAllowedToRegister) || showAll ).length > 0 ?
+        <Row>{events.filter((e) => !(!e.isUserAllowedToRegister) || showAll).map((e, i) =>
             <Col md={4} p={2}>
                 <Fade delay={i*200} key={shortid.generate()}>
                     <EventCard {...e} />

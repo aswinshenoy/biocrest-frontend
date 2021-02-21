@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import {Col, Row} from "srx";
 import {useMutation} from "graphql-hooks";
 import {setUserInfo} from "../../states";
+import ViewAuthenticator from "./ViewAuthenticator";
 
 const HeaderWrap = styled.header`
     width: 100%;
@@ -27,7 +28,24 @@ const Header = () => {
         });
     };
 
-    return <HeaderWrap>
+    const renderLogoutButton = () =>
+    <button
+        style={{ background: 'white', border: 'none', fontSize: '15px', padding: '5px 10px' }}
+        onClick={handleLogOut}
+    >
+        Logout
+    </button>;
+
+    const renderLoginButton = () =>
+    <a
+        style={{ background: 'white', border: 'none', fontSize: '15px', padding: '5px 10px' }}
+        href="/login"
+    >
+        Login
+    </a>
+
+
+               return <HeaderWrap>
         <Row>
             <Col s={6} md={4} flexVC px={1}>
                 <a href="/">
@@ -38,7 +56,12 @@ const Header = () => {
                 </a>
             </Col>
             <Col s={6} md={8} flexVC flexHR>
-                <button style={{ background: 'white', border: 'none', fontSize: '15px', padding: '5px 10px' }} onClick={handleLogOut}>Logout</button>
+                <ViewAuthenticator
+                    renderAuth={() => renderLogoutButton()}
+                    renderJudge={() => renderLogoutButton()}
+                    renderAdmin={() => renderLogoutButton()}
+                    renderPublic={() => renderLoginButton()}
+                />
             </Col>
         </Row>
     </HeaderWrap>;
