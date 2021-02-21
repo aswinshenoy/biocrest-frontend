@@ -60,16 +60,21 @@ const SubmissionGallery = ({ id }) => {
         const field = getField(e.key);
         return <div>
             {field['formats'] === 'image/*' ?
-            e.fileURL ? <img draggable="false" src={e.fileURL}/> : <img draggable="false"  src={e.url} />
-            : <div>
-                <a
-                    target="_blank"
-                    className="text-capitalize"
-                    href={e.fileURL ? e.fileURL : e.url}
-                >
-                    View {field['key']}
-                </a>
-            </div>}
+            <img draggable="false" src={e.fileURL ? e.fileURL : e.url}/> :
+            field['formats'] === 'audio/*' ?
+                <audio controls className="w-100 mt-2">
+                    <source src={e.fileURL ? e.fileURL : e.url} />
+                </audio>
+            : null}
+            {/*// <div>*/}
+            {/*//     <a*/}
+            {/*//         target="_blank"*/}
+            {/*//         className="text-capitalize"*/}
+            {/*//         href={e.fileURL ? e.fileURL : e.url}*/}
+            {/*//     >*/}
+            {/*//         View {field['key']}*/}
+            {/*//     </a>*/}
+            {/*// </div>}*/}
         </div>
     }
 

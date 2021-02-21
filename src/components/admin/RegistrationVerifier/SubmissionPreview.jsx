@@ -15,7 +15,11 @@ const SubmissionPreview = ({
                 <a target="_blank" href={submission.fileURL}>
                     <img alt={field.label} draggable="false" src={submission.fileURL} />
                 </a> :
-                <a target="_blank" href={submission.fileURL}>Download</a>
+            field?.formats === 'audio/*' ?
+            <audio controls className="w-100 mt-2">
+                <source src={submission.fileURL ? submission.fileURL : submission.url} />
+            </audio> :
+            <a target="_blank" href={submission.fileURL}>Download</a>
             }
         </div>
     </div>

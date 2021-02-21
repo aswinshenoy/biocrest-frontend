@@ -54,9 +54,13 @@ const MyEventRegistrations = () => {
                         : <div className="text-danger">Pending</div>
                 }</div>
                 <div className="col-md-3 d-flex justify-content-end p-1">
+                    {e.isApproved && e.event.postApprovalFields?.length>0 ?
+                    <a href={`/register/${e.event.slug}`} className="font-weight-bold btn btn-danger rounded-0 text-light py-2">
+                        Submit Work
+                    </a> :
                     <a href={`/register/${e.event.slug}`} className="text-primary">
                         Edit
-                    </a>
+                    </a>}
                 </div>
             </div>
         )}</div> :

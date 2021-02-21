@@ -218,6 +218,9 @@ query ($eventID: ID!){
     event{
       name
       slug
+      postApprovalFields{
+        key
+      }
     }
     timestampRegistered
   }

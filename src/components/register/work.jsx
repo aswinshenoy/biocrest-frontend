@@ -11,10 +11,12 @@ const EventWorkSubmit = ({ isEditor, myProfile, teamID: teamIDProps, event, onRe
     const [participate] = useMutation(PARTICIPATE_MUTATION);
     const [submit] = useMutation(SUBMIT_MUTATION);
     const [teamID, setTeamID] = useState(teamIDProps);
+    const [isSubmitting, setSubmitting] = useState(false);
 
     const processRegistration = (s) => {
         const filesToUpload = [];
         const sanitizedData = {};
+        setSubmitting(true);
         Object.keys(s).forEach((k) => {
             if(s[k].file) {
                 filesToUpload.push({
@@ -33,19 +35,23 @@ const EventWorkSubmit = ({ isEditor, myProfile, teamID: teamIDProps, event, onRe
         participate({ variables: {
                 eventID: event.id, teamID,
                 postApprovalData: JSON.stringify(sanitizedData)
-            }}).then(({ data, error}) => {
+        }}).then(async ({ data, error}) => {
             if(!error && data?.participate){
                 const participantID = data?.participate.id;
-                filesToUpload.forEach( async(f) => {
-                    await submit({ variables: {
+                await filesToUpload.forEach( (f, index) => {
+                    submit({ variables: {
                             participantID, file: f.file, key: f.key, url: f.url,
-                        }}).then(({ data, error }) => {
+                    }}).then(({ data, error }) => {
                         if(!error){
+                            if(index+1===filesToUpload.length) {
+                                setSubmitting(false);
+                                onRegister(data)
+                            }
                             return true;
                         }
                     })
                 })
-                onRegister(data);
+                return data
             }
         })
     };
@@ -53,7 +59,12 @@ const EventWorkSubmit = ({ isEditor, myProfile, teamID: teamIDProps, event, onRe
     return (teamID || !event.isTeamEvent) ?
         <div className="container p-2 my-3 d-flex align-items-center justify-content-center">
             <div className="bg-white p-3 shadow-sm" style={{ width: '720px', maxWidth: '100%' }}>
-                {event.postApprovalFields?.length > 0 ?
+                {   isSubmitting ?
+                    <div>
+                        <h1>Submitting</h1>
+                        <p>Please wait.</p>
+                    </div>:
+                event.postApprovalFields?.length > 0 ?
                     <EventFieldsForm
                         {...event}
                         {...myProfile}
