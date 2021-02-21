@@ -78,43 +78,38 @@ const SubmissionGallery = ({ id }) => {
         </div>
     }
 
-    return <Base meta={{ title: event?.name ? `${event.name} Gallery`  : 'Event Gallery' }}>
-        <Header />
+    return <div>
         {items?.length > 0 ?
-            <div className="container-lg my-3">
-                <h1>{event.name} Submissions</h1>
-                <div>
-                    <div className="row mx-0">
-                        {items.map((e) =>
-                            <div className="col-4 p-2">
-                                <GalleryCard>
-                                    {e?.submissions?.length > 0 &&
-                                        e.submissions.map((e) =>  <div className="p-1">
-                                            {renderSubmission(e)}
-                                        </div>)
-                                    }
-                                    <div className="line-height-1 p-2">
-                                        <div>Submitted by</div>
-                                        <div style={{ fontSize: '16px' }} className="text-primary font-weight-bold">
-                                            {e.participant?.profile?.title} {e.participant?.profile?.name}
-                                        </div>
+            <div>
+                <div className="row mx-0">
+                    {items.map((e) =>
+                        <div className="col-4 p-2">
+                            <GalleryCard>
+                                {e?.submissions?.length > 0 &&
+                                    e.submissions.map((e) =>  <div className="p-1">
+                                        {renderSubmission(e)}
+                                    </div>)
+                                }
+                                <div className="line-height-1 p-2">
+                                    <div>Submitted by</div>
+                                    <div style={{ fontSize: '16px' }} className="text-primary font-weight-bold">
+                                        {e.participant?.profile?.title} {e.participant?.profile?.name}
                                     </div>
-                                </GalleryCard>
-                            </div>
-                        )}
-                    </div>
-
+                                </div>
+                            </GalleryCard>
+                        </div>
+                    )}
                 </div>
+        </div> :
+        hasLoaded ?
+            <div>
+                <h1>No submissions found</h1>
             </div> :
-            hasLoaded ?
-                <div>
-                    <h1>No submissions found</h1>
-                </div> :
-                <div>
-                    <h1>Loading</h1>
-                </div>
+            <div>
+                <h1>Loading</h1>
+            </div>
         }
-    </Base>;
+    </div>;
 
 };
 

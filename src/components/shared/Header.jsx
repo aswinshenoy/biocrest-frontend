@@ -6,11 +6,11 @@ import {setUserInfo} from "../../states";
 
 const HeaderWrap = styled.header`
     width: 100%;
-    padding: 1rem;
+    padding: 0.25rem 1rem;
     background: #a02541;
     box-shadow: 2px 3px 8px rgba(0,0,0,0.35);
     img {
-        max-height: 5vh;
+        max-height: 8vh;
     }
 `;
 

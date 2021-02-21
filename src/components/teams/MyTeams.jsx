@@ -73,8 +73,11 @@ const MyTeams = () => {
                     </div>
                 )}
             </div> :
-            <div>
-                <h6 className="font-weight-bold mb-3">You're not part of any teams (yet)</h6>
+            <div className="p-2 d-flex align-items-center justify-content-center text-center" style={{ minHeight: '18vh' }}>
+                <div>
+                    <h3>No Teams Found</h3>
+                    <div className="font-weight-bold mb-3">You're not part of any teams (yet)</div>
+                </div>
             </div>}
         <div className="d-flex rounded-bottom align-items-center justify-content-end p-2" style={{ backgroundColor: '#AF0C3E' }}>
             <a href="/create-team" className="btn btn-light font-weight-bold m-1 px-4 py-2">Create A Team</a>

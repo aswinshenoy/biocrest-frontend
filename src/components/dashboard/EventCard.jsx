@@ -24,7 +24,7 @@ const EventCard = ({
             <div className="p-3">
                 <h3 style={{ color: '#AF0C3E', fontWeight: '600' }}>{name}</h3>
                 <div>{shortDescription}</div>
-                {registrationCloseTimestamp &&
+                {registrationCloseTimestamp && (parseISO(registrationCloseTimestamp) > new Date()) &&
                 <div style={{ fontSize: '13px' }} className="mt-2 text-danger">
                     Register before {format(parseISO(registrationCloseTimestamp), 'dd MMM')}
                 </div>}
