@@ -1,4 +1,5 @@
 import GraphQLFetch from './GraphQLFetch';
+import {setUserInfo} from "../states";
 
 const graphQLEndpoint = process.env.GRAPHQL_SERVER_ENDPOINT || '/api/graphql/';
 

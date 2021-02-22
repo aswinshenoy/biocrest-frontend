@@ -39,6 +39,8 @@ const Base = ({ children, meta }) => {
     if(process?.env?.theme)
         theme = process.env.theme;
 
+
+
     return <React.Fragment>
         <Head>
             <title>{title}</title>

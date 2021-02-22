@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import CompetitionsListing from "../competition/CompetionListing";
-import WebinarListing from "./WebinarListing";
-import MyProfile from "./MyProfile";
-import SubmissionFeed from "./Feed";
-import UpcomingEvents from "./UpcomingEvents";
+
+import CompetitionsListing from "../../competition/CompetionListing";
+import WebinarListing from "../WebinarListing";
+import MyProfile from "../MyProfile";
+import SubmissionFeed from "../Feed";
+import UpcomingEvents from "../UpcomingEvents";
+import InstallPWA from "./installPWA";
+import QuickActions from "./QuickActions";
 
 const FooterBar = styled.div`
     background: white;
@@ -49,6 +52,12 @@ const MobileView = ({
             {currentTab === 'dashboard' ?
             <div>
                 <UpcomingEvents />
+                <div className="my-3">
+                    <QuickActions onOpenTab={setTab} />
+                </div>
+                <div className="my-3">
+                    <InstallPWA />
+                </div>
             </div> :
             currentTab === 'feed' && process.env.features?.feed ?
                 <SubmissionFeed /> :
@@ -69,7 +78,7 @@ const MobileView = ({
                 <div className="w-100 d-flex justify-content-center">
                     <img
                         alt="dashboard" draggable="false"
-                        src={require('../../assets/icons/dashboard.png')}
+                        src={require('../../../assets/icons/dashboard.png')}
                     />
                 </div>
                 Dashboard
@@ -82,7 +91,7 @@ const MobileView = ({
                 <div className="w-100 d-flex justify-content-center">
                     <img
                         alt="schedule" draggable="false"
-                        src={require('../../assets/icons/feed.png')}
+                        src={require('../../../assets/icons/feed.png')}
                     />
                 </div>
                 Feed
@@ -94,7 +103,7 @@ const MobileView = ({
                 <div className="w-100 d-flex justify-content-center">
                     <img
                         alt="competition" draggable="false"
-                        src={require('../../assets/icons/profile.png')}
+                        src={require('../../../assets/icons/profile.png')}
                     />
                 </div>
                 My {process?.env?.eventName ? process?.env?.eventName : 'Profile'}
@@ -107,7 +116,7 @@ const MobileView = ({
                 <div className="w-100 d-flex justify-content-center">
                     <img
                         alt="competition" draggable="false"
-                        src={require('../../assets/icons/competition.png')}
+                        src={require('../../../assets/icons/competition.png')}
                     />
                 </div>
                 Competitions
@@ -119,11 +128,11 @@ const MobileView = ({
             >
                 <div className="w-100 d-flex justify-content-center">
                     <img
-                        alt="schedule" draggable="false"
-                        src={require('../../assets/icons/conference.png')}
+                        alt="webinars" draggable="false"
+                        src={require('../../../assets/icons/conference.png')}
                     />
                 </div>
-                Schedule
+                Conference
             </TabSwitch>}
         </FooterBar>
     </React.Fragment>
