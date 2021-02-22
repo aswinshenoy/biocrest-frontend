@@ -6,7 +6,7 @@ import ViewAuthenticator from "../../src/components/shared/ViewAuthenticator";
 import Header from "../../src/components/shared/Header";
 import RegistrationForm from "../../src/components/registration/RegisterForm";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 export default () => {
 

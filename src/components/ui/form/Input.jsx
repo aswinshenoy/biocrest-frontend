@@ -2,25 +2,24 @@ import React from 'react';
 import styled from "@emotion/styled";
 
 const FormInput = styled.div`
-    input { 
-      font-size: 15px!important; 
-      border: 1px solid #AF0C3E!important; 
-      padding: 9px 12px; 
-      margin-top: 0.15rem!important;
-      background: none!important;
-      &:focus {
-        border: 2px solid #AF0C3E!important;
-        padding: 8px 11px; 
-        outline: none!important;
-      }
+  input {
+    font-size: 15px!important;
+    border: 1px solid #AF0C3E!important;
+    padding: 8px 10px;
+    margin: 1px;
+    border-radius: 0;
+    &:focus {
+      border: 2px solid #AF0C3E!important;
+      margin: 0!important;
+      outline: none!important;
     }
-    label { 
-      font-size: 12px; 
-      font-weight: 600!important; 
-      display: block;
-      margin-bottom: 0;
-      color: #333;
-    }
+  }
+  label {
+    font-size: 12px;
+    font-weight: 500!important;
+    margin: 0.35rem 0;
+    display: block;
+  }
 `;
 
 const Input = ({

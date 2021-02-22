@@ -8,7 +8,7 @@ import {EVENTS_QUERY} from "../../../graphql/queries/event";
 
 import CompetitionCard from "./CompetitionCard";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 const CompetitionsListing = ({ showAll = false }) => {
 
@@ -32,17 +32,16 @@ const CompetitionsListing = ({ showAll = false }) => {
 
     return events?.length > 0 &&
     <div className="my-3">
-        <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold">Competitions</h2>
         {events?.filter((e) => !(!e.isUserAllowedToRegister) || showAll ).length > 0 ?
-            <Row>{events.filter((e) => !(!e.isUserAllowedToRegister) || showAll).map((e, i) =>
-                <Col s={6} md={4} p={1} key={shortid.generate()} className="h-100">
-                    <Fade delay={i*200}>
-                        <CompetitionCard {...e} />
-                    </Fade>
-                </Col>
-            )}</Row> : <div>
-                <h3>No competitions listed now</h3>
-            </div>}
+        <Row>{events.filter((e) => !(!e.isUserAllowedToRegister) || showAll).map((e, i) =>
+            <Col s={6} md={4} key={shortid.generate()} className="h-100 p-1 p-md-2">
+                <Fade delay={i*200}>
+                    <CompetitionCard {...e} />
+                </Fade>
+            </Col>
+        )}</Row> : <div>
+            <h3>No competitions listed now</h3>
+        </div>}
     </div>;
 
 };

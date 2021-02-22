@@ -4,6 +4,8 @@ const OptimizedImages = require('next-optimized-images');
 const withSourceMaps = require( '@zeit/next-source-maps' );
 const withOffline = require('next-offline');
 
+const eventConfig = require('./event.config.json');
+
 const customConfig = {
     devIndicators: { autoPrerender: false },
 
@@ -44,9 +46,7 @@ const customConfig = {
         ],
     },
 
-    env: {
-        eventID: 1,
-    }
+    env: eventConfig
 
 };
 

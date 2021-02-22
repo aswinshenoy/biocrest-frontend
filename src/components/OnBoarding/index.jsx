@@ -9,7 +9,7 @@ import UserTypeSelector from "./typeSelector";
 import EmailVerifyCard from "./emailVerify";
 import PhoneVerifyCard from "./phoneVerify";
 import IDUploader from "./idUpload";
-import {setUserInfo, useAuthState} from "../../states";
+import {setUserInfo} from "../../states";
 import Header from "../shared/Header";
 import AffiliationForm from "./affiliation";
 import BasicInfoForm from "./BasicInfo";
@@ -17,9 +17,8 @@ import BasicInfoForm from "./BasicInfo";
 import {MY_EVENT_PROFILE_QUERY, PARTICIPATE_MUTATION} from "../../graphql/queries/event";
 import {MY_PROFILE_QUERY, UPDATE_MUTATION} from "../../graphql/queries/user";
 import EventFieldsForm from "../fields/EventForm";
-import Base from "../shared/Base";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 
 const OnBoardWrap = styled.div`
@@ -113,6 +112,8 @@ const OnBoarding = ({ startZero = false, }) => {
 
     const [isSubmitting, setSubmitting] = useState(false);
 
+    const eventName = process?.env?.eventName || '';
+
     const stages_list = [
         {
             "value": "basic_profile",
@@ -131,7 +132,7 @@ const OnBoarding = ({ startZero = false, }) => {
         },
         {
             "value": "event_profile",
-            "label": "Biocrest Registration",
+            "label": `${eventName} Registration`,
             "icon": require('../../assets/icons/info.png'),
         },
         {

@@ -4,7 +4,7 @@ import {MY_EVENT_PROFILE_QUERY} from "../../../graphql/queries/event";
 import MyIDCard from "./IDCard";
 import FormButton from "../../ui/styled-components/Button";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 const RegistrationStatus = () => {
 
@@ -14,13 +14,15 @@ const RegistrationStatus = () => {
     data?.myEventProfile?.isApproved ?
     <div className="alert-success shadow p-1">
         <div className="p-2">
-            <h3 className="font-weight-bold text-success">Registered as Attendee</h3>
-            <p>Your profile has been successfully verified, and you have been registered as an attendee.</p>
+            <h3 className="font-weight-bold text-success mb-1">Registered as Attendee</h3>
+            <p className="mb-2">
+                Your profile has been successfully verified, and you have been registered as an attendee.
+            </p>
         </div>
-        <div className="p-1">
+        <div className="px-1">
             <MyIDCard {...data.myEventProfile} />
         </div>
-        <div className="p-3">
+        <div className="py-3 px-1">
             <FormButton link="/edit-profile" py={3}>
                 Edit Profile
             </FormButton>

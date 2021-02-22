@@ -7,7 +7,7 @@ import {EVENTS_QUERY} from "../../../graphql/queries/event";
 
 import WebinarCard from "./WebinarCard";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 const WebinarListing = ({ showAll = false }) => {
 
@@ -31,7 +31,6 @@ const WebinarListing = ({ showAll = false }) => {
 
     return events?.length > 0 &&
     <div className="my-3">
-        <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold">Schedule</h2>
         {events?.filter((e) => !(!e.isUserAllowedToRegister) || showAll ).length > 0 ?
             <div>{events.filter((e) => !(!e.isUserAllowedToRegister) || showAll).map((e, i) =>
                 <Fade delay={i*200} key={shortid.generate()}>

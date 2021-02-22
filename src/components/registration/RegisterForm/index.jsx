@@ -12,18 +12,20 @@ import LoginForm from "./login";
 import {LOGIN_MUTATION, REGISTER_MUTATION} from "../../../graphql/queries/user";
 import {setUserInfo} from "../../../states";
 import ResetForm from "./forgot";
+import Header from "../../shared/Header";
 
 const TabSwitchers = styled.div`
     button {
       font-size: 1.75rem;
       font-weight: 500;
       padding: 0.75rem;
-      border-bottom: 3.5px solid #AEAEAE;
+      border-bottom: ${({ theme }) => `3.5px solid ${theme.colors.primary}`};
       width: 50%;
     }
     .active {
-      color: #AF0C3E;
-      border-bottom: 3.5px solid #AF0C3E!important;
+      color: ${({ theme }) => theme?.colors.primary};
+      font-weight: 600;
+      border-bottom: ${({ theme }) => `3.5px solid ${theme.colors.primary}`};;
     }
 `;
 
@@ -32,28 +34,29 @@ const RegisterPageWrapper = styled.main`
   width: 100%;
   background-color: #340853;
   background-size: cover;
-  .container-lg{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      max-width: 900px;
+  min-height: 100vh;
+  //.container-lg{
+  //    display: flex;
+  //    align-items: center;
+  //    justify-content: center;
+  //    min-height: 100vh;
+  //    max-width: 900px;
+  //}
+  .footer-organizer-bar {
+      padding: 1rem;
+      text-align: center;
+      color: ${({ theme }) => theme?.colors.primaryInv};
+      background-color: ${({ theme }) => theme?.colors.primary};
+      img {
+          max-height: 64px;
+      }
   }
 `;
 
-const MenuNav = styled.nav`
-    a {
-        font-size: 18px;
-        color: white!important;
-        margin-right: 40px;
-        font-weight: 600;
-        text-decoration: none!important;
-        &:hover {
-             color: #fba930!important;
-        }
-    }
-`;
 
+const eventID = process.env.eventID;
+const organizerURL = process?.env?.links?.organizerURL || null;
+const organizerName = process?.env?.labels?.organizerName || null;
 
 const RegistrationForm = ({ type = 'register' }) => {
 
@@ -81,7 +84,14 @@ const RegistrationForm = ({ type = 'register' }) => {
     const handleRegisterFormSubmit = (p) => {
         setRegistering(true)
         registerUser({
-            variables: { input: { email: p.email, password: p.password, name: p.name} }
+            variables: {
+                input: {
+                    email: p.email,
+                    password: p.password,
+                    name: p.name,
+                    eventID
+                }
+            }
         }).then(({ data, error}) => {
             if(data?.register?.success){
                 handleSignIn({ email: p.email, password: p.password });
@@ -105,54 +115,16 @@ const RegistrationForm = ({ type = 'register' }) => {
         }
     </div>
 
-    return <RegisterPageWrapper style={{ backgroundImage: `url(${require('../../../assets/branding/login_page_cover.jpg')})`, minHeight: '100vh' }}>
-        <div className="d-none d-md-block py-5 mb-2">
-            <div className="container px-1">
-                <div className="row mx-0">
-                    <div className="col-4 p-1">
-                        <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
-                            <img
-                                alt="Biocrest" draggable="false"
-                                style={{ maxHeight: '64px' }}
-                                src={require('../../../assets/branding/biocrest_logo_light.png')}
-                            />
-                        </a>
-                    </div>
-                    <div className="col-8 d-flex align-items-center p-1">
-                        <MenuNav className="d-flex align-items-center">
-                            <a href="https://amrita.edu/biocrest" rel="noreferrer nofollow">
-                                Home
-                            </a>
-                            <a href="https://www.amrita.edu/biocrest/the-symposia/" rel="noreferrer nofollow">
-                                About
-                            </a>
-                            <a href="https://www.amrita.edu/biocrest/speakers/" rel="noreferrer nofollow">
-                                Speakers
-                            </a>
-                            <a href="https://www.amrita.edu/biocrest/schedule/" rel="noreferrer nofollow">
-                                Schedule
-                            </a>
-                            <a href="https://www.amrita.edu/biocrest/blog/" rel="noreferrer nofollow">
-                                Blog
-                            </a>
-                        </MenuNav>
-                    </div>
-                </div>
-            </div>
+    return <RegisterPageWrapper
+        style={{ backgroundImage: `url(${require('../../../assets/backgrounds/login_page.jpg')})` }}
+    >
+        <div className="w-100" style={{ minHeight: '72px' }}>
+            <Header transparent hideAuthButtons />
         </div>
-        <div className="d-block d-md-flex align-items-center justify-content-center px-0">
+        <div style={{ minHeight: '90vh' }} className="d-block d-md-flex align-items-center justify-content-center px-0">
             <div>
-                <div className="d-block d-md-none text-light text-center p-4">
-                    <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
-                        <img
-                            alt="Biocrest" draggable="false"
-                            style={{ maxHeight: '64px' }}
-                            src={require('../../../assets/branding/biocrest_logo_light.png')}
-                        />
-                    </a>
-                </div>
                 <Fade up timeout={500}>
-                    <section className="bg-white rounded-top shadow" style={{ width: '450px', maxWidth: '100%', minHeight: '500px' }}>
+                    <section className="bg-white  pb-5 rounded-top shadow" style={{ width: '450px', maxWidth: '100%', minHeight: '500px' }}>
                         <TabSwitchers>
                             <button
                                 aria-label="Register for Biocrest"
@@ -196,12 +168,11 @@ const RegistrationForm = ({ type = 'register' }) => {
                         {/*    <SocialLogin />*/}
                         {/*</div>*/}
                     </section>
-                    <div style={{ background: '#AF0C3E' }} className="d-block rounded-bottom text-light text-center p-3">
-                        <a rel="noreferrer nofollow" href="https://amrita.edu/biocrest">
+                    <div className="footer-organizer-bar rounded-bottom">
+                        <a rel="noreferrer nofollow" href={organizerURL}>
                             <img
-                                alt="Amrita Vishwa Vidyapeetham"
-                                style={{ maxHeight: '64px' }} draggable="false"
-                                src={require('../../../assets/branding/amrita_vishwa_vidyapeetham_light_logo.png')}
+                                alt={organizerName} draggable="false"
+                                src={require('../../../assets/branding/organizer_logo.png')}
                             />
                         </a>
                     </div>

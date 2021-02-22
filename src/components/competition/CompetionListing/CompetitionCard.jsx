@@ -10,7 +10,7 @@ const CompetitionCardWrap = styled.a`
     transition: 0.5s all ease;
     height: 100%;
     h3 {
-        color: #AF0C3E;
+        color: ${({ theme }) => theme?.colors.primary};
         font-weight: 600;
         margin-bottom: 3px;
         font-size: calc(1rem + 0.5vw);
@@ -30,7 +30,7 @@ const CompetitionCard = ({
    posterURL, slug, name, shortDescription, registrationCloseTimestamp
 }) => {
 
-    return <CompetitionCardWrap href={`/event/${slug}`} className="plain-link">
+    return <CompetitionCardWrap href={`/competition/${slug}`} className="plain-link">
         <Card bg="white" p={0} shadow={2} round={0} className="h-100">
             {posterURL && <img draggable="false" src={posterURL} alt={name} />}
             <div className="px-2 py-3 p-md-3">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from "srx";
 
 import APIFetch from "../../utils/APIFetch";
-import CompetitionsListing from "../dashboard/CompetionListing";
+import CompetitionsListing from "../competition/CompetionListing";
 
 const JudgeDashboard = () => {
 

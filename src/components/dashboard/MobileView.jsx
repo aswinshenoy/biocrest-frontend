@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import CompetitionsListing from "./CompetionListing";
+import CompetitionsListing from "../competition/CompetionListing";
 import WebinarListing from "./WebinarListing";
 import MyProfile from "./MyProfile";
 import SubmissionFeed from "./Feed";
@@ -39,7 +39,7 @@ const TabSwitch = styled.button`
 `;
 
 const MobileView = ({
-  defaultTab = 'competition'
+  defaultTab = 'dashboard'
 }) => {
 
     const [currentTab, setTab] = useState(defaultTab)
@@ -50,11 +50,11 @@ const MobileView = ({
             <div>
                 <UpcomingEvents />
             </div> :
-            currentTab === 'feed' ?
+            currentTab === 'feed' && process.env.features?.feed ?
                 <SubmissionFeed /> :
-            currentTab === 'competition' ?
+            currentTab === 'competition' && process.env.features?.competition ?
             <CompetitionsListing /> :
-            currentTab === 'webinar' ?
+            currentTab === 'webinar' && process.env.features?.webinar ?
             <WebinarListing /> :
             currentTab === 'profile' ?
             <MyProfile /> :
@@ -74,6 +74,7 @@ const MobileView = ({
                 </div>
                 Dashboard
             </TabSwitch>
+            {process.env.features?.feed &&
             <TabSwitch
                 active={currentTab === 'feed'}
                 onClick={() => setTab('feed')}
@@ -85,7 +86,7 @@ const MobileView = ({
                     />
                 </div>
                 Feed
-            </TabSwitch>
+            </TabSwitch>}
             <TabSwitch
                 active={currentTab === 'profile'}
                 onClick={() => setTab('profile')}
@@ -96,8 +97,9 @@ const MobileView = ({
                         src={require('../../assets/icons/profile.png')}
                     />
                 </div>
-                My BioCrest
+                My {process?.env?.eventName ? process?.env?.eventName : 'Profile'}
             </TabSwitch>
+            {process.env.features?.competition &&
             <TabSwitch
                 active={currentTab === 'competition'}
                 onClick={() => setTab('competition')}
@@ -109,7 +111,8 @@ const MobileView = ({
                     />
                 </div>
                 Competitions
-            </TabSwitch>
+            </TabSwitch>}
+            {process.env.features?.webinar &&
             <TabSwitch
                 active={currentTab === 'webinar'}
                 onClick={() => setTab('webinar')}
@@ -121,7 +124,7 @@ const MobileView = ({
                     />
                 </div>
                 Schedule
-            </TabSwitch>
+            </TabSwitch>}
         </FooterBar>
     </React.Fragment>
 

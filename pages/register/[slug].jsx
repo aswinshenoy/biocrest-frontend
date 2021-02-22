@@ -12,7 +12,7 @@ import ViewAuthenticator from "../../src/components/shared/ViewAuthenticator";
 import RegistrationForm from "../../src/components/registration/RegisterForm";
 import EventWorkSubmit from "../../src/components/register/work";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 const EventRegistrationPage = ({ slug }) => {
 

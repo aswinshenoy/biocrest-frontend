@@ -9,7 +9,7 @@ import AdminPanel from "../src/components/admin";
 import ViewAuthenticator from "../src/components/shared/ViewAuthenticator";
 import Header from "../src/components/shared/Header";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 const RegisterPage = () => {
 

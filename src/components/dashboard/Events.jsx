@@ -6,7 +6,7 @@ import EventCard from "./EventCard";
 import shortid from "shortid";
 import Fade from "react-reveal/Fade";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 
 const EventsListing = ({ showAll = false }) => {

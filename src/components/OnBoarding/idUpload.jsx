@@ -21,7 +21,7 @@ const IDUploader = ({ profile, hideSkip = false, onContinue = () => {}, onSkip =
          <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="mb-3">Upload ID Card (Optional)</h2>
         <p style={{ maxWidth: '600px' }}>
             We might need to manually verify your ID card for reviewing especially if you have won any prizes.
-            If you skip now, you will asked only if you win any prize at Biocrest.
+            If you skip now, you will asked only if you win any prize.
             Please make sure that details on the card are matching to the information provided,
             and are legible when you upload.
         </p>

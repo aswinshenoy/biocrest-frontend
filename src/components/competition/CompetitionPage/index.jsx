@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import styled from "@emotion/styled";
-
-import Base from "../../src/components/shared/Base";
-import APIFetch from "../../src/utils/APIFetch";
-import {EVENT_DETAILS_QUERY} from "../../src/graphql/queries/event";
-import Header from "../../src/components/shared/Header";
-import MarkdownViewer from "../../src/components/shared/MarkdownViewer";
-import FormButton from "../../src/components/ui/styled-components/Button";
-import Footer from "../../src/components/shared/Footer";
+import React, { useState } from 'react';
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
-import SubmissionGallery from "../../src/components/GalleryPage";
-import SubmissionFeed from "../../src/components/dashboard/Feed";
+import styled from "@emotion/styled";
 
-const eventID = process.env.eventID || 1;
+import Header from "../../shared/Header";
+import Footer from "../../shared/Footer";
+
+import FormButton from "../../ui/styled-components/Button";
+
+import SubmissionFeed from "../../dashboard/Feed";
+import MarkdownViewer from "../../shared/MarkdownViewer";
 
 const CoverSection = styled.section`
-    background: #a02541;
+    background: ${({ theme }) => theme?.colors.primary};
     color: white;
     min-height: 35vh;
     padding: 5vh 2.5vw;
@@ -30,33 +26,16 @@ const TabButton = styled.div`
     font-size: 18px;
     margin: 5px;
     cursor: pointer;
-    background: ${({ active }) => active ? '#a02541' : `none!important` };
-    color: ${({ active }) => active ? 'white' : `#a02541` };
+    background: ${({ active, theme }) => active ? theme?.colors.primary : `none!important` };
+    color: ${({ active, theme }) => active ? theme?.colors.primaryInv : theme?.colors.primary };
 `;
 
-const EventPage = ({ slug }) => {
 
-    const [event, setEvent] = useState(null);
-    const [showGallery, setShowGallery] = useState(false);
+const CompetitionPage = ({ event, }) => {
 
-    const fetchEvent = () => {
-        APIFetch({
-            query: EVENT_DETAILS_QUERY,
-            variables: {
-                slug,
-                parentID: eventID
-            }
-        }).then(({ data, success, errors }) => {
-            if(success) {
-                setEvent(data.event);
-            }
-        })
-    }
+    const [currentTab, setTab] = useState('about');
 
-    useEffect(fetchEvent, []);
-
-    return event ?
-    <Base meta={{ title: event?.name ? `${event.name} - Event Page` : 'Event Page' }}>
+    return <div>
         <Header />
         <CoverSection>
             <div className="container">
@@ -106,33 +85,27 @@ const EventPage = ({ slug }) => {
         </CoverSection>
         {event?.hasGallery &&
         <div className="p-0 d-flex align-items-center justify-content-center bg-white">
-            <TabButton onClick={() => setShowGallery(false)} active={!showGallery}>
-                About Event
+            <TabButton onClick={() => setTab('about')} active={currentTab==='about'}>
+                About
             </TabButton>
-
-            <TabButton onClick={() => setShowGallery(true)} active={showGallery}>
+            <TabButton onClick={() => setTab('submissions')} active={currentTab==='submissions'}>
                 View Submissions
             </TabButton>
         </div>}
         <div className="container px-2">
-            {showGallery ?
-            <div className="my-3">
-                <SubmissionFeed eventID={event?.id} event={event} />
-            </div> :
-            <div className="bg-white p-3 my-3 shadow">
-                <MarkdownViewer content={event?.details}/>
-            </div>}
+            {currentTab === 'submissions' ?
+                <div className="my-3">
+                    <SubmissionFeed eventID={event?.id} event={event} />
+                </div> :
+            currentTab === 'about' ?
+                <div className="bg-white p-3 my-3 shadow">
+                    <MarkdownViewer content={event?.details}/>
+                </div> :
+            null}
         </div>
         <Footer />
-    </Base> : <Base meta={{ title: 'Loading Event Details' }}>
-        <Header />
-        <h1>Loading</h1>
-    </Base>
+    </div>
 
 };
 
-EventPage.getInitialProps = async ({ query }) => {
-    return { slug: query.slug };
-};
-
-export default EventPage;
+export default CompetitionPage;

@@ -4,7 +4,7 @@ import APIFetch from "../../../utils/APIFetch";
 import {UPCOMING_EVENTS_QUERY} from "../../../graphql/queries/event";
 import NextEventCard from "./NextEventCard";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 const NextEvents = () => {
 

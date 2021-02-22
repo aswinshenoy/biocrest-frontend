@@ -4,7 +4,7 @@ import APIFetch from "../../../utils/APIFetch";
 import {LIVE_EVENTS_QUERY} from "../../../graphql/queries/event";
 import LiveEventCard from "./LiveEventCard";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 const LiveEvents = () => {
 

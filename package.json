@@ -34,6 +34,7 @@
     "react-dropzone": "^11.2.4",
     "react-google-places-autocomplete": "^3.0.0",
     "react-hooks-global-state": "^1.0.1",
+    "react-indiana-drag-scroll": "^1.8.0",
     "react-markdown": "^5.0.3",
     "react-otp-input": "^2.3.0",
     "react-qr-code": "^1.0.5",

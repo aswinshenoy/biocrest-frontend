@@ -7,12 +7,14 @@ import NextEvents from "./NextEvents";
 const UpcomingEvents = () => {
 
     return <Row>
+        {process.env.features?.dashboard?.liveEvents &&
         <Col md={4} p={2} className="h-100">
             <LiveEvents />
-        </Col>
+        </Col>}
+        {process.env.features?.dashboard?.nextEvents &&
         <Col md={8} p={2}>
             <NextEvents />
-        </Col>
+        </Col>}
     </Row>
 
 };

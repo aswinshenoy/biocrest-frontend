@@ -5,7 +5,7 @@ import Header from "../../src/components/shared/Header";
 import AdminPanel from "../../src/components/admin";
 import RegistrationForm from "../../src/components/registration/RegisterForm";
 
-const eventID = process.env.eventID || 1;
+const eventID = process.env.eventID;
 
 
 const TeamManagerPage = ({ id }) => {

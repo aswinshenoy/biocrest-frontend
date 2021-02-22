@@ -9,7 +9,7 @@ const WebinarCardWrap = styled.div`
   transform: translateY(0);
   transition: 0.5s all ease;
   h3 {
-    color: #AF0C3E;
+    color: ${({ theme }) => theme?.colors.primary};
     font-weight: 600;
     margin-bottom: 8px;
     font-size: calc(1.1rem + 0.5vw);
@@ -48,8 +48,8 @@ const DayWrap = styled.div`
 `;
 
 const Timing = styled.div`
-    font-size: calc(0.9rem + 0.2vw);
-    color: #AF0C3E;
+    font-size: calc(1rem + 0.2vw);
+    color: ${({ theme }) => theme?.colors.primary};
 `;
 
 const WebinarCard = ({
