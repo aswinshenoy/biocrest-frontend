@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from "srx";
 
 import APIFetch from "../../utils/APIFetch";
-import EventsListing from "../dashboard/Events";
+import CompetitionsListing from "../dashboard/CompetionListing";
 
 const JudgeDashboard = () => {
 
@@ -47,7 +47,7 @@ const JudgeDashboard = () => {
             </div>}
         </div>
         <hr />
-        <EventsListing showAll />
+        <CompetitionsListing showAll />
     </div>
 
 };

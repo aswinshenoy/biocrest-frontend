@@ -20,7 +20,7 @@ const FooterBar = styled.div`
 const TabSwitch = styled.button`
   padding: 0.5rem 0.35rem;
   width: 20%;
-  font-size: 10px;
+  font-size: 8px;
   margin-right: 5px;
   cursor: pointer;
   background: none!important;
@@ -46,8 +46,7 @@ const MobileView = ({
 
     return <React.Fragment>
         <div className="p-1">
-            {
-            currentTab === 'dashboard' ?
+            {currentTab === 'dashboard' ?
             <div>
                 <UpcomingEvents />
             </div> :

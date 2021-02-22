@@ -91,7 +91,7 @@ const WebinarCard = ({
                             alt="Zoom" draggable="false"
                             src={require('../../../assets/icons/zoom_app.png')}
                         />
-                        Zoom Meet Link
+                        Open Zoom Meet
                     </a>}
                 </div>
             </div>

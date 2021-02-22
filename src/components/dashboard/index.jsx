@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "@emotion/styled";
 import {Col, Row} from "srx";
+import { useMediaQuery } from 'react-responsive'
 
 import Base from "../shared/Base";
 import Header from "../shared/Header";
@@ -9,8 +10,6 @@ import Footer from "../shared/Footer";
 import EventListing from "./Listing";
 import MobileView from "./MobileView";
 import MyProfile from "./MyProfile";
-import NextEvents from "./NextEvents";
-import LiveEvents from "./LiveEvents";
 import UpcomingEvents from "./UpcomingEvents";
 
 const CoverSection = styled.section`
@@ -25,8 +24,11 @@ const CoverSection = styled.section`
 
 const DashboardPage = () => {
 
+    const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 768 })
+
     return <Base meta={{ title: 'Dashboard' }}>
         <Header />
+        {isDesktopOrLaptop ?
         <div className="d-none d-md-block">
             <CoverSection>
                 <h1>Dashboard</h1>
@@ -35,7 +37,7 @@ const DashboardPage = () => {
                 <UpcomingEvents />
                 <Row>
                     <Col md={4} p={2}>
-                      <MyProfile />
+                        <MyProfile />
                     </Col>
                     <Col md={8} p={2}>
                         <EventListing />
@@ -43,11 +45,11 @@ const DashboardPage = () => {
                 </Row>
             </div>
             <Footer />
-        </div>
+        </div> :
         <div className="d-block d-md-none">
             <MobileView />
         </div>
-
+        }
     </Base>;
 
 };

@@ -35,7 +35,9 @@ const WebinarListing = ({ showAll = false }) => {
         {events?.filter((e) => !(!e.isUserAllowedToRegister) || showAll ).length > 0 ?
             <div>{events.filter((e) => !(!e.isUserAllowedToRegister) || showAll).map((e, i) =>
                 <Fade delay={i*200} key={shortid.generate()}>
-                    <WebinarCard {...e} />
+                    <div className="mb-2">
+                        <WebinarCard {...e} />
+                    </div>
                 </Fade>
             )}</div> : <div>
                 <h3>No Webinars listed now</h3>
