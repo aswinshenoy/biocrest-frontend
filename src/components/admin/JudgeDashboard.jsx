@@ -47,6 +47,7 @@ const JudgeDashboard = () => {
             </div>}
         </div>
         <hr />
+        <h3>View Competitions</h3>
         <CompetitionsListing showAll />
     </div>
 

@@ -50,7 +50,7 @@ const HeaderHorizontalNavBar = styled(ScrollContainer)`
 `;
 
 const Header = ({
-    transparent = false, hideAuthButtons = false,
+    transparent = false, hideAuthButtons = false, hideHeaderNav = false,
 }) => {
 
     const [logoutUser] = useMutation(`mutation {  logoutUser }`);
@@ -100,6 +100,7 @@ const Header = ({
                     renderPublic={() => renderLoginButton()}
                 />}
             </div>
+            {!hideHeaderNav &&
             <div className="col-md-6 p-0 d-flex align-items-center">
                 {HeaderLinks?.length > 0 &&
                 <HeaderHorizontalNavBar>
@@ -111,7 +112,7 @@ const Header = ({
                     </div>
                     )}
                 </HeaderHorizontalNavBar>}
-            </div>
+            </div>}
             <div className="col-md-3 d-none d-md-flex p-2 justify-content-end align-items-center">
                 {!hideAuthButtons &&
                 <ViewAuthenticator

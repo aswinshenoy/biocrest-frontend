@@ -52,6 +52,8 @@ const Timing = styled.div`
     color: ${({ theme }) => theme?.colors.primary};
 `;
 
+
+
 const WebinarCard = ({
     posterURL, slug, name, shortDescription, registrationCloseTimestamp,
     startTimestamp, endTimestamp, webinarLink
@@ -71,6 +73,27 @@ const WebinarCard = ({
             </div>
     }
 
+    const makeUrl = (base, query) => Object.keys(query).reduce(
+        (accum, key, index) => {
+            const value = query[key];
+            if (value !== null) {
+                return `${accum}${index === 0 ? "?" : "&"}${key}=${encodeURIComponent(value)}`;
+            }
+            return accum;
+        },
+        base
+    );
+
+    const makeTime = (time) => new Date(time).toISOString().replace(/[-:]|\.\d{3}/g, "");
+
+    const makeGoogleCalendarUrl = (event) => makeUrl("https://calendar.google.com/calendar/render", {
+        action: "TEMPLATE",
+        dates: `${makeTime(event.startsAt)}/${makeTime(event.endsAt)}`,
+        timezone: event.timezone,
+        text: event.name,
+        details: event.details
+    });
+
     return <WebinarCardWrap>
         <Card bg="white" p={1} shadow={2} round={0}>
             <div className="row mx-0">
@@ -85,14 +108,33 @@ const WebinarCard = ({
                     <div style={{ fontSize: '13px' }} className="mt-2 text-danger">
                         Register before {format(parseISO(registrationCloseTimestamp), 'dd MMM')}
                     </div>}
-                    {webinarLink &&
-                    <a href={webinarLink} className="mt-3" target="_blank" rel="noreferrer nofollow">
-                        <img
-                            alt="Zoom" draggable="false"
-                            src={require('../../../assets/icons/zoom_app.png')}
-                        />
-                        Open Zoom Meet
-                    </a>}
+                    <div className="d-flex align-items-center mt-3">
+                        {webinarLink &&
+                        <a href={webinarLink} className="mr-2" target="_blank" rel="noreferrer nofollow">
+                            <img
+                                alt="Zoom" draggable="false"
+                                src={require('../../../assets/icons/zoom_app.png')}
+                            />
+                            Open Zoom
+                        </a>}
+                        {(startTimestamp && endTimestamp) &&
+                        <a
+                            target="_blank"
+                            href={makeGoogleCalendarUrl({
+                                name,
+                                details: `${shortDescription}. ${webinarLink ? webinarLink : 'https://amrita.edu/biocrest'}`,
+                                startsAt: startTimestamp && parseISO(startTimestamp).toLocaleString(),
+                                endsAt: endTimestamp && parseISO(endTimestamp).toLocaleString(),
+                                timezone: 'Asia/Kolkata'
+                            })}
+                        >
+                            <img
+                                alt="Add to Google Calendar" style={{ width: '28px' }}
+                                src={require('../../../assets/icons/google_calendar.png')}
+                            />
+                            Add to Calendar
+                        </a>}
+                    </div>
                 </div>
             </div>
         </Card>

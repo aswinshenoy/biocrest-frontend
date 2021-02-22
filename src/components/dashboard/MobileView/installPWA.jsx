@@ -26,6 +26,9 @@ const InstallPWA = () => {
         <button id="installPWAButton" className="btn btn-primary px-3 py-2 rounded-0">
             Install PWA
         </button>
+        <div className="small p-2">
+            Only supported on select devices/browsers*
+        </div>
     </div>
 
 };

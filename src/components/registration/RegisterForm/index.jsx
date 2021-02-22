@@ -119,7 +119,7 @@ const RegistrationForm = ({ type = 'register' }) => {
         style={{ backgroundImage: `url(${require('../../../assets/backgrounds/login_page.jpg')})` }}
     >
         <div className="w-100" style={{ minHeight: '72px' }}>
-            <Header transparent hideAuthButtons />
+            <Header transparent hideAuthButtons hideHeaderNav />
         </div>
         <div style={{ minHeight: '90vh' }} className="d-block d-md-flex align-items-center justify-content-center px-0">
             <div>
