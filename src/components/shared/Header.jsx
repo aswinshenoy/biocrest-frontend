@@ -50,7 +50,7 @@ const HeaderHorizontalNavBar = styled(ScrollContainer)`
 `;
 
 const Header = ({
-    transparent = false, hideAuthButtons = false, hideHeaderNav = false,
+    transparent = false, hideAuthButtons = false
 }) => {
 
     const [logoutUser] = useMutation(`mutation {  logoutUser }`);
@@ -83,7 +83,7 @@ const Header = ({
     const renderHeader =
     <div className="container-lg px-0">
         <div className="row mx-0">
-            <div className="col-6 col-md-3 d-flex align-items-center p-2">
+            <div className="col col-md-3 d-flex align-items-center justify-content-center p-2">
                 <a href="/">
                     <img
                         draggable="false" alt={eventName}
@@ -91,16 +91,15 @@ const Header = ({
                     />
                 </a>
             </div>
+            {!hideAuthButtons &&
             <div className="col-6 d-md-none d-flex align-items-center justify-content-end p-2">
-                {!hideAuthButtons &&
                 <ViewAuthenticator
                     renderAuth={() => renderLogoutButton()}
                     renderJudge={() => renderLogoutButton()}
                     renderAdmin={() => renderLogoutButton()}
                     renderPublic={() => renderLoginButton()}
-                />}
-            </div>
-            {!hideHeaderNav &&
+                />
+            </div>}
             <div className="col-md-6 p-0 d-flex align-items-center">
                 {HeaderLinks?.length > 0 &&
                 <HeaderHorizontalNavBar>
@@ -112,16 +111,16 @@ const Header = ({
                     </div>
                     )}
                 </HeaderHorizontalNavBar>}
-            </div>}
+            </div>
+            {!hideAuthButtons &&
             <div className="col-md-3 d-none d-md-flex p-2 justify-content-end align-items-center">
-                {!hideAuthButtons &&
                 <ViewAuthenticator
                     renderAuth={() => renderLogoutButton()}
                     renderJudge={() => renderLogoutButton()}
                     renderAdmin={() => renderLogoutButton()}
                     renderPublic={() => renderLoginButton()}
-                />}
-            </div>
+                />
+            </div>}
         </div>
     </div>
 

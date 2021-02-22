@@ -118,7 +118,7 @@ const RegistrationForm = ({ type = 'register' }) => {
     return <RegisterPageWrapper
         style={{ backgroundImage: `url(${require('../../../assets/backgrounds/login_page.jpg')})` }}
     >
-        <div className="w-100" style={{ minHeight: '72px' }}>
+        <div className="w-100" style={{ minHeight: '120px' }}>
             <Header transparent hideAuthButtons hideHeaderNav />
         </div>
         <div style={{ minHeight: '90vh' }} className="d-block d-md-flex align-items-center justify-content-center px-0">
