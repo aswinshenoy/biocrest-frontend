@@ -132,7 +132,7 @@ const MobileView = ({
                         src={require('../../../assets/icons/conference.png')}
                     />
                 </div>
-                Conference
+                Schedule
             </TabSwitch>}
         </FooterBar>
     </React.Fragment>

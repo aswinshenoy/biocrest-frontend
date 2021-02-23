@@ -18,6 +18,10 @@ export default () => {
                 <AdminPanel eventID={eventID} />
             </div>
         </Base>}
+        renderJudge={() =>
+        <div>
+            <h1>Access Denied</h1>
+        </div>}
         renderAuth={() =>
         <div>
             <h1>Access Denied</h1>
