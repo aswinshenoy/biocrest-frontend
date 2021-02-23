@@ -160,13 +160,15 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $publicListi
 
 
 export const JUDGE_PROFILES_QUERY = `
-query ($eventID: ID!, $search: String, $count: Int, $after: String, $publicListing: Boolean, $filters: ParticipantQueryFilters) {
+query ($eventID: ID!, $search: String, $count: Int, $after: String, $publicListing: Boolean, $judgeListing: Boolean, $eliminatorListing: Boolean, $filters: ParticipantQueryFilters) {
   participants(
     eventID: $eventID
     search: $search
     count: $count
     after: $after
     publicListing: $publicListing,
+    eliminatorListing: $eliminatorListing,
+    judgeListing: $judgeListing,
     filters: $filters
   ) {
     hasNext

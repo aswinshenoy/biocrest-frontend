@@ -6,10 +6,10 @@ import {JUDGE_PROFILES_QUERY} from "../../../graphql/queries/user"
 import {EVENT_QUERY} from "../../../graphql/queries/event";
 
 import APIFetch from "../../../utils/APIFetch";
-import JudgingCard from "./cards";
+import EliminatorCard from "./cards";
 import {Waypoint} from "react-waypoint";
 
-const JudgingPanel = ({ eventID }) => {
+const EliminatorPanel = ({ eventID }) => {
 
     const { loading: loadingEvent, error: eventError , data: event, refetch: refetchEvent } = useQuery(
         EVENT_QUERY, { variables: { eventID,} }
@@ -34,7 +34,7 @@ const JudgingPanel = ({ eventID }) => {
                     eventID,
                     after: !forced ? after : null,
                     search: keyword,
-                    judgeListing: true,
+                    eliminatorListing: true,
                     filters: {
                         type: type > 0 ? type : null,
                         status: status !== 0 ? status : null,
@@ -131,7 +131,7 @@ const JudgingPanel = ({ eventID }) => {
         <div>
         {profiles?.length > 0 ?
             <div>
-                {profiles.map((p) => <JudgingCard fields={getFields()} {...p} />)}
+                {profiles.map((p) => <EliminatorCard fields={getFields()} {...p} />)}
                 <Waypoint onEnter={() => fetch()}>
                     <div className="my-3 w-100 p-2">
                         <button onClick={() => fetch()} className="btn btn-primary p-3">Load More</button>
@@ -144,4 +144,4 @@ const JudgingPanel = ({ eventID }) => {
     </div>;
 };
 
-export default JudgingPanel;
+export default EliminatorPanel;

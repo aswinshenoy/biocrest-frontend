@@ -3,13 +3,13 @@ import ReactStars from "react-rating-stars-component";
 
 import SubmissionPreview from "../RegistrationVerifier/SubmissionPreview";
 import APIFetch from "../../../utils/APIFetch";
+import FormButton from "../../ui/styled-components/Button";
 
 export default ({
-    id, fields, profile, team, myPoints, formData, submissions
+    id, fields, profile, team, formData, submissions
 }) => {
 
-    const [points, setPoints] = useState(myPoints);
-    const [isUpdating, setUpdated] = useState(true);
+    const [isUpdating, setUpdated] = useState(false);
     const [isSaved, setSaved] = useState(false);
 
     const getSubmissionFieldByKey = (key) => {
@@ -19,20 +19,19 @@ export default ({
         return null;
     };
 
-    const judge = (points) => {
+    const eliminate = () => {
         setUpdated(true);
         APIFetch({
-            query: `mutation ($participantID: ID!, $points: Int!){
-              judgeParticipant(participantID: $participantID, points: $points)
+            query: `mutation ($participantID: ID!, $feedback: String) {
+              eliminateParticipant(participantID: $participantID, feedback: $feedback)
             }`,
             variables: {
                 participantID: id,
-                points
             }
         }).then(({ success, data, errors }) => {
             setUpdated(false);
             if(success) {
-               setSaved(true);
+                setSaved(true);
             }
         })
     };
@@ -115,15 +114,15 @@ export default ({
                 </div>
             )}
         </div>}
-        <ReactStars
-            count={10}
-            onChange={(p) => { setPoints(Math.round(p*2)); judge(p*2) }}
-            value={points/2}
-            size={64}
-            isHalf={true}
+        <FormButton
+            onClick={eliminate}
+            text="Eliminate"
+            px={3} py={4}
+            shadow={2}
+            variant="danger"
         />
         {isUpdating ? <div>Updating Your Points</div> :
-        isSaved ? <h4 className="font-weight-bold text-success">Your Points Recorded</h4> :
+            isSaved ? <h4 className="font-weight-bold text-danger">Eliminated</h4> :
         null}
     </div>;
 

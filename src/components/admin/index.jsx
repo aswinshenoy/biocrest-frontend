@@ -78,6 +78,12 @@ const AdminPanel = ({ eventID = defaultEventID }) => {
                 <div>View Scores</div>
             </MenuButton>
         </div>
+        <div className="col-md-4 p-2">
+            <MenuButton href={`/admin/eliminate/${eventID}`}>
+                <img alt="Eliminate" src={require('../../assets/icons/eliminate.png')} />
+                <div>Eliminate Participants</div>
+            </MenuButton>
+        </div>
         <div className="col-md-12 px-2">
             <AdminSubEventsLister event={event} eventID={eventID} />
         </div>

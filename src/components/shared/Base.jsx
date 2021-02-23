@@ -27,7 +27,12 @@ const Base = ({ children, meta }) => {
     const GoogleAnalyticsIDs =  process.env?.analytics?.GoogleAnalyticsIDs || [];
     const FacebookPixelIDs = process.env?.analytics?.FacebookPixelIDs || []
 
-    const client = new GraphQLClient({ url: graphQLEndpoint, });
+    const client = new GraphQLClient({
+        url: graphQLEndpoint,
+        fetchOptions: {
+            credentials: 'include'
+        }
+    });
 
     let theme = {
         colors: {

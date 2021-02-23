@@ -58,7 +58,7 @@ const eventID = process.env.eventID;
 const organizerURL = process?.env?.links?.organizerURL || null;
 const organizerName = process?.env?.labels?.organizerName || null;
 
-const RegistrationForm = ({ type = 'register' }) => {
+const RegistrationForm = ({ type = 'login' }) => {
 
     const [currentTab, setTab] = useState(type);
 
@@ -160,7 +160,19 @@ const RegistrationForm = ({ type = 'register' }) => {
                             {   currentTab === 'forgot' ?
                                 <ResetForm /> :
                                 currentTab === 'register' ?
-                                <RegisterForm onRegister={handleRegisterFormSubmit} /> :
+                                // <RegisterForm onRegister={handleRegisterFormSubmit} /
+                                <div
+                                    style={{ minHeight: '35vh' }}
+                                    className="text-center p-3 d-flex align-items-center justify-content-center"
+                                >
+                                    <div>
+                                        <h1 className="font-weight-bold text-danger">Registrations Closed</h1>
+                                        <p>
+                                            Registrations for Biocrest 2021 has been closed, registered
+                                            participants can use login as usual.
+                                        </p>
+                                    </div>
+                                </div>:
                                 <LoginForm onLogin={handleSignIn} onReset={() => setTab('forgot')} />
                             }
                         </div>
