@@ -30,7 +30,12 @@ const JudgeDashboard = () => {
 
     return <div>
         <div className="my-5">
-            <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold mb-2">Judgement Panel</h2>
+            <h2 style={{ color: '#AF0C3E', fontWeight: '600' }} className="font-weight-bold mb-2">
+                Judgement Panel
+            </h2>
+            <a href="/" className="btn btn-primary text-light font-weight-bold px-4 mt-2 py-3 rounded-0">
+                Open Dashboard
+            </a>
             <p>Select an event below to start judging</p>
             {events?.length > 0 ?
             <Row>{events.map((e) =>
@@ -46,13 +51,6 @@ const JudgeDashboard = () => {
             <div>
                 <h3>No Events Found</h3>
             </div>}
-        </div>
-        <hr />
-        <div className="col-md-12 px-2">
-            <hr />
-            <h1>Dashboard</h1>
-            <UpcomingEvents />
-            <EventListing showAll />
         </div>
     </div>
 

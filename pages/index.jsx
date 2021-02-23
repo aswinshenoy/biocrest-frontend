@@ -5,10 +5,7 @@ import OnBoarding from "../src/components/OnBoarding";
 
 import DashboardPage from "../src/components/dashboard";
 import Base from "../src/components/shared/Base";
-import AdminPanel from "../src/components/admin";
 import ViewAuthenticator from "../src/components/shared/ViewAuthenticator";
-import Header from "../src/components/shared/Header";
-import JudgeDashboard from "../src/components/admin/JudgeDashboard";
 
 const eventID = process.env.eventID;
 
@@ -16,18 +13,12 @@ const RegisterPage = () => {
 
     return <ViewAuthenticator
         renderAdmin={() =>
-        <Base meta={{ title: 'Admin Panel' }}>
-            <Header />
-            <div className="container-lg px-2 py-5">
-                <AdminPanel eventID={eventID} />
-            </div>
-        </Base>}
+            <Base meta={{ title: 'Dashboard' }}>
+                <DashboardPage />
+            </Base>}
         renderJudge={() =>
-            <Base meta={{ title: 'Judgement Panel' }}>
-                <Header />
-                <div className="container-lg px-2 py-5">
-                    <JudgeDashboard />
-                </div>
+            <Base meta={{ title: 'Dashboard' }}>
+                <DashboardPage />
             </Base>
         }
         renderAuth={(userInfo) => !userInfo?.isProfileComplete ?

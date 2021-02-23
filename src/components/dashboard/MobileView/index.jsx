@@ -8,6 +8,7 @@ import SubmissionFeed from "../Feed";
 import UpcomingEvents from "../UpcomingEvents";
 import InstallPWA from "./installPWA";
 import QuickActions from "./QuickActions";
+import ViewAuthenticator from "../../shared/ViewAuthenticator";
 
 const FooterBar = styled.div`
     background: white;
@@ -51,6 +52,24 @@ const MobileView = ({
         <div className="p-1">
             {currentTab === 'dashboard' ?
             <div>
+                <ViewAuthenticator
+                    renderAdmin={() =>
+                        <div className="p-3 shadow mx-2" style={{ background: '#DFD' }}>
+                            <h4 className="font-weight-bold">You're an Admin</h4>
+                            <a href="/admin" className="btn btn-primary text-light font-weight-bold px-4 mt-2 py-3 rounded-0">
+                                Open Admin Panel
+                            </a>
+                        </div>
+                    }
+                    renderJudge={() =>
+                        <div className="p-3 shadow mx-2" style={{ background: '#DFD' }}>
+                            <h4 className="font-weight-bold">You're a Judge</h4>
+                            <a href="/admin" className="btn btn-primary text-light font-weight-bold px-4 mt-2 py-3 rounded-0">
+                                Open Judge Panel
+                            </a>
+                        </div>
+                    }
+                />
                 <UpcomingEvents />
                 <div className="my-3">
                     <QuickActions onOpenTab={setTab} />

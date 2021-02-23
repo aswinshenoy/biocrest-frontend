@@ -6,7 +6,7 @@ const ViewAuthenticator = ({
    renderAuth = () => <div />,
    renderPublic = () => <div />,
    renderLoading = () => <div />,
-   renderJudge = () => <div />
+   renderJudge = () => <div />,
 }) => {
 
     const [hasLoaded, setLoaded] = useState(false);
