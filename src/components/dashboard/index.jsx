@@ -20,8 +20,7 @@ const DashboardPage = () => {
         <div className="d-block d-md-none">
             <Header />
             <MobileView />
-        </div>
-        }
+        </div>}
     </Base>;
 
 };

@@ -4,6 +4,10 @@ import styled from "@emotion/styled";
 import AdminSubEventsLister from "./SubEvents";
 import APIFetch from "../../utils/APIFetch";
 
+import UpcomingEvents from "../dashboard/UpcomingEvents";
+import EventListing from "../dashboard/DesktopView/Listing";
+
+
 const MenuButton = styled.a`
     background: white;
     padding: 1rem;
@@ -44,9 +48,10 @@ const AdminPanel = ({ eventID = defaultEventID }) => {
 
     useEffect(fetchEventDetails, []);
 
+
     return <div className="row mx-0">
         <div className="col-12 p-3">
-            {event && <h1>{event.name} Registrations</h1>}
+            {event && <h1>{event.name} Admin Panel</h1>}
         </div>
         <div className="col-md-4 p-2">
             <MenuButton href={`/admin/verify/${eventID}`}>
@@ -86,6 +91,12 @@ const AdminPanel = ({ eventID = defaultEventID }) => {
         </div>
         <div className="col-md-12 px-2">
             <AdminSubEventsLister event={event} eventID={eventID} />
+        </div>
+        <div className="col-md-12 px-2">
+            <hr />
+            <h1>Dashboard</h1>
+            <UpcomingEvents />
+            <EventListing showAll />
         </div>
     </div>
 };

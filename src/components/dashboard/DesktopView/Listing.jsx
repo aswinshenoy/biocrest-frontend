@@ -30,7 +30,7 @@ const TabSwitch = styled.button`
 `;
 
 const EventListing = ({
-    defaultTab = 'competition'
+    defaultTab = 'competition', showAll = false,
 }) => {
 
     const [currentTab, setTab] = useState(defaultTab)
@@ -79,11 +79,11 @@ const EventListing = ({
         </div>
         <div className="p-2">
             {currentTab === 'competition' && process.env.features?.competition ?
-                <CompetitionsListing /> :
+                <CompetitionsListing showAll={showAll} /> :
             currentTab === 'webinar' && process.env.features?.webinar ?
-                <WebinarListing /> :
+                <WebinarListing showAll={showAll} /> :
             currentTab === 'feed' && process.env.features?.feed ?
-                <SubmissionFeed />
+                <SubmissionFeed showAll={showAll} />
             : null}
         </div>
     </div>

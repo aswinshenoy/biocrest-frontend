@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from "srx";
 
 import APIFetch from "../../utils/APIFetch";
-import CompetitionsListing from "../competition/CompetionListing";
+import UpcomingEvents from "../dashboard/UpcomingEvents";
+import EventListing from "../dashboard/DesktopView/Listing";
 
 const JudgeDashboard = () => {
 
@@ -47,8 +48,12 @@ const JudgeDashboard = () => {
             </div>}
         </div>
         <hr />
-        <h3>View Competitions</h3>
-        <CompetitionsListing showAll />
+        <div className="col-md-12 px-2">
+            <hr />
+            <h1>Dashboard</h1>
+            <UpcomingEvents />
+            <EventListing showAll />
+        </div>
     </div>
 
 };
