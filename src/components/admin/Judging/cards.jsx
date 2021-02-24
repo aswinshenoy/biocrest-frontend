@@ -9,7 +9,7 @@ export default ({
 }) => {
 
     const [points, setPoints] = useState(myPoints);
-    const [isUpdating, setUpdated] = useState(true);
+    const [isUpdating, setUpdated] = useState(fields);
     const [isSaved, setSaved] = useState(false);
 
     const getSubmissionFieldByKey = (key) => {
