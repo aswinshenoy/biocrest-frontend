@@ -9,7 +9,7 @@ export default ({
 }) => {
 
     const [points, setPoints] = useState(myPoints);
-    const [isUpdating, setUpdated] = useState(fields);
+    const [isUpdating, setUpdated] = useState(false);
     const [isSaved, setSaved] = useState(false);
 
     const getSubmissionFieldByKey = (key) => {
@@ -115,13 +115,18 @@ export default ({
                 </div>
             )}
         </div>}
-        <ReactStars
-            count={10}
-            onChange={(p) => { setPoints(Math.round(p*2)); judge(p*2) }}
-            value={points/2}
-            size={64}
-            isHalf={true}
-        />
+        <div>
+            <div className="mb-2 small">
+                You can rate this participant from 1 to 10 stars, including half stars (at 20 point scale).
+            </div>
+            <ReactStars
+                count={10}
+                onChange={(p) => { setPoints(Math.round(p*2)); judge(p*2) }}
+                value={points/2}
+                size={64}
+                isHalf={true}
+            />
+        </div>
         {isUpdating ? <div>Updating Your Points</div> :
         isSaved ? <h4 className="font-weight-bold text-success">Your Points Recorded</h4> :
         null}
