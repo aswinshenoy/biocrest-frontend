@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from "srx";
 
 import APIFetch from "../../utils/APIFetch";
-import UpcomingEvents from "../dashboard/UpcomingEvents";
-import EventListing from "../dashboard/DesktopView/Listing";
 
 const JudgeDashboard = () => {
 

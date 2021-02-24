@@ -139,7 +139,6 @@ const JudgingPanel = ({ eventID }) => {
                 </Waypoint>
             </div> :
         <div className="w-100">No profiles found</div>}
-
         </div>
     </div>;
 };

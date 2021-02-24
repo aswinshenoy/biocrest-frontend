@@ -5,7 +5,7 @@ import AdminPanel from "../../src/components/admin";
 import ViewAuthenticator from "../../src/components/shared/ViewAuthenticator";
 import Header from "../../src/components/shared/Header";
 import RegistrationForm from "../../src/components/registration/RegisterForm";
-import JudgingPanel from "../../src/components/admin/Judging";
+import JudgeDashboard from "../../src/components/admin/JudgeDashboard";
 
 const eventID = process.env.eventID;
 
@@ -22,7 +22,7 @@ export default () => {
         renderJudge={() =>
         <Base meta={{ title: 'Judging Panel' }}>
             <Header />
-            <JudgingPanel />
+            <JudgeDashboard />
         </Base>}
         renderAuth={() =>
         <div>
