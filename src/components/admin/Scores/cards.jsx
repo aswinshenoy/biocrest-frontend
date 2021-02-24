@@ -11,7 +11,8 @@ export default ({
                 {profile ?
                     <React.Fragment>
                         <h2 className="my-2">
-                            #{rank}. {profile?.title && `${profile?.title}.`} {profile.name}
+                            <span className="font-weight-bold pr-1">#{rank}. </span>
+                            {profile?.title && `${profile?.title}.`} {profile.name}
                         </h2>
                         <div>{
                             profile?.type === 0 ? 'Admin' :
@@ -38,18 +39,31 @@ export default ({
             </div>
             <div className="col-md-2 d-flex align-items-center justify-content-end px-2">
                 <div>
-                    <h4>Avg: {avgPoints} Pts</h4>
-                    <h5>Votes: {noOfJudges}</h5>
+                    <h4 className="font-weight-bold">{avgPoints && (Math.round((avgPoints + Number.EPSILON) * 100) / 100)} Pts</h4>
+                    <h5>{noOfJudges} votes</h5>
                 </div>
 
             </div>
         </div>
         <div className="d-flex align-items-center p-2">
-            <div className="mr-2">High: {highScore} Pts</div>
-            <div className="mr-2">Low: {lowScore} Pts</div>
-            <div className="mr-2">Avg: {avgPoints} Pts</div>
-            <div className="mr-2">Variance: {variance}</div>
-            <div className="mr-2">Standard Deviation: {stdDiv}</div>
+            <div className="mr-2">
+                Votes: <b>{noOfJudges}</b>
+            </div>
+            <div className="mr-2">
+                High: <b>{highScore && (Math.round((highScore + Number.EPSILON) * 100) / 100)}</b> Pts
+            </div>
+            <div className="mr-2">
+                Low: <b>{lowScore && (Math.round((lowScore + Number.EPSILON) * 100) / 100)}</b> Pts
+            </div>
+            <div className="mr-2">
+                Avg: <b>{avgPoints && (Math.round((avgPoints + Number.EPSILON) * 100) / 100)}</b> Pts
+            </div>
+            <div className="mr-2">
+                Variance: <b>{variance && (Math.round((variance + Number.EPSILON) * 100) / 100)}</b>
+            </div>
+            <div className="mr-2">
+                Std. Deviation: <b>{stdDiv && (Math.round((stdDiv + Number.EPSILON) * 100) / 100)}</b>
+            </div>
         </div>
     </div>;
 
