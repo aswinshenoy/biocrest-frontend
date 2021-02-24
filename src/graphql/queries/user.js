@@ -213,6 +213,11 @@ export const JUDGE_SCORES_QUERY = `
 query ($eventID: ID!){
   scores(eventID: $eventID){
     avgPoints
+    noOfJudges
+    highScore
+    lowScore
+    stdDiv
+    variance
     participant{
       id
       profile{

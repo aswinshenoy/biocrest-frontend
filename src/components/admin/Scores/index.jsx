@@ -27,10 +27,11 @@ const JudgingScores = ({ eventID }) => {
 
     return error ? <div>Error occurred while loading. Please refresh to retry</div> :
     <div>
+        <h1>Judgement Scores</h1>
         <div>
             {profiles?.length > 0 ?
                 <div>
-                    {profiles.map((p) => <Scorecard {...p} />)}
+                    {profiles.map((p, i) => <Scorecard rank={i+1} {...p} />)}
                 </div> :
                 <div className="w-100">No judgement found</div>}
         </div>
