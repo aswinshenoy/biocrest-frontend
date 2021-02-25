@@ -1,7 +1,8 @@
 import React from 'react';
+import ViewJudgements from "./judgements";
 
 export default ({
-    participant: { profile, team },
+    participant: { id, profile, team },
     rank, avgPoints, noOfJudges, highScore, lowScore, stdDiv, variance
 }) => {
 
@@ -65,6 +66,7 @@ export default ({
                 Std. Deviation: <b>{stdDiv && (Math.round((stdDiv + Number.EPSILON) * 100) / 100)}</b>
             </div>
         </div>
+        <ViewJudgements participantID={id} />
     </div>;
 
 };
