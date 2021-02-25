@@ -112,6 +112,14 @@ query ($eventID: ID!, $search: String, $count: Int, $after: String, $publicListi
       team{
         id
         name
+        leader {
+            title
+            name
+            affiliationBody {
+              value: id
+              label: name
+            }
+        }
         members{
           id
           title

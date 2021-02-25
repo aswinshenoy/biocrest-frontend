@@ -30,7 +30,8 @@ export default ({
                 fields.map((f) => formfields.push(f.key));
             }
             d.push([
-                '#', 'Title', 'Name', 'Status', 'Type', 'Phone', 'Email', 'Date Joined', 'City', 'State', 'County', 'Gender', 'Affiliation Title', 'Affiliation Body',
+                '#', 'Title', 'Name', 'Status', 'Type', 'Phone', 'Email', 'Date Joined', 'City', 'State',
+                'County', 'Gender', 'Affiliation Title', 'Affiliation Body',
                 ...formfields
             ])
             profiles.forEach(({ profile: s, isApproved, remarks, formData: f }, index) => {
@@ -89,7 +90,7 @@ export default ({
                 fields.map((f) => formfields.push(f.key));
             }
             d.push([
-                '#', 'Name', 'Members',
+                '#', 'Name', 'Leader', 'Affiliation Body', 'Members',
                 ...formfields
             ])
             profiles.forEach(({ team, isApproved, remarks, formData: f }, index) => {
@@ -118,7 +119,9 @@ export default ({
                     d.push([
                         `${index+1}`,
                         `${team?.name}`,
-                        `${team?.members?.length > 0 ? team.members.map((m) => `${m.name}, `) : ''}`,
+                        `${team?.leader ? `${team?.leader?.title} ${team?.leader?.name}` : ''}`,
+                        `${team?.leader ? `${team?.leader?.affiliationBody?.label}` : ''}`,
+                        `${team?.members?.length > 0 ? team.members.map((m) => `${m.title} ${m.name} (${m.email}), `) : ''}`,
                         ...fieldData
                     ])
             })

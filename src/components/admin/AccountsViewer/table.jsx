@@ -80,6 +80,8 @@ export default ({
             <thead>
                 <th style={{ minWidth: '40px' }}>#</th>
                 <th style={{ minWidth: '150px' }}>Team Name</th>
+                <th style={{ minWidth: '150px' }}>Leader</th>
+                <th style={{ minWidth: '150px' }}>Affiliation Body</th>
                 <th style={{ minWidth: '150px' }}>Members</th>
                 {fields?.map((d) =>
                     <th style={{ minWidth: '190px' }}>{d.label}</th>
@@ -122,9 +124,25 @@ export default ({
                                 {team.name}
                             </td>
                             <td>
+                                {team?.leader &&
+                                    <div>
+                                        {team.leader?.title} {team.leader?.name}
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                {team?.leader &&
+                                <div>
+                                    {team.leader?.affiliationBody?.label}
+                                </div>}
+                            </td>
+                            <td>
                                 {team.members?.length > 0 &&
                                 team.members.map((t) =>
-                                    <div>{t.title} {t.name}, </div>
+                                    <div>
+                                        <span className="pr-1">{t.title} {t.name}</span>
+                                        <span>({t.email})</span>
+                                    </div>
                                 )
                                 }
                             </td>
