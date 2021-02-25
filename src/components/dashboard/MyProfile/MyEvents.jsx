@@ -69,6 +69,10 @@ const MyEventRegistrations = () => {
                     </div>
                 </div>
                 <div className="col-3 p-1">{
+                    e.prize ?
+                    <div style={{ fontSize: '110%' }} className="font-weight-bold text-success">
+                        {e.prize === 1 ? 'Winner 🎉' : e.prize === 2 ? 'Runner-Up 🎉' : e.prize === 3 ? 'Second RunnerUp 🎉' : `${e.prize} prize 🎉`}
+                    </div> :
                     e.isApproved ? <div className="text-success">Approved</div>
                         : <div className="text-danger">Pending</div>
                 }</div>

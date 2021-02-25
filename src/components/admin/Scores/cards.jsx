@@ -1,9 +1,10 @@
 import React from 'react';
 import ViewJudgements from "./judgements";
+import WinnerSelector from "./WinnerSelector";
 
 export default ({
-    participant: { id, profile, team },
-    rank, avgPoints, noOfJudges, highScore, lowScore, stdDiv, variance
+    participant: { id, profile, team, prize },
+    rank, avgPoints, noOfJudges, highScore, lowScore, stdDiv, variance,
 }) => {
 
     return <div className="card p-3 my-3">
@@ -66,7 +67,14 @@ export default ({
                 Std. Deviation: <b>{stdDiv && (Math.round((stdDiv + Number.EPSILON) * 100) / 100)}</b>
             </div>
         </div>
-        <ViewJudgements participantID={id} />
+        <div className="row mx-0">
+            <div className="col-md-6 p-2">
+                <ViewJudgements participantID={id} />
+            </div>
+            <div className="col-md-6 p-2">
+                <WinnerSelector participantID={id} prize={prize} />
+            </div>
+        </div>
     </div>;
 
 };

@@ -18,7 +18,7 @@ const GalleryCard = styled.div`
 
 
 const SubmissionPost = ({
-    participant, submissions, event, timestamp
+    participant, submissions, event, hideEventName, prize
 }) => {
 
     const getField = (key) => {
@@ -63,13 +63,17 @@ const SubmissionPost = ({
         <div className="row mx-0 p-2">
             <div className="col-6 col-md-8 p-2">
                 <div style={{ fontSize: '15px' }} className=" line-height-1">
-                    <div className="mb-2">{event.name}</div>
+                    {!hideEventName && <div className="mb-2">{event.name}</div>}
                     <div className="font-weight-bold text-primary">{participant?.profile?.title} {participant?.profile?.name}</div>
                 </div>
             </div>
             <div className="col-6 col-md-4 d-flex justify-content-end align-items-center px-1">
                 {(participant?.timestampApproved) &&
                 formatDistanceToNow(parseISO(participant.timestampApproved), { addSuffix: true })}
+                {prize &&
+                <div className="font-weight-bold">
+                    {prize === 1 ? 'First Prize' : prize === 2 ? 'Second Prize' : prize === 3 ? 'Third Prize' : `${prize} Prize`}
+                </div>}
             </div>
         </div>
         {submissions?.length > 0 &&

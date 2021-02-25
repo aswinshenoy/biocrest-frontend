@@ -54,7 +54,7 @@ const ViewJudgements = ({ participantID }) => {
         : <div>
             <button
                 onClick={fetch}
-                className="btn-primary px-3 py-2"
+                className="btn-primary btn px-3 py-2"
             >
                 View Judgements
             </button>

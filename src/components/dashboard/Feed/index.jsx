@@ -47,7 +47,7 @@ const SubmissionFeed = ({
                 <div className="row mx-0">
                     {posts.map((p) =>
                         <div className="col-md-4 py-2">
-                            <SubmissionPost event={event} {...p} />
+                            <SubmissionPost hideEventName event={event} {...p} />
                         </div>
                     )}
                 </div>

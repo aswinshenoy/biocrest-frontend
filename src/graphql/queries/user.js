@@ -228,6 +228,7 @@ query ($eventID: ID!){
     variance
     participant{
       id
+      prize
       profile{
         id
         title

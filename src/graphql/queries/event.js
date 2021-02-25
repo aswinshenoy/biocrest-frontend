@@ -48,6 +48,7 @@ query ($parentID: ID, $slug: String) {
     minTeamSize
     maxTeamSize
     hasGallery
+    hasWinners
   }
 }
 `;
@@ -218,6 +219,7 @@ export const MY_EVENT_REGS = `
 query ($eventID: ID!){
   myEvents(parentID: $eventID){
     isApproved
+    prize
     event{
       name
       slug
@@ -263,6 +265,8 @@ query ($eventID: ID, $count: Int, $after: String) {
     }
   }
 }`;
+
+
 
 export const GALLERY_QUERY = `
 query ($eventID: ID, $count: Int, $after: String) {
@@ -321,3 +325,28 @@ query ($eventType: Int, $parentID: ID){
   }
 }`;
 
+export const EVENT_WINNERS_QUERY = `
+query ($eventID: ID!){
+  event(eventID: $eventID) {
+    name
+    formFields {
+      formats
+      key
+      label
+    }
+    postApprovalFields {
+      formats
+      key
+      label
+    }
+    winners{
+      name
+      prize
+      submissions{
+        key
+        fileURL
+        url
+      }
+    }
+  }
+}`;

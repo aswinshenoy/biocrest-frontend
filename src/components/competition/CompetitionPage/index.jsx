@@ -10,6 +10,7 @@ import FormButton from "../../ui/styled-components/Button";
 
 import SubmissionFeed from "../../dashboard/Feed";
 import MarkdownViewer from "../../shared/MarkdownViewer";
+import Winners from "./winners";
 
 const CoverSection = styled.section`
     background: ${({ theme }) => theme?.colors.primary};
@@ -83,14 +84,19 @@ const CompetitionPage = ({ event, }) => {
                 </div>
             </div>
         </CoverSection>
-        {event?.hasGallery &&
+        {(event?.hasGallery || event?.hasWinners) &&
         <div className="p-0 d-flex align-items-center justify-content-center bg-white">
             <TabButton onClick={() => setTab('about')} active={currentTab==='about'}>
                 About
             </TabButton>
+            {event?.hasGallery  &&
             <TabButton onClick={() => setTab('submissions')} active={currentTab==='submissions'}>
                 View Submissions
-            </TabButton>
+            </TabButton>}
+            {event?.hasWinners  &&
+            <TabButton onClick={() => setTab('winners')} active={currentTab==='winners'}>
+                View Winners
+            </TabButton>}
         </div>}
         <div className="container px-2">
             {currentTab === 'submissions' ?
@@ -100,6 +106,10 @@ const CompetitionPage = ({ event, }) => {
             currentTab === 'about' ?
                 <div className="bg-white p-3 my-3 shadow">
                     <MarkdownViewer content={event?.details}/>
+                </div> :
+            currentTab === 'winners' ?
+                <div className="my-3">
+                    <Winners eventID={event?.id} />
                 </div> :
             null}
         </div>
