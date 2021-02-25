@@ -25,12 +25,17 @@ const ParticipationCertificate = ({ id }) => {
 
     useEffect(fetchCertificate, [])
 
-    return <Base meta={{ title: 'Participation Certificate' }}>
+    return <Base meta={{ title: 'My Certificate' }}>
         <Header />
         <div>
+            <div className="my-2 p-3 bg-white">
+                <a href={certificate} target="_blank" className="btn-primary text-light font-weight-bold btn px-3 py-2">
+                    Download Certificate
+                </a>
+            </div>
             {certificate &&
             <iframe
-                style={{ minHeight: '90vh' }}
+                style={{ minHeight: '88vh' }}
                 src={certificate} width="100%"
             />}
         </div>

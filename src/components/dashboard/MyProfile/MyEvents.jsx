@@ -63,7 +63,7 @@ const MyEventRegistrations = () => {
             </div>
             {events.map((e) =>
             <div className="row mx-0 border-top p-2">
-                <div className="col-5 col-md-6 p-1">
+                <div className="col-5 p-1">
                     <div className="font-weight-bold mb-0">
                         {e.event.name}
                     </div>
@@ -76,8 +76,14 @@ const MyEventRegistrations = () => {
                     e.isApproved ? <div className="text-success">Approved</div>
                         : <div className="text-danger">Pending</div>
                 }</div>
-                <div className="col-4 col-md-3 d-flex justify-content-end p-1">
-                    {e.isApproved && e.event.postApprovalFields?.length>0 ?
+                <div className="col-4 d-flex justify-content-end p-1">
+                    {e?.isCertificateAvailable ?
+                    <div className="mr-2">
+                        <a href={`/my-certificate/${e.event.id}`} className="font-weight-bold" style={{ color: '#4a148c' }}>
+                            Open Certificate
+                        </a>
+                    </div> :
+                    e.isApproved && e.event.postApprovalFields?.length>0 ?
                     <a href={`/register/${e.event.slug}`} className="font-weight-bold btn btn-danger rounded-0 text-light px-1 px-md-2 py-2">
                         Submit Work
                     </a> :

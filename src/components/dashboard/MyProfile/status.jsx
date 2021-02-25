@@ -23,8 +23,11 @@ const RegistrationStatus = () => {
             <MyIDCard {...data.myEventProfile} />
         </div>
         <div className="py-3 px-1">
-            <FormButton link="/edit-profile" py={3}>
+            <FormButton className="mr-3" link="/edit-profile" py={3}>
                 Edit Profile
+            </FormButton>
+            <FormButton link={`/my-certificate/${process?.env.eventID}`} py={3}>
+                My Certificate
             </FormButton>
         </div>
     </div> :

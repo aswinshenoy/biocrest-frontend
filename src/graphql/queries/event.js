@@ -220,7 +220,9 @@ query ($eventID: ID!){
   myEvents(parentID: $eventID){
     isApproved
     prize
+    isCertificateAvailable
     event{
+      id
       name
       slug
       postApprovalFields{
